@@ -1,7 +1,7 @@
 <!-- Header ================================================== -->
 <header>
     <div class="container-fluid">
-        <div class="row">
+        <div class="row delivery_bar">
             <div class="col-md-12 col-xs-12">
                 <div class="pull-right">
                         <a href="#" class="be_delivery_man">Devenir un livreur</a>

@@ -4,6 +4,7 @@
 .logo_image
 {
     width: 88px!important;
+    margin-top:-35px;
     height: 88px!important;
     margin-bottom: 13px!important;
 
@@ -24,11 +25,16 @@
 
 }
 
+.be_delivery_man:hover {
+    text-decoration: none;
+    color: #7dc440;
+}
+
 .be_delivery_man
 {
     font-size:20px;
     text-decoration: none;
-    color:white;
+    color:#7dc440;
     border:1px solid white;
     width: 180px;
     text-align: center;
@@ -36,8 +42,106 @@
     display:block;
     border-radius: 5px;
 }
-.be_delivery_man:hover
+
+.profile_page
 {
-    text-decoration: none;
-    color:white;
+    margin-top:120px;
 }
+
+.profile_img
+{
+    width: 250px;
+    height: 250px;
+}
+
+.username
+{
+    font-size: 30px;
+    color:black;
+    font-weight: normal;
+    font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif
+}
+
+.address
+{
+    font-size: 16px;
+    color:black;
+    font-weight: bold;
+
+}
+.panel-profile
+{
+    width: 250px;
+}
+
+.panel-heading
+{
+    font-size: 15px;
+    text-align: center;
+    font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif
+}
+
+.cmn-toggle-switch>span
+{
+    background: #7dc440!important;
+}
+
+.cmn-toggle-switch>span:before
+{
+    background: #7dc440!important;
+}
+
+.cmn-toggle-switch>span:after
+{
+    background: #7dc440!important;
+}
+
+.margin_10
+{
+    margin-top:10px;
+}
+
+.report_user>a:hover
+{
+    text-decoration: underline;
+    color:black;
+}
+.report_user>a
+{
+    color:black;
+}
+
+.user_information
+{
+    line-height: 2;
+}
+
+.panel-item
+{
+    font-size: 15px;
+}
+
+.user_verified
+{
+    font-size: 18px;
+}
+
+.wish_list
+{
+    font-size: 24px;
+}
+.wish_list_count
+{
+    font-size: 14px;
+}
+
+@media only screen and (max-width: 600px) {
+    .username{
+        font-size: 14px;
+        font-weight: bold;
+        font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif
+    }
+}
+
+
+
