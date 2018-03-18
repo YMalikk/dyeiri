@@ -8,7 +8,7 @@
     @include('frontOffice.inc.header')
 @stop
 
-@section('subHeader')
+@section('content')
     <!-- SubHeader =============================================== -->
     <section class="parallax-window" id="home" data-parallax="scroll" data-image-src="{{asset('img')}}/sub_header_home.jpg" data-natural-width="1400" data-natural-height="550">
         <div id="subheader">
@@ -38,11 +38,6 @@
         </div>
     </section><!-- End section -->
     <!-- End SubHeader ============================================ -->
-
-@stop
-
-@section('content')
-
 <!-- Content ================================================== -->
 <div class="container margin_60">
 

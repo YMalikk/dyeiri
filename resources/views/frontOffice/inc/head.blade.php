@@ -19,15 +19,19 @@
     <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="img/apple-touch-icon-114x114-precomposed.png">
     <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="img/apple-touch-icon-144x144-precomposed.png">
 
+    <!--Font awesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/solid.css" integrity="sha384-v2Tw72dyUXeU3y4aM2Y0tBJQkGfplr39mxZqlTBDUZAb9BGoC40+rdFCG0m10lXk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/fontawesome.css" integrity="sha384-q3jl8XQu1OpdLgGFvNRnPdj5VIlCvgsDQTQB6owSOHWlAurxul7f+JpUOVdAiJ5P" crossorigin="anonymous">
+
     <!-- GOOGLE WEB FONT -->
     <link href='https://fonts.googleapis.com/css?family=Lato:400,700,900,400italic,700italic,300,300italic' rel='stylesheet' type='text/css'>
 
     <!-- BASE CSS -->
     <link href="css/base.css" rel="stylesheet">
-
-    <!--[if lt IE 9]>
+   <!--[if lt IE 9]>
     <script src="{{asset('js')}}/html5shiv.min.js"></script>
     <script src="{{asset('js')}}/respond.min.js"></script>
+
     <![endif]-->
 
 </head>
