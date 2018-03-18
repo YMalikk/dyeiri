@@ -13,14 +13,14 @@
     <section class="parallax-window" id="home" data-parallax="scroll" data-image-src="{{asset('img')}}/sub_header_home.jpg" data-natural-width="1400" data-natural-height="550">
         <div id="subheader">
             <div id="sub_content">
-                <h1>Order Takeaway or Delivery Food</h1>
+                <h1>Découvrez des plats fait maison</h1>
                 <p>
-                    Ridiculus sociosqu cursus neque cursus curae ante scelerisque vehicula.
+                    Commandez les plats que vous aimez auprés de chez vous.
                 </p>
                 <form method="post" action="http://www.ansonika.com/quickfood/list_page.html">
                     <div id="custom-search-input">
                         <div class="input-group ">
-                            <input type="text" class=" search-query" placeholder="Your Address or postal code">
+                            <input type="text" class=" search-query" placeholder='Essayez "Couscous" ' >
                             <span class="input-group-btn">
                         <input type="submit" class="btn_search" value="submit">
                         </span>
@@ -42,10 +42,7 @@
 <div class="container margin_60">
 
     <div class="main_title">
-        <h2 class="nomargin_top" style="padding-top:0">How it works</h2>
-        <p>
-            Cum doctus civibus efficiantur in imperdiet deterruisset.
-        </p>
+        <h2 class="nomargin_top" style="padding-top:0">Comment ça marche</h2>
     </div>
     <div class="row">
         <div class="col-md-3">
