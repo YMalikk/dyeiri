@@ -1,0 +1,43 @@
+.header_dyeiri{
+    margin-top:10px;
+}
+.logo_image
+{
+    width: 88px!important;
+    height: 88px!important;
+    margin-bottom: 13px!important;
+
+}
+
+.logo_image_mobile
+{
+    width: 70px;
+    height: 74px;
+    margin-top: -32px;
+}
+
+.logo_image_menu
+{
+    width: 100px;
+    height: 92px;
+
+
+}
+
+.be_delivery_man
+{
+    font-size:20px;
+    text-decoration: none;
+    color:white;
+    border:1px solid white;
+    width: 180px;
+    text-align: center;
+    height: 30px;
+    display:block;
+    border-radius: 5px;
+}
+.be_delivery_man:hover
+{
+    text-decoration: none;
+    color:white;
+}
