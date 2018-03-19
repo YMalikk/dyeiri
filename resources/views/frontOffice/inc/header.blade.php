@@ -11,7 +11,7 @@
         </div>
         <div class="row">
             <div class="col--md-4 col-sm-4 col-xs-4">
-                <a href="index-2.html" id="logo">
+                <a href="{{route('showHome')}}" id="logo">
                     <img src="{{asset('img')}}/greenLogo.png" width="190" height="23" alt=""  data-retina="true" class="hidden-xs logo_image">
                     <img src="{{asset('img')}}/greenLogo.png" width="59" height="23" alt="" data-retina="true" class="hidden-lg hidden-md hidden-sm logo_image_mobile">
                 </a>
@@ -29,7 +29,7 @@
                         <li><a href="about.html">A propos de nous</a></li>
 
                         <li><a href="#0" data-toggle="modal" data-target="#login_2">Connexion</a></li>
-                        <li><a href="http://themeforest.net/item/quickfood-delivery-or-takeaway-food-template/13958100?ref=ansonika">Devenir un chef</a></li>
+                        <li><a href="{{route('showChefSubscription')}}">Devenir un chef</a></li>
 
                     </ul>
                 </div><!-- End main-menu -->
@@ -38,4 +38,21 @@
     </div><!-- End container -->
 </header>
 <!-- End Header =============================================== -->
+<!-- Login modal -->
+<div class="modal fade" id="login_2" tabindex="-1" role="dialog" aria-labelledby="myLogin" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content modal-popup">
+            <a href="#" class="close-link"><i class="icon_close_alt2"></i></a>
+            <form action="{{route('handleConnection')}}" method="POST" class="popup-form" id="myLogin">
+                <div class="login_icon"><i class="icon_lock_alt"></i></div>
+                <input type="email" name="email"  class="form-control form-white" placeholder="Email">
+                <input type="password" name="password" class="form-control form-white" placeholder="Mot de passe">
+                <div class="text-left">
+                    <a href="#">Mot de passe oublié?</a>
+                </div>
+                <button type="submit" class="btn btn-submit">Connexion</button>
+            </form>
+        </div>
+    </div>
+</div><!-- End modal -->
    

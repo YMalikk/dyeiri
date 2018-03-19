@@ -13,6 +13,7 @@
     </div>
 </div><!-- End Preload -->
 @yield('header')
+
 @yield('content')
 @yield('footer')
 </body>
