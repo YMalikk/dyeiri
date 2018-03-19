@@ -10,6 +10,9 @@ class User extends Authenticatable {
 
     use Notifiable;
 
+    public $timestamps = true;
+
+    protected $table = 'users';
     /**
      * The attributes that are mass assignable.
      *
@@ -43,6 +46,14 @@ class User extends Authenticatable {
     public function roles()
     {
         return $this->belongsToMany('App\Modules\User\Models\Role', 'users_roles')->withTimestamps();
+    }
+
+    public function hasRole($role)
+    {
+        if ($this->roles()->where('title', $role)->first()) {
+            return true;
+        }
+        return false;
     }
 
 

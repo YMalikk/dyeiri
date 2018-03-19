@@ -32,6 +32,12 @@
     <script src="{{asset('js')}}/html5shiv.min.js"></script>
     <script src="{{asset('js')}}/respond.min.js"></script>
 
+    <!-- Jquery-->
+    <script src="{{asset('js')}}/jquery-2.2.4.min.js"></script>
+    <!-- sweet alert -->
+    <link rel="stylesheet" href="{{asset('plugins/sweetalert')}}/sweetalert.css"/>
+    <script src="{{asset('plugins/sweetalert')}}/sweetalert.min.js"></script>
+
     <![endif]-->
 
 </head>
