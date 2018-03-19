@@ -32,7 +32,7 @@
 
 .be_delivery_man
 {
-    font-size:20px;
+    font-size:20px!important;
     text-decoration: none;
     color:#7dc440;
     border:1px solid white;
@@ -146,6 +146,17 @@
 #count
 {
     display:none;
+}
+
+.logo_tag
+{
+    color:#7dc440;
+}
+
+.with_work_us
+{
+    width: 165px;
+    height: 160px;
 }
 
 

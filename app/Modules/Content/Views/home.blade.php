@@ -13,7 +13,7 @@
     <section class="parallax-window" id="home" data-parallax="scroll" data-image-src="{{asset('img')}}/sub_header_home.jpg" data-natural-width="1400" data-natural-height="550">
         <div id="subheader">
             <div id="sub_content">
-                <h1>Découvrez des plats fait maison</h1>
+                <h1>Découvrez des recettes et plats <span class="logo_tag">#dyeiri</span></h1>
                 <p>
                     Commandez les plats que vous aimez auprés de chez vous.
                 </p>
@@ -48,36 +48,36 @@
         <div class="col-md-3">
             <div class="box_home" id="one">
                 <span>1</span>
-                <h3>Search by address</h3>
+                <h3>Se localiser</h3>
                 <p>
-                    Find all restaurants available in your zone.
+                    Trouver tous les chefs valable dans votre région.
                 </p>
             </div>
         </div>
         <div class="col-md-3">
             <div class="box_home" id="two">
                 <span>2</span>
-                <h3>Choose a restaurant</h3>
+                <h3>Chosir votre chef</h3>
                 <p>
-                    We have more than 1000s of menus online.
+                  Nos chef sont à votre disposition.
                 </p>
             </div>
         </div>
         <div class="col-md-3">
             <div class="box_home" id="three">
                 <span>3</span>
-                <h3>Pay by card or cash</h3>
+                <h3>Commander</h3>
                 <p>
-                    It's quick, easy and totally secure.
+                    Vos envies maintenant.
                 </p>
             </div>
         </div>
         <div class="col-md-3">
             <div class="box_home" id="four">
                 <span>4</span>
-                <h3>Delivery or takeaway</h3>
+                <h3>Livraison ou à emporter</h3>
                 <p>
-                    You are lazy? Are you backing home?
+                  Manger sain, c'est simple.
                 </p>
             </div>
         </div>
@@ -270,19 +270,34 @@
         </p>
     </div>
     <div class="row">
-        <div class="col-md-4 col-md-offset-2">
+        <div class="col-md-4 col-xs-12">
             <a class="box_work" href="submit_restaurant.html">
-                <img src="{{asset('img')}}/submit_restaurant.jpg" width="848" height="480" alt="" class="img-responsive">
-                <h3>Submit your Restaurant<span>Start to earn customers</span></h3>
-                <p>Lorem ipsum dolor sit amet, ut virtute fabellas vix, no pri falli eloquentiam adversarium. Ea legere labore eam. Et eum sumo ocurreret, eos ei saepe oratio omittantur, legere eligendi partiendo pro te.</p>
-                <div class="btn_1">Read more</div>
+                <img src="{{asset('img')}}/steak-bowl.png" alt="" class="img-circle with_work_us">
+                <h3>Health Food, For Real<span>Start being healthy</span></h3>
+                <p>Manger sain n'est pas si compliqué.<br/>
+                   Une alimentation saine contribu à rester en bonne santé.
+                </p>
+                <div class="btn_1">Get started</div>
             </a>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 col-xs-12">
             <a class="box_work" href="submit_driver.html">
-                <img src="{{asset('img')}}/delivery.jpg" width="848" height="480" alt="" class="img-responsive">
+                <img src="{{asset('img')}}/community.png" class="img-circle with_work_us">
+                <h3>Join Our Community<span>Start to be actif</span></h3>
+                <p>Rejoingez notre communité, où vos recettes prennent vie.
+                   Nous rejoindre c'est rejoindre une communité chaleureuse et solide.<br/>
+                </p>
+                <div class="btn_1">Join</div>
+            </a>
+        </div>
+
+        <div class="col-md-4 col-xs-12">
+            <a class="box_work" href="submit_driver.html">
+                <img src="{{asset('img')}}/scooter.png" style="width: 204px;" class="img-circle with_work_us">
                 <h3>We are looking for a Driver<span>Start to earn money</span></h3>
-                <p>Lorem ipsum dolor sit amet, ut virtute fabellas vix, no pri falli eloquentiam adversarium. Ea legere labore eam. Et eum sumo ocurreret, eos ei saepe oratio omittantur, legere eligendi partiendo pro te.</p>
+                <p>Dyeiri recherche une personne motivée, rigoureuse et active.<br/>
+                   Ayant un moyen de transport pour la livraison.
+                </p>
                 <div class="btn_1">Read more</div>
             </a>
         </div>
