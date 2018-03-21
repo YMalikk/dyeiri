@@ -3,6 +3,7 @@
 namespace App\Modules\User\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Chef\Models\Chef;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -12,6 +13,7 @@ use App\Modules\User\Models\Schedule;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Alert;
+use Stichoza\GoogleTranslate\TranslateClient;
 
 
 class RegisterController extends Controller
@@ -80,10 +82,6 @@ class RegisterController extends Controller
     public function handleChefRegister(Request $request)
     {
 
-        /*        $this->validate($request, [
-                'g-recaptcha-response' => 'required|captcha',
-            ]);*/
-        //For security reason (rules) for all inputs
         if($request->provider) {
             $verifyForm = Validator::make($request->all(), [
                 'name' => 'required|max:190|min:1',
@@ -96,7 +94,7 @@ class RegisterController extends Controller
         {
             if($request->password!=$request->password2)
             {
-                Alert::error("Vérfiez votre mot de passe","Erreur")->persistent("Ok");
+                alert()->error("Vérfiez votre mot de passe","Erreur")->persistent("Ok");
                 return redirect()->back();
             }
             $verifyForm = Validator::make($request->all(), [
@@ -136,13 +134,6 @@ class RegisterController extends Controller
             return redirect()->back();
         }
 
-        /*$json = json_decode(file_get_contents('https://www.geoip-db.com/json/'), true);
-        $latitude = $json['latitude'];
-        $longitude = $json['longitude'];
-
-
-            $destinationPath = 'storage/uploads/restaurants/restaurant.png';*/
-
         $confirmation_code = str_random(25);
 
         $dataUser = [
@@ -154,29 +145,21 @@ class RegisterController extends Controller
             'status' => 0,
         ];
 
+
+
         $user=User::create($dataUser);
 
 
-
-        /*$code_affiliate = str_random(50);
-
-        $dataRestaurant=[
-            'name'=>$request->restaurant_name,
-            'lng'=>$request->lng,
-            'lat'=>$request->lat,
-            'address'=>$request->address,
-            'logo'=>$destinationPath,
-            'code_affiliate'=>$code_affiliate,
+        $dataChef=[
+            'likes_count'=>0,
+            'description'=>'',
+            'work'=>'',
+            'language'=>'Arabic',
             'status'=>0,
-            'city'=>$request->city,
-            'user_id'=>$user->id,
-            'waiters_count'=>$request->waiters_count,
+            'user_id'=>$user->id
         ];
 
-        $restaurant=Restaurant::create($dataRestaurant);
-        RestaurantInformation::create([
-            'restaurant_id'=>$restaurant->id
-        ]);*/
+        Chef::create($dataChef);
 
         for($i=1;$i<=7;$i++)
         {
@@ -200,9 +183,9 @@ class RegisterController extends Controller
             $user->provider_id=$request->providerId;
             $user->status=1;
             $user->save();
-            $user->assignRole(2);  //role 2 => restaurant manager
+            $user->assignRole(2);
             Auth::login($user);
-            //return redirect()->route('payWithStripe',array($user->id));
+
         }
 
         $user->assignRole(2);  //role 2 => chef
@@ -227,6 +210,11 @@ class RegisterController extends Controller
             alert()->success('Sorry your email cannot be identified.')->persistent('Close');
         }
         return redirect('/');
+    }
+
+    public function showChefRegister()
+    {
+        return view('Chef::auth.chefRegister');
     }
 
 }

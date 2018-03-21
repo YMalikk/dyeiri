@@ -50,25 +50,23 @@ class LoginController extends Controller
 
     public function handleConnection(Request $request)
     {
-        $user = User::where('email','=',$request->email)->first();
-        if(!isset($user))
-        {
-            alert()->warning('Ce compte n\'existe pas.', 'Information')->persistent("Ok");
-        }
-        elseif(!Hash::check($request->password, $user->password))
-        {
-            alert()->warning('Le mot de passe ne correspond pas', 'Information')->persistent("Ok");
-        }
-        elseif($user->status==0)
-            alert()->warning('Veuillez activer votre compte', 'Information')->persistent("Ok");
-        else
-        {
-            Auth::attempt(['email' => $request->email, 'password' => $request->password]);
-            if ($user->hasRole('client'))
+        $credentials = $this->credentials($request);
+        $remember_me = $request->has('remember_me') ? true : false;
+        if (auth()->attempt(['email' => $request->input('email'), 'password' => $request->input('password')], $remember_me)) {
+            $user = Auth::getLastAttempted($credentials, true);
+
+            if ($user->hasRole('client')) {
+                Auth::login($user);
                 return redirect()->route('showProfile');
-            elseif($user->hasRole('chef'))
+            } elseif ($user->hasRole('chef')) {
+                Auth::login($user);
                 return redirect()->route('showProfileChef');
+            }
+        } else {
+            Auth::logout();
+            alert()->error('Vérifier vos données', 'Erreur')->persistent('Ok');
+            return redirect()->back();
         }
-        return redirect()->back();
+
     }
 }

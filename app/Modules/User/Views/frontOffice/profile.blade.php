@@ -9,7 +9,7 @@
 @stop
 
 @section('content')
-   <section class="profile_page">
+   <section class="page_content">
 
 
         <div class="row col-md-10 col-md-offset-1 col-xs-10 col-xs-offset-1 margin_30 col-sm-12 col-sm-offset-0">

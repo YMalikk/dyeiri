@@ -42,7 +42,7 @@ class AuthenticateChef
         }
         else
         {
-            if($this->auth->user()->roles()->pluck('title')->first()!=="chef")
+            if($this->auth->user()->hasRole('chef'))
             {
                 return redirect('/');
             }

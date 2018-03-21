@@ -57,14 +57,14 @@
                     <ul>
                         <li><a href="#0"><i class="icon-facebook"></i></a></li>
                         <li><a href="#0"><i class="icon-twitter"></i></a></li>
-                        <li><a href="#0"><i class="icon-google"></i></a></li>
+                        <li><a href="mailto:dyeirifood@gmail.com"><i class="icon-google"></i></a></li>
                         <li><a href="#0"><i class="icon-instagram"></i></a></li>
                         <li><a href="#0"><i class="icon-pinterest"></i></a></li>
                         <li><a href="#0"><i class="icon-vimeo"></i></a></li>
                         <li><a href="#0"><i class="icon-youtube-play"></i></a></li>
                     </ul>
                     <p>
-                        © Quick Food 2015
+                        © Dyeiri 2018
                     </p>
                 </div>
             </div>
@@ -78,3 +78,7 @@
 <script src="{{asset('js')}}/common_scripts_min.js"></script>
 <script src="{{asset('js')}}/functions.js"></script>
 <script src="{{asset('assets')}}/validate.js"></script>
+<script src="{{asset('js')}}/script.js"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCj1cCyUDGUciWPWK7kzjrxjLx4wDDS9c&libraries=places&callback=initAutocomplete"
+        async defer></script>

@@ -5,6 +5,7 @@ namespace App\Modules\User\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Alert;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -20,8 +21,4 @@ class UserController extends Controller
         return view('User::frontOffice.profile');
     }
 
-    public function showChefSubscription()
-    {
-        return view('User::chefSubscription');
-    }
 }
