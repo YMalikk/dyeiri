@@ -18,13 +18,30 @@
                     Commandez les plats que vous aimez auprés de chez vous.
                 </p>
                 <form method="post" action="http://www.ansonika.com/quickfood/list_page.html">
-                    <div id="custom-search-input">
-                        <div class="input-group ">
-                            <input type="text" class=" search-query" placeholder='Essayez "Couscous" ' >
-                            <span class="input-group-btn">
-                        <input type="submit" class="btn_search" value="submit">
-                        </span>
-                        </div>
+                    <div class="input-group col-md-offset-2 col-md-8 col-xs-12">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle btn_select" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catégories <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li><a class="choose" id="1" href="#">Toutes</a></li>
+                                <li><a class="choose" id="2" href="#">Entrée</a></li>
+                                <li><a class="choose" id="3" href="#">Menu principale</a></li>
+                                <li><a class="choose" id="4" href="#">Dessert</a></li>
+                                <li><a class="choose" id="5" href="#">Drinks</a></li>
+                            </ul>
+                        </div><!-- /btn-group -->
+                        <input type="text" class="form-control search-query" id="address" placeholder="Où voulez-vous cherchez vos plats?">
+                        <input type="hidden" name="lat"  id="lat"/>
+                        <input type="hidden" name="lng" id="lng"/>
+                        <input type="hidden" name="city" id="city"/>
+                        <input type="hidden" name="country" id="country"/>
+                        <span class="input-group-addon btn_localise" title="Se localiser">
+                            <span id="arround_me_value"></span>
+                            <span class="fa fa-location-arrow"  aria-hidden="true"></span></span>
+
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-success btn_select">Rechercher <span class="fa fa-angle-right"></span></button>
+
+                        </div><!-- /btn-group -->
                     </div>
                 </form>
             </div><!-- End sub_content -->

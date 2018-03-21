@@ -43,7 +43,7 @@
     border-radius: 5px;
 }
 
-.profile_page
+.page_content
 {
     margin-top:120px;
 }
@@ -141,6 +141,18 @@
         font-weight: bold;
         font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif
     }
+
+    .become_chef
+    {
+        text-align: inherit!important;
+        height: 44px!important;
+    }
+
+    .chef_register
+    {   background-color: black;
+        background-size: cover;
+        background: none;
+    }
 }
 
 #count
@@ -159,5 +171,28 @@
     height: 160px;
 }
 
+.chef_register
+{
+    background: url(../img/bg_chef_register.jpeg) no-repeat;
+    background-size: cover;
+}
+
+.chef_register_title
+{
+    font-size: 4em!important;
+    color:white;
+}
+
+.second_title_register
+{
+    color:white;
+}
+
+.pac-container:after {
+    /* Disclaimer: not needed to show 'powered by Google' if also a Google Map is shown */
+
+    background-image: none !important;
+    height: 0px;
+}
 
 

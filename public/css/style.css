@@ -542,18 +542,66 @@ footer .styled-select {
 }
 
 #custom-search-input .search-query {
-    width: 650px;
+    width: 300px;
     padding: 15px 30px;
     border: 0;
-    -webkit-border-radius: 30px;
-    -moz-border-radius: 30px;
-    border-radius: 30px;
+    border-radius: 0;
     -webkit-box-shadow: 0 0 50px 0 rgba(0, 0, 0, .75);
     -moz-box-shadow: 0 0 50px 0 rgba(0, 0, 0, .75);
     box-shadow: 0 0 50px 0 rgba(0, 0, 0, .75);
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 600;
     color: #444
+}
+
+.btn_select
+{
+    height: 40px;
+}
+
+#subheader a
+{
+    color:black!important;
+
+}
+#subheader a:hover
+{
+    text-decoration: none;
+}
+
+.close_auto_localise
+{
+    width: 12px;
+    float: left;
+    -webkit-transition: width 2s; /* For Safari 3.1 to 6.0 */
+    transition: width 2s;
+    cursor: pointer;
+}
+
+.transit_width
+{
+    width: 100%;
+    -webkit-transition: width 2s; /* For Safari 3.1 to 6.0 */
+    transition: width 2s;
+}
+
+.btn_localise
+{
+    cursor: pointer;
+}
+
+#custom-search-input .search-query-1
+{
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+#custom-search-input .search-query-2
+{
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
 }
 
 #count, #hero_video {
