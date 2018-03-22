@@ -5,3 +5,8 @@ Route::group(['module' => 'Chef', 'middleware' => ['web'], 'namespace' => 'App\M
     Route::resource('Chef', 'ChefController');
 
 });
+
+Route::group(['module'=> 'User','middleware'=>'chef','namespace'=>'App\Modules\Chef\Controllers'],function () {
+
+    Route::get('/me', 'ChefController@showChefProfile')->name('showChefProfile');
+});

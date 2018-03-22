@@ -15,10 +15,4 @@ class UserController extends Controller
       return view('User::frontOffice.profile');
     }
 
-    public function showProfileChef()
-    {
-        return 'ici profile chef';
-        return view('User::frontOffice.profile');
-    }
-
 }

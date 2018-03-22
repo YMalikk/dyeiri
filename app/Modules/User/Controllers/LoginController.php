@@ -5,13 +5,10 @@ namespace App\Modules\User\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Modules\User\Models\User;
-use Laravel\Socialite\Facades\Socialite;
-use Illuminate\Support\Str;
 
 class LoginController extends Controller
 {
@@ -63,81 +60,13 @@ class LoginController extends Controller
                 return redirect()->route('showProfile');
             } elseif ($user->hasRole('chef')) {
                 Auth::login($user);
-                return redirect()->route('showProfile');
+                return redirect()->route('showProfileChef');
             }
         } else {
             Auth::logout();
             alert()->error('Vérifier vos données', 'Erreur')->persistent('Ok');
             return redirect()->back();
         }
-    }
 
-    public function authenticate($provider)
-    {
-        return Socialite::driver($provider)->redirect();
-    }
-
-    public function loginProvider($provider)
-    {
-        $socialUserInfo = Socialite::driver($provider)->stateless()->user();
-        $user = User::where(['email' => $socialUserInfo->getEmail()])->first();
-        if(isset($user))
-        {
-            Auth::login($user);
-            if($user->hasRole('client'))
-                return redirect()->route('showProfile');
-            else if($user->hasRole('chef'))
-                return redirect()->route('showProfile');
-        }
-        else {
-            Session::put('providerInfo', $socialUserInfo);
-            Session::put('provider', $provider);
-            return view('User::frontOffice.subscriptionProvider');
-        }
-    }
-
-    public function handleSubscriptionProviderType(Request $request)
-    {
-        if (Session::has('providerInfo')) {
-            $socialUserInfo = session('providerInfo');
-            $provider = session('provider');
-            $nameComposed = explode(" ", Str::lower($socialUserInfo->getName()));
-            if($provider=="facebook")
-            {
-                $name= $nameComposed[0];
-                $surname= $nameComposed[1];
-            }
-            else
-            {
-                $surname= $nameComposed[0];
-                $name= $nameComposed[1];
-            }
-            $user = User::create([
-                'name' => $name,
-                'surname' => $surname,
-                'email' => $socialUserInfo->getEmail(),
-                'provider' => $provider,
-                'provider_id' => $socialUserInfo->getId(),
-                'image' => $socialUserInfo->getAvatar(),
-                'status' => 1
-            ]);
-
-            if ($request->userType == "client")
-            {
-                $user->assignRole(1);
-                Auth::login($user);
-                return redirect()->route('showProfile');
-            }
-            else if ($request->userType == "chef")
-            {
-                $user->assignRole(2);
-                Auth::login($user);
-                return redirect()->route('showProfile');
-            }
-        }
-        else
-        {
-            return redirect()->route('showHome');
-        }
     }
 }
