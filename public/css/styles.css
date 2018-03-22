@@ -153,11 +153,25 @@
         background-size: cover;
         background: none;
     }
+
+    .user_register
+    {
+        background-color: black;
+        background-size: cover;
+        background: none;
+    }
 }
+
+.tab-content
+{
+    border: none;
+}
+
+.
 
 #count
 {
-    display:none;
+    display:none!important;
 }
 
 .logo_tag
@@ -181,6 +195,18 @@
 {
     font-size: 4em!important;
     color:white;
+}
+
+.user_register_title
+{
+    font-size: 4em!important;
+    color:white;
+}
+
+.user_register
+{
+    background: url(../img/bg_client_register.jpg) no-repeat;
+    background-size: cover;
 }
 
 .second_title_register
