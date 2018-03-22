@@ -27,7 +27,7 @@
     <link href='https://fonts.googleapis.com/css?family=Lato:400,700,900,400italic,700italic,300,300italic' rel='stylesheet' type='text/css'>
 
     <!-- BASE CSS -->
-    <link href="css/base.css" rel="stylesheet">
+    <link href="{{asset('css/base.css')}}" rel="stylesheet">
    <!--[if lt IE 9]>
     <script src="{{asset('js')}}/html5shiv.min.js"></script>
     <script src="{{asset('js')}}/respond.min.js"></script>
