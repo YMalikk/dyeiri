@@ -18,6 +18,8 @@ class CreateFoodsTable extends Migration
             $table->string('image');
             $table->string('description');
             $table->integer('status');
+            $table->integer('category_id')->unsigned();
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->integer('chef_id')->unsigned();
             $table->foreign('chef_id')->references('id')->on('chef');
             $table->timestamps();
