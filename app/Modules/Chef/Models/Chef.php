@@ -10,7 +10,10 @@ class Chef extends Model {
     protected $table = 'chef';
 
     protected $fillable = [
+        'cover_photo',
+        'address',
         'likes_count',
+        'speciality',
         'description',
         'work',
         'language',

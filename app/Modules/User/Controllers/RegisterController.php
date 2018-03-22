@@ -135,9 +135,11 @@ class RegisterController extends Controller
         }
 
         $confirmation_code = str_random(25);
-
+        $destinationPath = 'storage/uploads/chefs/chefImage.png';
+        $destinationPathCoverPhoto='storage/uploads/chefs/chefCover.jpg';
         $dataUser = [
             'name' => $request->name,
+            'image'=>$destinationPath,
             'surname' => $request->surname,
             'email' => $request->email,
             'password' => bcrypt($request->password),
@@ -151,6 +153,7 @@ class RegisterController extends Controller
 
 
         $dataChef=[
+            'cover_photo'=>$destinationPathCoverPhoto,
             'likes_count'=>0,
             'description'=>'',
             'work'=>'',
@@ -170,25 +173,7 @@ class RegisterController extends Controller
             ]);
         }
 
-        if(!$request->provider) {
-            $content = array('confirmation_code' => $confirmation_code);
-            Mail::send('User::emails.verify_account', $content, function ($message) use ($request) {
-                $message->to($request['email'], $request['name'])
-                    ->subject(trans('Activé votre compte'));
-            });
-        }
-        else
-        {
-            $user->provider=$request->provider;
-            $user->provider_id=$request->providerId;
-            $user->status=1;
-            $user->save();
-            $user->assignRole(2);
-            Auth::login($user);
-
-        }
-
-        $user->assignRole(2);  //role 2 => chef
+        $user->assignRole(3);  //role 3 => chef
         Auth::logout();
 
         alert()->warning('Consulter votre boite email pour activer votre compte.', 'Information')->persistent("Ok");
@@ -215,6 +200,12 @@ class RegisterController extends Controller
     public function showChefRegister()
     {
         return view('Chef::auth.chefRegister');
+    }
+
+
+    public function showClientRegister()
+    {
+        return view('User::auth.clientRegister');
     }
 
 }

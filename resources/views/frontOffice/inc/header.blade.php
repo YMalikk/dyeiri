@@ -33,10 +33,14 @@
                             <li><a href="about.html">Blog</a></li>
                             <li><a href="about.html">A propos de nous</a></li>
                             @if($user==null)
-                                <li><a href="http://themeforest.net/item/quickfood-delivery-or-takeaway-food-template/13958100?ref=ansonika">S'inscrire</a></li>
+                                <li><a href="{{route('showClientRegister')}}">S'inscrire</a></li>
                                 <li><a href="#0" data-toggle="modal" data-target="#login_2">Connexion</a></li>
                             @else
-                                <li><a href="{{route('showProfile')}}" >Mon profile</a></li>
+                                @if(\Illuminate\Support\Facades\Auth::user()->hasRole('chef'))
+                                  <li><a href="{{route('showChefProfile')}}" >Mon profil</a></li>
+                                @else
+                                  <li><a href="{{route('showProfile')}}" >Mon profil</a></li>
+                                @endif
                             @endif
 
                     </ul>
@@ -54,18 +58,6 @@
             <form action="{{route('handleConnection')}}" method="POST" class="popup-form" id="myLogin">
                 {!! csrf_field() !!}
                 <div class="login_icon"><i class="icon_lock_alt"></i></div>
-                <div class="row">
-                    <div class="col-md-6 col-xs-6">
-                        <a href="{{ route('authenticate',array('facebook')) }}" class="btn btn-block btn-social btn-facebook">
-                            <span class="glyph-icon icon-facebook"></span> Facebook
-                        </a>
-                    </div>
-                    <div class="col-md-6 col-xs-6">
-                        <a href="{{ route('authenticate',array('google')) }}" class="btn btn-block btn-social btn-google">
-                            <span class="glyph-icon icon-googleplus"></span> Google Plus
-                        </a>
-                    </div>
-                </div>
                 <input type="email" name="email"  class="form-control form-white" placeholder="Email">
                 <input type="password" name="password" class="form-control form-white" placeholder="Mot de passe">
                 <div class="text-left">

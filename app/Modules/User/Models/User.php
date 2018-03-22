@@ -62,4 +62,9 @@ class User extends Authenticatable {
         $this->roles()->attach($role);
     }
 
+    public function chef()
+    {
+        return $this->hasOne('App\Modules\Chef\Models\Chef', 'user_id','id');
+    }
+
 }
