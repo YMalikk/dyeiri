@@ -127,7 +127,7 @@ h3 .slide_typo strong {
 }
 
 .feature h3 span, a {
-    color: #ec008c
+    color: #7dc440
 }
 
 .feature h3 {
@@ -637,6 +637,11 @@ footer .styled-select {
     padding: 0;
     margin: 0;
     text-align: center
+}
+
+#count
+{
+    display:none!important;
 }
 
 #count ul li {
