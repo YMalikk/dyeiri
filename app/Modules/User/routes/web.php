@@ -8,6 +8,9 @@ Route::group(['module' => 'User', 'middleware' => ['web'], 'namespace' => 'App\M
     Route::post('/handleConnection', 'LoginController@handleConnection')->name('handleConnection');
     Route::get('/user/verify/{token}', 'RegisterController@verifyUser');
 
+    Route::get('/subscriptionProvider/{provider}', 'LoginController@authenticate')->name('authenticate');
+    Route::post('/subscriptionProviderType', 'LoginController@handleSubscriptionProviderType')->name('handleSubscriptionProviderType');
+    Route::get('login/{provider}/callback', 'LoginController@loginProvider')->name('loginProvider')->where(['provider' => 'facebook|google']);
 });
 
 
