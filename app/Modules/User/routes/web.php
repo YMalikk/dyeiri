@@ -21,9 +21,3 @@ Route::group(['module' => 'User','middleware'=>'client', 'namespace' => 'App\Mod
 
 });
 
-
-Route::group(['module'=> 'User','middleware'=>'chef','namespace'=>'App\Modules\User\Controllers'],function () {
-
-    Route::get('/espace', 'UserController@showProfile')->name('showProfile');
-
-});
