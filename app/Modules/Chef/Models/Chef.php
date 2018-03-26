@@ -30,5 +30,10 @@ class Chef extends Model {
     {
         return $this->hasOne('App\Modules\User\Models\User','id','user_id');
     }
+    
+    public function reviews()
+    {
+        return $this->hasMany('App\Modules\Chef\Models\Review','chef_id','id');
+    }
 
 }
