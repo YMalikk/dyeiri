@@ -28,28 +28,28 @@ class OrderController extends Controller
         $quantities = $request->quantity;
         $todayDate = Carbon::now();
         return view('Order::frontOffice.orderSummary',compact('chef','price','foods','quantities','user',
-                    'todayDate'));
+            'todayDate'));
     }
 
     public function handleOrder(Request $request,$id)
     {
         $user=Auth::user();
         $order = Order::create([
-          'chef_id' => $id,
-          'client_id' => $user->id,
-          'status' => 0,
-          'price' => $request->price
-      ]);
+            'chef_id' => $id,
+            'client_id' => $user->id,
+            'status' => 0,
+            'price' => $request->price
+        ]);
 
-      foreach ($request->foods as $key => $food_id)
-      {
-          FoodOrder::create([
-              'order_id' => $order->id,
-              'food_id' => $food_id,
-              'quantity' => $request->quantities[$key]
-          ]);
-      }
+        foreach ($request->foods as $key => $food_id)
+        {
+            FoodOrder::create([
+                'order_id' => $order->id,
+                'food_id' => $food_id,
+                'quantity' => $request->quantities[$key]
+            ]);
+        }
         alert()->success('Veuillez attendre la confirmation du chef', 'Commande prise en compte')->persistent('Ok');
-      return redirect()->route('showChefProfil',compact('id'));
+        return redirect()->route('showChefProfil',compact('id'));
     }
 }
