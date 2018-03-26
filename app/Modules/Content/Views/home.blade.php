@@ -17,17 +17,17 @@
                 <p>
                     Commandez les plats que vous aimez auprés de chez vous.
                 </p>
-                <form method="post" action="http://www.ansonika.com/quickfood/list_page.html">
+                <form method="post" action="{{route('handleSearchFood')}}">
+                    {!! csrf_field() !!}
                     <div class="input-group col-md-offset-2 col-md-8 col-xs-12">
                         <div class="input-group-btn">
-                            <button type="button" class="btn btn-default dropdown-toggle btn_select" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catégories <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                                <li><a class="choose" id="1" href="#">Toutes</a></li>
-                                <li><a class="choose" id="2" href="#">Entrée</a></li>
-                                <li><a class="choose" id="3" href="#">Menu principale</a></li>
-                                <li><a class="choose" id="4" href="#">Dessert</a></li>
-                                <li><a class="choose" id="5" href="#">Drinks</a></li>
-                            </ul>
+                            <select class="btn btn-default dropdown-toggle btn_select" name="category">
+                                <option selected disabled>Catégories</option>
+                                <option  value="0">Toutes</option>
+                                @foreach($categories as $category)
+                                    <option  value="{{$category->id}}">{{$category->name}}</option>
+                                @endforeach
+                            </select>
                         </div><!-- /btn-group -->
                         <input type="text" class="form-control search-query" id="address" placeholder="Où voulez-vous cherchez vos plats?">
                         <input type="hidden" name="lat"  id="lat"/>
@@ -39,7 +39,7 @@
                             <span class="fa fa-location-arrow"  aria-hidden="true"></span></span>
 
                         <div class="input-group-btn">
-                            <button type="button" class="btn btn-success btn_select">Rechercher <span class="fa fa-angle-right"></span></button>
+                            <button type="submit" class="btn btn-success btn_select">Rechercher <span class="fa fa-angle-right"></span></button>
 
                         </div><!-- /btn-group -->
                     </div>
