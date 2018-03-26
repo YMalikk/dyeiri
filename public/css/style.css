@@ -319,7 +319,7 @@ a.btn_side:hover {
 }
 
 #cart_box .btn_full, #cart_box a.btn_full {
-    background: #ec008c;
+    background: #7dc440;
     font-size: 15px
 }
 
@@ -2011,6 +2011,10 @@ select.form-control.form-white {
 
 .nopadding {
     padding: 0 !important
+}
+
+.nopadding_top{
+    padding-top: 0!important;
 }
 
 .marker_info {
