@@ -57,13 +57,30 @@ class LoginController extends Controller
         $remember_me = $request->has('remember_me') ? true : false;
         if (auth()->attempt(['email' => $request->input('email'), 'password' => $request->input('password')], $remember_me)) {
             $user = Auth::getLastAttempted($credentials, true);
-
+            if($user->status==0)
+            {
+                Auth::logout();
+                alert()->warning('Veuillez vérifier votre compte', 'Information')->persistent('Ok');
+                return redirect()->back();
+            }
+            else
+            {
             if ($user->hasRole('client')) {
                 Auth::login($user);
                 return redirect()->route('showProfile');
             } elseif ($user->hasRole('chef')) {
+                $chef=$user->chef;
                 Auth::login($user);
-                return redirect()->route('showProfile');
+                if($chef->status==0)
+                {
+                    return redirect()->route("showChefRegisterStepTwo");
+                }
+                else
+                {
+                    return redirect()->route('showChefProfile');
+                }
+
+            }
             }
         } else {
             Auth::logout();
@@ -132,12 +149,17 @@ class LoginController extends Controller
             {
                 $user->assignRole(2);
                 Auth::login($user);
-                return redirect()->route('showProfile');
+                return redirect()->route('showChefProfile');
             }
         }
         else
         {
             return redirect()->route('showHome');
         }
+    }
+
+    public function showLogin()
+    {
+            return view('User::auth.login');
     }
 }

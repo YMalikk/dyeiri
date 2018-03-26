@@ -11,7 +11,7 @@
 @section('content')
 <!-- Content ================================================== -->
 <section >
-    <div class="row chef_register">
+    <div class="row chef_register page_content">
         <div class="col-md-4 pull-right col-xs-12 page_content">
             <div class="main_title">
                 <h2 class="nomargin_top chef_register_title">Inscrivez-vous</h2>

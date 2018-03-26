@@ -13,6 +13,14 @@ class ChefController extends Controller
     {
         $user=Auth::user();
         $chef=$user->chef;
+
         return view('Chef::backOffice.chefProfile',compact('user','chef'));
+    }
+
+    public function showChefRegisterStepTwo()
+    {
+        $user=Auth::user();
+        $chef=$user->chef;
+        return view('Chef::auth.chefRegisterStepTwo',compact('user','chef'));
     }
 }
