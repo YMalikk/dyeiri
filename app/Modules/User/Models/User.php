@@ -66,5 +66,10 @@ class User extends Authenticatable {
     {
         return $this->hasOne('App\Modules\Chef\Models\Chef', 'user_id','id');
     }
+    
+    public function reviews()
+    {
+        return $this->hasMany('App\Modules\Chef\Models\Review', 'client_id','id');
+    }
 
 }
