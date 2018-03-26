@@ -36,7 +36,15 @@ class Authenticate
     public function handle($request, Closure $next)
     {
         if ( !$this->auth->user() ){
+
             return redirect()->route('');
+        }
+        else
+        {
+            if($this->auth->user()->status==0)
+            {
+                return redirect()->route('showLogin');
+            }
         }
         return $next($request);
     }

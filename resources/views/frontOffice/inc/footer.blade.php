@@ -74,7 +74,7 @@
 <!-- End Footer =============================================== -->
 <div class="layer"></div><!-- Mobile menu overlay mask -->
 <!-- COMMON SCRIPTS -->
-<script src="{{asset('js')}}/jquery-2.2.4.min.js"></script>
+<!--<script src="{{asset('js')}}/jquery-2.2.4.min.js"></script>-->
 <script src="{{asset('js')}}/common_scripts_min.js"></script>
 <script src="{{asset('js')}}/functions.js"></script>
 <script src="{{asset('assets')}}/validate.js"></script>

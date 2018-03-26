@@ -8,6 +8,8 @@ Route::group(['module' => 'User', 'middleware' => ['web'], 'namespace' => 'App\M
     Route::post('/handleChefRegister', 'RegisterController@handleChefRegister')->name('handleChefRegister');
     Route::post('/handleConnection', 'LoginController@handleConnection')->name('handleConnection');
     Route::get('/user/verify/{token}', 'RegisterController@verifyUser');
+    Route::get('/login',['uses'=>'LoginController@showLogin','as'=>'showLogin']);
+
 
     Route::get('/subscriptionProvider/{provider}', 'LoginController@authenticate')->name('authenticate');
     Route::post('/subscriptionProviderType', 'LoginController@handleSubscriptionProviderType')->name('handleSubscriptionProviderType');
