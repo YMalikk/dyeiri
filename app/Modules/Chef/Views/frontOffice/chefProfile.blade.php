@@ -18,7 +18,7 @@
 <section class="parallax-window" data-parallax="scroll" data-image-src="{{asset($chef->cover_photo)}}" data-natural-width="1400" data-natural-height="470">
     <div id="subheader">
         <div id="sub_content">
-            <div id="thumb"><img src="{{asset($user->image)}}" alt=""></div>
+            <div id="thumb"><img src="{{asset('../storage/img/users/avatar/' . $user->image)}}" alt=""></div>
             <div class="rating"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i> (<small><a href="detail_page_2.html">Read 98 reviews</a></small>)</div>
             <h1>{{ucfirst($user->name)}} {{ucfirst($user->surname)}}</h1>
             <div><em>{{$chef->speciality}}</em></div>
@@ -63,15 +63,64 @@
 
                 <div class="box_style_2 hidden-xs" id="help">
                     <i class="icon_lifesaver"></i>
-                    <h4>Need <span>Help?</span></h4>
-                    <a href="tel://004542344599" class="phone">+45 423 445 99</a>
-                    <small>Monday to Friday 9.00am - 7.30pm</small>
+                    <h4>Besoin <span>d'aide?</span></h4>
+                    <a href="tel://004542344599" class="phone">+216 123 456</a>
+                    <small>Lundi au Vendredi 9.00 - 20.00</small>
                 </div>
             </div><!-- End col-md-3 -->
 
             <div class="col-md-6">
                 <div class="box_style_2" id="main_menu">
                     <h2 class="inner">Menu</h2>
+                    <h3 id="desserts">Menu du jour</h3>
+                    @if(count($entrees)==0)
+                        Aucun menu du jour
+                    @else
+                        <table class="table table-striped cart-list ">
+                            <thead>
+                            <tr>
+                                <th >
+                                    Item
+                                </th>
+                                <th>
+                                    Prix
+                                </th>
+                                <th class="text-center">
+                                    Commander
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($desserts as $key => $dessert)
+                                <tr>
+                                    <td>
+                                        <figure class="thumb_menu_list"><img src="{{asset('../storage/img/foods/'.$dessert->image)}}" alt="thumb"></figure>
+                                        <h5>{{++$key}}. {{$dessert->name}}</h5>
+                                        <p>
+                                            {{$dessert->description}}
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <strong>{{$dessert->price}} DT</strong>
+                                    </td>
+                                    <td class="options text-center">
+                                        <div class="dropdown dropdown-options">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i class="icon_plus_alt2"></i></a>
+                                            <div class="dropdown-menu">
+                                                <h5 class="text-center">Quantité</h5>
+                                                <label class="text-center margin-bottom-none">
+                                                    <input class="text-center" type="number" id="quantite{{$dessert->id}}" min="1" value="1" max="10">
+                                                </label>
+                                                <a href="javascript: void(0)" onclick="add('{{$dessert->id}}','{{$dessert->name}}','{{$dessert->price}}')" class="add_to_basket" style="margin-top: 10px">Add to cart</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    @endif
+                    <hr>
                     <h3 class="nomargin_top" id="starters">Entrées</h3>
                     @if(count($entrees)==0)
                         Aucune entrée
@@ -247,7 +296,7 @@
                     </table>
                     @endif
                     <hr>
-                    <h3 id="main_courses">Plats principal (plat du jour)</h3>
+                    <h3 id="main_courses">Plats principal</h3>
                     @if(count($mains)==0)
                         Aucun menu principal
                     @else
@@ -492,7 +541,7 @@
                         @foreach($desserts as $key => $dessert)
                             <tr>
                             <td>
-                                <figure class="thumb_menu_list"><img src="{{asset($dessert->image)}}" alt="thumb"></figure>
+                                <figure class="thumb_menu_list"><img src="{{asset('../storage/img/foods/'.$dessert->image)}}" alt="thumb"></figure>
                                 <h5>{{++$key}}. {{$dessert->name}}</h5>
                                 <p>
                                     {{$dessert->description}}
@@ -671,9 +720,9 @@
                     </div>
                     <div class="box_style_2 hidden-xs" id="help">
                         <i class="icon_lifesaver"></i>
-                        <h4>Need <span>Help?</span></h4>
-                        <a href="tel://004542344599" class="phone">+45 423 445 99</a>
-                        <small>Monday to Friday 9.00am - 7.30pm</small>
+                        <h4>Besoin <span>d'aide?</span></h4>
+                        <a href="tel://004542344599" class="phone">+216 123 456</a>
+                        <small>Lundi au Vendredi 9.00 - 20.00</small>
                     </div>
                 </div>
 
