@@ -36,4 +36,10 @@ class Chef extends Model {
         return $this->hasMany('App\Modules\Chef\Models\Review','chef_id','id');
     }
 
+    public function getKitchenImages()
+    {
+        return $this->hasMany('App\Modules\Chef\Models\KitchenImage','chef_id','id');
+    }
+
+
 }

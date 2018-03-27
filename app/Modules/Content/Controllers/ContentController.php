@@ -30,14 +30,17 @@ class ContentController extends Controller
         if(!isset($request->category) || $request->category==0)
         {
             // tous les chefs
-            $chefs = Chef::all();
+            $chefs = Chef::where('status','=',2)->get();
         }
         else
         {
             $foods = Food::where('category_id', '=', $request->category)->get();
             $chefs = array();
             foreach ($foods as $key => $food) {
-                $chefs[$key] = $food->chef; // where status = 1;
+                if($food->chef->status==2)
+                {
+                $chefs[$key] = $food->chef; // where status = 2;
+                }
             }
         }
         // juste pour teste distance
@@ -51,7 +54,7 @@ class ContentController extends Controller
                     * sin(deg2rad($chef->lat ))));
 
         }
-        //dd($tab);
+
         for($i=0;$i<count($chefs)-1;$i++)
         {
             $sqlDistance1 = (6371 * acos(cos(deg2rad($lat))
@@ -74,6 +77,6 @@ class ContentController extends Controller
                 $chefs[$i+1] = $tempChef;
             }
         }
-        return view('Content::searchResults',compact('chefs'));
+        return view('Content::searchResults',compact('chefs','lat','lng'));
     }
 }

@@ -41,6 +41,7 @@
                                 @else
                                   <li><a href="{{route('showProfile')}}" >Mon profil</a></li>
                                 @endif
+                                    <li><a href="{{route('logout')}}">Déconnexion</a></li>
                             @endif
 
                     </ul>

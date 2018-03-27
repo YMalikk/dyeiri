@@ -18,7 +18,7 @@
 <section class="parallax-window" data-parallax="scroll" data-image-src="{{asset($chef->cover_photo)}}" data-natural-width="1400" data-natural-height="470">
     <div id="subheader">
         <div id="sub_content">
-            <div id="thumb"><img src="{{asset('../storage/img/users/avatar/' . $user->image)}}" alt=""></div>
+            <div id="thumb"><img src="{{asset($user->image)}}" alt=""></div>
             <div class="rating"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i> (<small><a href="detail_page_2.html">Read 98 reviews</a></small>)</div>
             <h1>{{ucfirst($user->name)}} {{ucfirst($user->surname)}}</h1>
             <div><em>{{$chef->speciality}}</em></div>
@@ -732,37 +732,19 @@
 
                         <div id="Img_carousel" class="slider-pro">
                             <div class="sp-slides">
-
+                            @foreach($kitchenImages as $image)
                                 <div class="sp-slide">
-                                    <img alt="" class="sp-image" src="{{asset('src/css/images/blank.html')}}"
-                                         data-src="{{asset('img/slider_single_restaurant/1_medium.jpg')}}"
-                                         data-small="{{asset('img/slider_single_restaurant/1_small.jpg')}}"
-                                         data-medium="{{asset('img/slider_single_restaurant/1_medium.jpg')}}"
-                                         data-large="{{asset('img/slider_single_restaurant/1_large.jpg')}}"
-                                         data-retina="{{asset('img/slider_single_restaurant/1_large.jpg')}}">
+                                    <img alt="" class="sp-image" src="{{asset($image->image)}}">
                                 </div>
-                                <div class="sp-slide">
-                                    <img alt="" class="sp-image" src="{{asset('src/css/images/blank.html')}}"
-                                         data-src="{{asset('img/slider_single_restaurant/2_medium.jpg')}}"
-                                         data-small="{{asset('img/slider_single_restaurant/2_small.jpg')}}"
-                                         data-medium="{{asset('img/slider_single_restaurant/2_medium.jpg')}}"
-                                         data-large="{{asset('img/slider_single_restaurant/2_large.jpg')}}"
-                                         data-retina="{{asset('img/slider_single_restaurant/2_large.jpg')}}">
-                                    <h3 class="sp-layer sp-black sp-padding" data-horizontal="40" data-vertical="40" data-show-transition="left">
-                                        Lorem ipsum dolor sit amet </h3>
-                                    <p class="sp-layer sp-white sp-padding" data-horizontal="40" data-vertical="100" data-show-transition="left" data-show-delay="200">
-                                        consectetur adipisicing elit
-                                    </p>
-                                    <p class="sp-layer sp-black sp-padding" data-horizontal="40" data-vertical="160" data-width="350" data-show-transition="left" data-show-delay="400">
-                                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                    </p>
-                                </div>
-
+                            @endforeach
                             </div>
                             <div class="sp-thumbnails">
-                                <img alt="" class="sp-thumbnail" src="{{asset('img/slider_single_restaurant/1_medium.jpg')}}">
-                                <img alt="" class="sp-thumbnail" src="{{asset('img/slider_single_restaurant/2_medium.jpg')}}">
+                                @foreach($kitchenImages as $image)
+                                    <img alt="" class="sp-thumbnail" src="{{asset($image->image)}}">
+                                @endforeach
+
                             </div>
+
                         </div>
                         <h3>About us</h3>
                         <p>
@@ -1103,6 +1085,15 @@
 <script>
     jQuery('#sidebar').theiaStickySidebar({
         additionalMarginTop: 80
+    });
+    $('a[data-toggle="pill"]').on('shown.bs.tab', function(e) {
+
+        $(".sp-thumbnail").each(function()
+        {
+            $(this).css('margin-left','');
+            $(this).css("width","100%");
+        });
+        jQuery("#Img_carousel").sliderPro("resize");
     });
 </script>
 

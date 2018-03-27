@@ -3,6 +3,8 @@
 namespace App\Modules\User\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Chef\Models\Chef;
+use App\Modules\User\Models\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Session;
@@ -104,7 +106,7 @@ class LoginController extends Controller
             if($user->hasRole('client'))
                 return redirect()->route('showProfile');
             else if($user->hasRole('chef'))
-                return redirect()->route('showProfile');
+                return redirect()->route('showChefProfile');
         }
         else {
             Session::put('providerInfo', $socialUserInfo);
@@ -141,13 +143,34 @@ class LoginController extends Controller
 
             if ($request->userType == "client")
             {
-                $user->assignRole(1);
+                $user->assignRole(2);
                 Auth::login($user);
                 return redirect()->route('showProfile');
             }
             else if ($request->userType == "chef")
             {
-                $user->assignRole(2);
+                $destinationPathCoverPhoto='storage/uploads/chefs/chefCover.jpg';
+                $user->assignRole(3);
+                $dataChef=[
+                    'cover_photo'=>$destinationPathCoverPhoto,
+                    'likes_count'=>0,
+                    'description'=>'',
+                    'work'=>'',
+                    'language'=>'Arabic',
+                    'status'=>0,
+                    'user_id'=>$user->id
+                ];
+
+                Chef::create($dataChef);
+
+                for($i=1;$i<=7;$i++)
+                {
+                    Schedule::create([
+                        'day'=>$i,
+                        'status'=>0,
+                        'user_id'=>$user->id
+                    ]);
+                }
                 Auth::login($user);
                 return redirect()->route('showChefProfile');
             }

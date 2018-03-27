@@ -221,4 +221,12 @@
     height: 0px;
 }
 
+.my_btn_select
+{
+    border-radius: 0px;
+    -webkit-appearance: button;
+    background-color: #ededed;
+}
+
+
 
