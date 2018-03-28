@@ -71,5 +71,10 @@ class User extends Authenticatable {
     {
         return $this->hasMany('App\Modules\Chef\Models\Review', 'client_id','id');
     }
+    
+      public function food_order_reviews()
+    {
+        return $this->hasMany('App\Modules\Food\Models\FoodOrderReview', 'user_id','id');
+    }
 
 }
