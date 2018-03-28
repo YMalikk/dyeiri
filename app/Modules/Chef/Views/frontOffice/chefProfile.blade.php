@@ -542,7 +542,7 @@
                             <tr>
                             <td>
                                 <figure class="thumb_menu_list"><img src="{{asset('../storage/img/foods/'.$dessert->image)}}" alt="thumb"></figure>
-                                <h5>{{++$key}}. {{$dessert->name}}</h5>
+                                <h5><a href='{{route('showFood',['id' => $dessert->id])}}' class="add_bottom_15">{{++$key}}. {{$dessert->name}}</a></h5>
                                 <p>
                                     {{$dessert->description}}
                                 </p>
@@ -696,6 +696,143 @@
             </div><!-- End col-md-3 -->
 
         </div><!-- End row -->
+        <div id="summary_review">
+            <div id="general_rating">
+                {{count($reviews)}} Reviews
+                <div class="rating">
+                    <i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i>
+                </div>
+            </div>
+
+            <div class="row" id="rating_summary">
+                <div class="col-md-6">
+                    <ul>
+                        <li>Food Quality
+                            <div class="rating">
+                                <i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i>
+                            </div>
+                        </li>
+                        <li>Price
+                            <div class="rating">
+                                <i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <ul>
+                        <li>Punctuality
+                            <div class="rating">
+                                <i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i>
+                            </div>
+                        </li>
+                        <li>Courtesy
+                            <div class="rating">
+                                <i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div><!-- End row -->
+            <hr class="styled">
+            <a href="#" class="btn_1 add_bottom_15" data-toggle="modal" data-target="#myReview">Poster un avis</a>
+        </div><!-- End summary_review -->
+
+        @foreach($reviews as $review)
+            <div class="review_strip_single">
+                <img src="" alt="" class="img-circle">
+                <small> - {{$review->created_at}} -</small>
+                <h4>{{$review->client->name}} {{$review->client->surname}}</h4>
+                <p>
+                    {{$review->content}}
+                </p>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="rating">
+                            @for($i=0;$i<5;$i++)
+                                @if($i<($review->reviewRating->where('rating_type_id','=',1)->first())->rating)
+                                    <i class="icon_star voted"></i>
+                                @else
+                                    <i class="icon_star"></i>
+                                @endif
+                            @endfor
+                        </div>
+                        Quantité servie
+                    </div>
+                    <div class="col-md-3">
+                        <div class="rating">
+                            @for($i=0;$i<5;$i++)
+                                @if($i<($review->reviewRating->where('rating_type_id','=',2)->first())->rating)
+                                    <i class="icon_star voted"></i>
+                                @else
+                                    <i class="icon_star"></i>
+                                @endif
+                            @endfor
+                        </div>
+                        Propreté
+                    </div>
+                    <div class="col-md-3">
+                        <div class="rating">
+                            @for($i=0;$i<5;$i++)
+                                @if($i<($review->reviewRating->where('rating_type_id','=',3)->first())->rating)
+                                    <i class="icon_star voted"></i>
+                                @else
+                                    <i class="icon_star"></i>
+                                @endif
+                            @endfor
+                        </div>
+                        Rapidité
+                    </div>
+                    <div class="col-md-3">
+                        <div class="rating">
+                            @for($i=0;$i<5;$i++)
+                                @if($i<($review->reviewRating->where('rating_type_id','=',4)->first())->rating)
+                                    <i class="icon_star voted"></i>
+                                @else
+                                    <i class="icon_star"></i>
+                                @endif
+                            @endfor
+                        </div>
+                        Prix
+                    </div>
+                </div><!-- End row -->
+            </div><!-- End review strip -->
+        @endforeach
+
+        <div class="review_strip_single last">
+            <img src="" alt="" class="img-circle">
+            <small> - 10 April 2015 -</small>
+            <h4>Frank Cooper</h4>
+            <p>
+                "Ne mea congue facilis eligendi, possit utamur sensibus id qui, mel tollit euismod alienum eu. Ad tollit lucilius praesent per, ex probo utroque placerat eos. Tale verear efficiendi et cum, meis timeam vix et, et duis debet nostro mel. Aeterno labitur per no, id nec tantas nemore. An minim molestie per, mei sumo vulputate cu."
+            </p>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="rating">
+                        <i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i>
+                    </div>
+                    Food Quality
+                </div>
+                <div class="col-md-3">
+                    <div class="rating">
+                        <i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i>
+                    </div>
+                    Price
+                </div>
+                <div class="col-md-3">
+                    <div class="rating">
+                        <i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i>
+                    </div>
+                    Punctuality
+                </div>
+                <div class="col-md-3">
+                    <div class="rating">
+                        <i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i>
+                    </div>
+                    Courtesy
+                </div>
+            </div><!-- End row -->
+        </div><!-- End review strip -->
     </div>
 
     <div id="kicthen" class="tab-pane fade">
