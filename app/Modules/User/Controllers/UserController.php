@@ -12,7 +12,8 @@ class UserController extends Controller
 
     public function showProfile()
     {
-      return view('User::frontOffice.profile');
+      $orders = Order::where('client_id','=',2)->orderBy('created_at','desc') ->get();
+      return view('User::frontOffice.profile',compact('orders');
     }
 
 }
