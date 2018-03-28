@@ -33,5 +33,16 @@ class Order extends Model {
     {
         return $this->hasMany(FoodOrder::class);
     }
+    
+     public function order_reviews()
+    {
+        return $this->hasMany("App\Modules\Food\Models\FoodOrderReview","order_id",'id');
+    }
+
+    public function food_order_reviews($id)
+    {
+        return $this->hasMany('App\Modules\Food\Models\FoodOrderReview', 'order_id','id')
+            ->where('food_id','=',$id)->first();
+    }
 
 }
