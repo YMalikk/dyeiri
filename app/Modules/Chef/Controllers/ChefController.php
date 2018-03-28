@@ -6,6 +6,7 @@ use App\Modules\Chef\Models\Chef;
 use App\Modules\Chef\Models\KitchenImage;
 use App\Modules\Chef\Models\Review;
 use App\Modules\Chef\Models\ReviewRating;
+use App\Modules\Order\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
