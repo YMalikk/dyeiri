@@ -27,7 +27,8 @@ class ChefController extends Controller
         $drinks = $chef->getFoods->where('category_id','=',4);
         $reviews = $chef->reviews;
          $kitchenImages=$chef->getKitchenImages;
-        return view('Chef::backOffice.chefProfile',compact('user','chef','drinks','kitchenImages','entrees','desserts','mains','reviews'));
+        $orders = Order::where('chef_id','=',$chef->id)->orderBy('created_at','desc') ->get();
+        return view('Chef::backOffice.chefProfile',compact('user','chef','drinks','kitchenImages','orders','entrees','desserts','mains','reviews'));
     }
 
 
@@ -253,5 +254,41 @@ class ChefController extends Controller
         alert()->success("Votre inscription est compléte il faut attendre que l'administrateur confirme votre compte","Information")->persistent("Ok");
         return redirect()->route('showChefProfile');
 
+    }
+    
+    public function confirmOrderChef($id)
+    {
+        $order = Order::find($id);
+        $order->status = 1;
+        $order->save();
+        alert()->success('Veuillez nous notifier lorsque cette commande sera prête.', 'Commande confirmé')->persistent('Ok');
+        return redirect()->back();
+    }
+    
+     public function denyOrderChef($id)
+    {
+        $order = Order::find($id);
+        $order->status = 5;
+        $order->save();
+        alert()->success('La commande a été annulé.', 'Commande annulé')->persistent('Ok');
+        return redirect()->back();
+    }
+    
+      public function denyOrderClient($id)
+    {
+        $order = Order::find($id);
+        $order->status = 5;
+        $order->save();
+        alert()->success('La commande a été annulé.', 'Commande annulé')->persistent('Ok');
+        return redirect()->back();
+    }
+    
+      public function confirmDishReadyChef($id)
+    {
+        $order = Order::find($id);
+        $order->status = 2;
+        $order->save();
+        alert()->success('Votre avez confirmé que votre plat est prêt', 'Plat prêt')->persistent('Ok');
+        return redirect()->back();
     }
 }
