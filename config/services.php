@@ -37,12 +37,12 @@ return [
     'facebook' => [
         'client_id' => env('FACEBOOK_CLIENT_ID'),
         'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
-        'redirect' => 'http://localhost/dyeiri/public/login/facebook/callback',
+        'redirect' => 'http://localhost/projects/dyeiri/public/login/facebook/callback',
     ],
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect' => 'http://localhost/dyeiri/public/login/google/callback',
+        'redirect' => 'http://localhost/projects/dyeiri/public/login/google/callback',
     ],
 
 

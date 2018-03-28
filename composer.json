@@ -14,7 +14,8 @@
         "laravel/socialite": "^3.0",
         "laravel/tinker": "~1.0",
         "stichoza/google-translate-php": "~3.2",
-        "uxweb/sweet-alert": "~1.1"
+        "uxweb/sweet-alert": "~1.1",
+        "intervention/image": "^2.3"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

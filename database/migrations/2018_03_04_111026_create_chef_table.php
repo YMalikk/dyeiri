@@ -19,6 +19,7 @@ class CreateChefTable extends Migration
             $table->string('address')->nullable();
             $table->string('lat')->nullable();
             $table->string('lng')->nullable();
+            $table->string('country')->nullable();
             $table->string('speciality')->nullable();
             $table->string('cover_photo')->nullable();
             $table->integer('likes_count');

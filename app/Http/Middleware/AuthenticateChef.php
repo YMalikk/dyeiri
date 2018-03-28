@@ -48,7 +48,7 @@ class AuthenticateChef
             }
             elseif($this->auth->user()->hasRole('chef'))
             {
-                if(($this->auth->user()->chef->status==0)&&(Route::currentRouteName()!="showChefRegisterStepTwo"))
+                if(($this->auth->user()->chef->status==0)&&(Route::currentRouteName()!="showChefRegisterStepTwo")&&(Route::currentRouteName()!="handleCompleteRegisterChef"))
                 {
                     return redirect()->route("showChefRegisterStepTwo");
                 }

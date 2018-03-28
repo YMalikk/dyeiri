@@ -10,7 +10,6 @@
 
 @section('content')
     <link rel="stylesheet" href="{{asset('css/wizardForm.css')}}"/>
-
     <link rel="stylesheet" href="{{ asset ('plugins/intlTelInput/css')}}/intlTelInput.css"/>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="{{ asset ('plugins/intlTelInput/js')}}/intlTelInput.js"></script>
@@ -57,7 +56,8 @@
                         </ul>
                     </div>
 
-                    <form role="form" class="form-horizontal">
+                    <form role="form" id="completeRegisterForm" class="form-horizontal" action="{{route('handleCompleteRegisterChef')}}" method="POST" enctype="multipart/form-data">
+                        {!! csrf_field() !!}
                         <div class="tab-content">
                             <div class="tab-pane active" role="tabpanel" id="step1">
                                 <span class="title">Information personnelles</span>
@@ -79,7 +79,7 @@
                                     <label class="control-label col-sm-3">Adresse<span class="text-danger"></span></label>
                                     <div class="col-md-8 col-sm-9">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" id="address" required placeholder="votre adresse">
+                                            <input type="text" class="form-control" id="address" name="address" required placeholder="votre adresse">
                                             <input type="hidden" name="lat"  id="lat"/>
                                             <input type="hidden" name="lng" id="lng"/>
                                             <input type="hidden" name="city" id="city"/>
@@ -99,7 +99,7 @@
                                         <label class="control-label col-sm-3">Photo de profile <span class="text-danger"></span></label>
                                         <div class="col-md-8 col-sm-9">
                                             <div class="input-group">
-                                                <input type="file" id="image" class="form-control" required />
+                                                <input type="file" id="image" name="user_image" class="form-control"  />
                                             </div>
                                             <small>Votre photo de profile sera visible par tous les clients.</small> </div>
                                     </div>
@@ -109,7 +109,7 @@
                                         <label class="control-label col-sm-3">Photo de couverture<span class="text-danger"></span></label>
                                         <div class="col-md-8 col-sm-9">
                                             <div class="input-group">
-                                                <input type="file" class="form-control" required>
+                                                <input type="file" class="form-control" name="cover_photo">
                                             </div>
                                             <small>Votre votre photo couverture sera visible par tous les clients.</small> </div>
                                     </div>
@@ -118,7 +118,7 @@
                                         <label class="control-label col-sm-3">Spécialité<span class="text-danger"></span></label>
                                         <div class="col-md-8 col-sm-9">
                                             <div class="input-group">
-                                                <input type="text" class="form-control" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}"id="spec" required>
+                                                <input type="text" class="form-control" name="speciality" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" id="spec" >
                                             </div>
                                             <small>Votre spécialité va faciliter la recherche de votre profile.</small> </div>
                                     </div>
@@ -147,7 +147,8 @@
                                         <div class="col-md-8 col-sm-9">
                                             <div class="input-group kitchen_images">
                                             </div>
-                                            <small>Vos photos de cuisine seront visible par tous les clients.</small> </div>
+                                            <small>Vos photos de cuisine seront visible par tous les clients.</small>
+                                        </div>
                                     </div>
 
 
@@ -177,8 +178,19 @@
                                             </div>
                                             <small>Votre address nous aide à vous localisez facilement pour la recherche.</small> </div>
                                     </div>
-                                <div class="results_images">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-3">Vos images (<span name="countImage" id="images_count_result">0</span>) <span class="text-danger"></span></label>
+                                    <div class="col-md-8 col-sm-9">
+                                        <div class="input-group results_images">
+                                        </div>
+                                        <small>Vos photos de cuisine seront visible par tous les clients.</small>
+                                    </div>
                                 </div>
+
+                                <ul class="list-inline pull-right">
+                                    <li><button type="button" class="btn btn-default prev-step">Retour</button></li>
+                                    <li><button type="button" id="btn_complete" class="btn btn-primary btn-info-full">Valider</button></li>
+                                </ul>
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -191,4 +203,6 @@
 @stop
 @section('footer')
     @include('frontOffice.inc.footer')
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCj1cCyUDGUciWPWK7kzjrxjLx4wDDS9c&libraries=places&callback=initAutocomplete"
+            async defer></script>
 @endsection

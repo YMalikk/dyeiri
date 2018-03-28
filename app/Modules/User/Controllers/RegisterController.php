@@ -13,6 +13,7 @@ use App\Modules\User\Models\Schedule;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Alert;
+
 use Stichoza\GoogleTranslate\TranslateClient;
 
 
@@ -176,6 +177,13 @@ class RegisterController extends Controller
         $user->assignRole(3);  //role 3 => chef
         Auth::logout();
 
+
+        $content = array('confirmation_code' => $confirmation_code);
+        Mail::send('User::emails.verify_account', $content, function ($message) use ($request) {
+            $message->to($request['email'], $request['name'])
+                ->subject(trans('Activé votre compte'));
+        });
+
         alert()->warning('Consulter votre boite email pour activer votre compte.', 'Information')->persistent("Ok");
         return redirect()->route('showHome');
     }
@@ -187,12 +195,22 @@ class RegisterController extends Controller
             if ($verifyUser->status==0) {
                 $verifyUser->status= 1;
                 $verifyUser->save();
-                alert()->success('Your e-mail is verified. You can now login.')->persistent('Close');
+                Auth::login($verifyUser);
+                if($verifyUser->hasRole('chef'))
+                {
+                    alert()->success('Votre e-mail est vérifier. veuillez compléter votre inscirption','Information')->persistent('Ok');
+                    return redirect()->route('showChefRegisterStepTwo');
+                }
+                else
+                {
+                    alert()->success('Votre e-mail est vérifier.','Information')->persistent('Ok');
+                }
             } else {
-                alert()->success('Your e-mail is already verified. You can now login.')->persistent('Close');
+                Auth::login($verifyUser);
+                alert()->success('Votre e-mail est déja vérifier','Information')->persistent('Ok');
             }
         } else {
-            alert()->success('Sorry your email cannot be identified.')->persistent('Close');
+            alert()->error('Votre email n\'est pas encore vérifier ','Erreur')->persistent('Ok');
         }
         return redirect('/');
     }

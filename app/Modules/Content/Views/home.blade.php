@@ -21,7 +21,7 @@
                     {!! csrf_field() !!}
                     <div class="input-group col-md-offset-2 col-md-8 col-xs-12">
                         <div class="input-group-btn">
-                            <select class="btn btn-default dropdown-toggle btn_select" name="category">
+                            <select class="btn btn-default dropdown-toggle btn_select my_btn_select" name="category">
                                 <option selected disabled>Catégories</option>
                                 <option  value="0">Toutes</option>
                                 @foreach($categories as $category)
@@ -323,4 +323,6 @@
 @stop
 @section('footer')
     @include('frontOffice.inc.footer')
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCj1cCyUDGUciWPWK7kzjrxjLx4wDDS9c&libraries=places&callback=initAutocomplete"
+            async defer></script>
 @endsection

@@ -27,6 +27,18 @@ $(document).ready(function () {
         currentForm=3;
     });
 
+    $("#complete").click(function()
+    {
+        alert("4");
+        currentForm=4;
+    });
+
+    $("#btn_complete").click(function()
+    {
+        $("#completeRegisterForm").serialize();
+        $("#completeRegisterForm").submit();
+    });
+
 
     function valideTel() {
 
@@ -87,20 +99,22 @@ $(document).ready(function () {
     });
 
     $(".next-step").click(function (e) {
+
         if(verifyForm(currentForm))
         {
             var $active = $('.wizard .nav-tabs li.active');
             $active.next().removeClass('disabled');
+
             nextTab($active);
-            if(currentForm==4)
+            if(currentForm==3)
             {
-                var kitchenImages = $(".kitchen_images_result").html();
+                currentForm++;
+
                 $(".results_images").empty();
                 $(".tel_result").empty();
                 $(".address_result").empty();
                 $(".address_result").append($("#address").clone().attr("disabled","disabled"));
                 $(".tel_result").append($("#tel_int").clone().attr("disabled","disabled"));
-                $(".results_images").append(kitchenImages);
             }
             console.log("Current form : "+currentForm);
         }
@@ -144,9 +158,12 @@ function addImage(input) {
                         var reader = new FileReader();
                         reader.onload = function (e) {
                             $(".kitchen_images").append('  <div class="col-md-4"><img class="image_kitchen_list img-responsive image_kitchen" src="' + e.target.result + '"/></div>')
+                            $(".results_images").append('  <div class="col-md-4"><img class="image_kitchen_list img-responsive image_kitchen" src="' + e.target.result + '" /></div>')
+                            $("#completeRegisterForm").append("<input type='hidden' name='kitchenImages[]' value='"+e.target.result+"'/>")
                             currentImageNumber++;
                             $("#images_count").text(currentImageNumber.toString());
-                            if (currentImageNumber>= 6) {
+                            $("#images_count_result").text(currentImageNumber.toString());
+                            if (currentImageNumber>= 5) {
                                 keep = false;
                             }
                         };
