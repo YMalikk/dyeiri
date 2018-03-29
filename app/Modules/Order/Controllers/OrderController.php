@@ -50,6 +50,6 @@ class OrderController extends Controller
             ]);
         }
         alert()->success('Veuillez attendre la confirmation du chef', 'Commande prise en compte')->persistent('Ok');
-        return redirect()->route('showChefProfil',compact('id'));
+        return redirect()->route('showChefSearchedProfile',compact('id'));
     }
 }

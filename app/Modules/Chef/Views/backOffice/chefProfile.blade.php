@@ -36,7 +36,7 @@
     </div>
 </div><!-- Position -->
 <div class="container">
-    <div class=" container col-md-3 col-xs-12">
+    <div class=" container col-md-5 col-xs-12">
         <ul class="nav nav-pills">
             <li class="active"><a data-toggle="pill"  href="#menu">Menu</a></li>
             <li><a data-toggle="pill" href="#kicthen" id="kitchen_tab">Cuisine</a></li>
@@ -678,7 +678,6 @@
                             @foreach($kitchenImages as $image)
                                 <img alt="" class="sp-thumbnail" src="{{asset($image->image)}}">
                             @endforeach
-
                         </div>
                     </div>
 
@@ -691,6 +690,7 @@
         <div class="row">
             <h3>Paramétre </h3>
             <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
     </div>
     
     <div id="orders" class="tab-pane fade">

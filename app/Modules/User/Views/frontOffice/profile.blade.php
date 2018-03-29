@@ -14,7 +14,7 @@
            <div class=" container col-md-5 col-xs-12">
                <ul class="nav nav-pills">
                    <li class="active"><a data-toggle="pill"  href="#account">Mon compte</a></li>
-                   <li><a data-toggle="pill" href="#orders">Mes commande</a></li>
+                   <li><a data-toggle="pill" href="#orders">Mes commandes</a></li>
                </ul>
            </div>
        </div>
@@ -78,10 +78,6 @@
                <div class="col-md-12">
                    <div class="box_style_2" id="main_menu">
                        <h2 class="inner text-center">Mes Commandes</h2>
-                       <h3 class="nomargin_top" id="starters">Commandes</h3>
-                       <p>
-                           Te ferri iisque aliquando pro, posse nonumes efficiantur in cum. Sensibus reprimique eu pro. Fuisset mentitum deleniti sit ea.
-                       </p>
                        <div class="panel-group" id="accordion">
                            <div class="panel panel-default">
                                <div class="panel-heading" style="padding: 3px 25px!important;">
@@ -201,23 +197,89 @@
 
    @foreach($orders as $order)
        @foreach($order->foods as $food)
-           <?php $plat=\App\Modules\Food\Models\Food::find($food->food_id) ?>
+           <?php $i=0; $plat=\App\Modules\Food\Models\Food::find($food->food_id) ?>
            <div class="modal fade" id="foodReview{{$order->id}}{{$plat->id}}" tabindex="-1" role="dialog" aria-labelledby="review" aria-hidden="true">
                <div class="modal-dialog">
                    <div class="modal-content modal-popup">
                        <a href="#" class="close-link"><i class="icon_close_alt2"></i></a>
-                       <form method="post" action="" name="review" style="width: 100%;max-width: 650px" class="popup-form">
+                       <form method="post" action="{{route('handleFoodReview',['food_id' => $plat->id])}}" name="review" style="width: 100%;max-width: 650px" class="popup-form">
+                           {!! csrf_field() !!}
                            <div class="login_icon"><i class="icon_comment_alt"></i></div>
-                           <div class="row">
                                @if($order->status!=4)
+                               <div class="row">
                                    <h4>Vous ne pouvez pas commenter ce plat</h4>
+                                   <input href="#" value="Retour" class="btn btn-submit close-link" >
+                                </div>
                                @else
-                                   <div class="review_strip_single">
-                                    Votre commentaire
+                                   @foreach($foodOrderReviews as $foodOrderReview)
+                                       @if($foodOrderReview->user_id == $user->id && $foodOrderReview->food_id == $plat->id
+                                                && $foodOrderReview->order_id == $order->id)
+                                            <?php $i=1; ?>
+                                                <div class="review_strip_single">
+                                                    <img src="{{asset('../storage/img/users/avatar/') . '/' . $user->image}}" alt="" class="img-circle" style="width: 80px">
+                                                    <small> - {{date("j F Y",strtotime($foodOrderReview->created_at))}} -</small>
+                                                    <h4>{{$user->name}} {{$user->surname}}</h4>
+                                                    <p>
+                                                        {{$foodOrderReview->content}}
+                                                    </p>
+                                                </div><!-- End review strip -->
+                                                <input href="#" value="Retour" class="btn btn-submit close-link" >
+                                        @endif
+                                   @endforeach
+                                   @if($i!=1)
+                                   <div class="row">
+                                       <div class="col-md-6">
+                                           <select class="form-control form-white" name="amount_review" id="amount_review">
+                                               <option value="0">Quantité</option>
+                                               <option value="1">Peu</option>
+                                               <option value="2">Suffisante</option>
+                                               <option value="3">Bonne</option>
+                                               <option value="4">Excellente</option>
+                                               <option value="5">Super</option>
+                                               <option value="0">Je ne sais pas</option>
+                                           </select>
+                                       </div>
+                                       <div class="col-md-6">
+                                           <select class="form-control form-white"  name="clean_review" id="clean_review">
+                                               <option value="0">Propreté</option>
+                                               <option value="1">Sale</option>
+                                               <option value="2">Peu sale</option>
+                                               <option value="3">Propre</option>
+                                               <option value="4">Excellente</option>
+                                               <option value="5">Super</option>
+                                               <option value="0">Je ne sais pas</option>
+                                           </select>
+                                       </div>
                                    </div>
-                               @endif
+                                   <div class="row">
+                               <div class="col-md-6">
+                                   <select class="form-control form-white"  name="speed_review" id="speed_review">
+                                       <option value="0">Rapidité</option>
+                                       <option value="1">Lente</option>
+                                       <option value="2">Moyenne</option>
+                                       <option value="3">Bonne</option>
+                                       <option value="4">Excellente</option>
+                                       <option value="5">Super</option>
+                                       <option value="0">Je ne sais pas</option>
+                                   </select>                       </div>
+                               <div class="col-md-6">
+                                   <select class="form-control form-white"  name="price_review" id="price_review">
+                                       <option value="0">Prix</option>
+                                       <option value="1">Trop Cher</option>
+                                       <option value="2">Cher</option>
+                                       <option value="3">Moyennement Cher</option>
+                                       <option value="4">Peu Cher</option>
+                                       <option value="5">Bon marché</option>
+                                       <option value="0">Je ne sais pas</option>
+                                   </select>
+                               </div>
                            </div><!--End Row -->
-                           <input type="submit" value="Envoyer" class="btn btn-submit" id="submit-review">
+                                   <input type="hidden" name="order_id" value="{{$order->id}}">
+                               <textarea name="review_text" id="review_text" class="form-control form-white" style="height:100px" placeholder="Donnez votre avis"></textarea>
+                               <button type="submit" class="btn btn-submit">Envoyer</button>
+                                       <?php $i=0; ?>
+                                       @endif
+                               @endif
                        </form>
                    </div>
                </div>

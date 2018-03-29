@@ -4,4 +4,5 @@ Route::group(['module' => 'Food', 'middleware' => ['web'], 'namespace' => 'App\M
 
     Route::resource('Food', 'FoodController');
     Route::get('/showFood/{id}', 'FoodController@showFood')->name('showFood');
+    Route::post('/foodReview/{id}', 'FoodController@handleFoodReview')->name('handleFoodReview');
 });

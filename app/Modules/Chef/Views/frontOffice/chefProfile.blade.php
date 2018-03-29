@@ -10,10 +10,47 @@
     <link href="{{asset('css/slider-pro.min.css')}}" rel="stylesheet">
     <!-- Radio and check inputs -->
     <link href="{{asset('css/skins/square/grey.css')}}" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 @stop
 
 
 @section('content')
+
+    <style>
+        div.stars {
+
+        }
+
+        input.star { display: none; }
+
+        label.star {
+            float: right;
+            padding: 2px;
+            font-size: 24px;
+            color: #444;
+            transition: all .2s;
+        }
+
+        input.star:checked ~ label.star:before {
+            content: '\f005';
+            color: #FD4;
+            transition: all .25s;
+        }
+
+        input.star-5:checked ~ label.star:before {
+            color: #FE7;
+            text-shadow: 0 0 20px #952;
+        }
+
+        input.star-1:checked ~ label.star:before { color: #F62; }
+
+        label.star:hover { transform: rotate(-15deg) scale(1.3); }
+
+        label.star:before {
+            content: '\f006';
+            font-family: FontAwesome;
+        }
+    </style>
 <!-- SubHeader =============================================== -->
 <section class="parallax-window" data-parallax="scroll" data-image-src="{{asset($chef->cover_photo)}}" data-natural-width="1400" data-natural-height="470">
     <div id="subheader">
@@ -698,7 +735,7 @@
         </div><!-- End row -->
         <div id="summary_review">
             <div id="general_rating">
-                {{count($reviews)}} Reviews
+                {{count($reviews)}} Avis
                 <div class="rating">
                     <i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i>
                 </div>
@@ -735,7 +772,11 @@
                 </div>
             </div><!-- End row -->
             <hr class="styled">
-            <a href="#" class="btn_1 add_bottom_15" data-toggle="modal" data-target="#myReview">Poster un avis</a>
+            @if(count($currentUserReview)==0)
+                <a href="#" class="btn_1 add_bottom_15" data-toggle="modal" data-target="#myReview">Poster un avis</a>
+            @else
+                <button type="submit" class="btn add_bottom_15" style="background-color: #85c99d" disabled>Poster un avis</button>
+            @endif
         </div><!-- End summary_review -->
 
         @foreach($reviews as $review)
@@ -798,41 +839,6 @@
                 </div><!-- End row -->
             </div><!-- End review strip -->
         @endforeach
-
-        <div class="review_strip_single last">
-            <img src="" alt="" class="img-circle">
-            <small> - 10 April 2015 -</small>
-            <h4>Frank Cooper</h4>
-            <p>
-                "Ne mea congue facilis eligendi, possit utamur sensibus id qui, mel tollit euismod alienum eu. Ad tollit lucilius praesent per, ex probo utroque placerat eos. Tale verear efficiendi et cum, meis timeam vix et, et duis debet nostro mel. Aeterno labitur per no, id nec tantas nemore. An minim molestie per, mei sumo vulputate cu."
-            </p>
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="rating">
-                        <i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i>
-                    </div>
-                    Food Quality
-                </div>
-                <div class="col-md-3">
-                    <div class="rating">
-                        <i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i>
-                    </div>
-                    Price
-                </div>
-                <div class="col-md-3">
-                    <div class="rating">
-                        <i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i>
-                    </div>
-                    Punctuality
-                </div>
-                <div class="col-md-3">
-                    <div class="rating">
-                        <i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i>
-                    </div>
-                    Courtesy
-                </div>
-            </div><!-- End row -->
-        </div><!-- End review strip -->
     </div>
 
     <div id="kicthen" class="tab-pane fade">
@@ -890,144 +896,6 @@
                         <p class="add_bottom_30">
                             Lorem ipsum dolor sit amet, ex has recusabo adipiscing, aliquip alienum at vis, eos id qualisque quaerendum. Soleat habemus duo no, te quo dicam everti, sale ullum movet per ea. Cu cum laudem quaeque, agam decore nullam ei vis. Nec ad tota etiam eirmod. Harum debitis detraxit ut vel, eu vel option oporteat.
                         </p>
-                        <div id="summary_review">
-                            <div id="general_rating">
-                                {{count($reviews)}} Reviews
-                                <div class="rating">
-                                    <i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i>
-                                </div>
-                            </div>
-
-                            <div class="row" id="rating_summary">
-                                <div class="col-md-6">
-                                    <ul>
-                                        <li>Food Quality
-                                            <div class="rating">
-                                                <i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i>
-                                            </div>
-                                        </li>
-                                        <li>Price
-                                            <div class="rating">
-                                                <i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-6">
-                                    <ul>
-                                        <li>Punctuality
-                                            <div class="rating">
-                                                <i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i>
-                                            </div>
-                                        </li>
-                                        <li>Courtesy
-                                            <div class="rating">
-                                                <i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div><!-- End row -->
-                            <hr class="styled">
-                            <a href="#" class="btn_1 add_bottom_15" data-toggle="modal" data-target="#myReview">Poster un avis</a>
-                        </div><!-- End summary_review -->
-
-                        @foreach($reviews as $review)
-                            <div class="review_strip_single">
-                            <img src="" alt="" class="img-circle">
-                            <small> - {{$review->created_at}} -</small>
-                            <h4>{{$review->client->name}} {{$review->client->surname}}</h4>
-                            <p>
-                                {{$review->content}}
-                            </p>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="rating">
-                                        @for($i=0;$i<5;$i++)
-                                            @if($i<($review->reviewRating->where('rating_type_id','=',1)->first())->rating)
-                                                <i class="icon_star voted"></i>
-                                            @else
-                                                <i class="icon_star"></i>
-                                            @endif
-                                        @endfor
-                                    </div>
-                                    Quantité servie
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="rating">
-                                        @for($i=0;$i<5;$i++)
-                                            @if($i<($review->reviewRating->where('rating_type_id','=',2)->first())->rating)
-                                                <i class="icon_star voted"></i>
-                                            @else
-                                                <i class="icon_star"></i>
-                                            @endif
-                                        @endfor
-                                    </div>
-                                    Propreté
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="rating">
-                                        @for($i=0;$i<5;$i++)
-                                            @if($i<($review->reviewRating->where('rating_type_id','=',3)->first())->rating)
-                                                <i class="icon_star voted"></i>
-                                            @else
-                                                <i class="icon_star"></i>
-                                            @endif
-                                        @endfor
-                                    </div>
-                                    Rapidité
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="rating">
-                                        @for($i=0;$i<5;$i++)
-                                            @if($i<($review->reviewRating->where('rating_type_id','=',4)->first())->rating)
-                                                <i class="icon_star voted"></i>
-                                            @else
-                                                <i class="icon_star"></i>
-                                            @endif
-                                        @endfor
-                                    </div>
-                                    Prix
-                                </div>
-                            </div><!-- End row -->
-                        </div><!-- End review strip -->
-                        @endforeach
-
-                        <div class="review_strip_single last">
-                            <img src="" alt="" class="img-circle">
-                            <small> - 10 April 2015 -</small>
-                            <h4>Frank Cooper</h4>
-                            <p>
-                                "Ne mea congue facilis eligendi, possit utamur sensibus id qui, mel tollit euismod alienum eu. Ad tollit lucilius praesent per, ex probo utroque placerat eos. Tale verear efficiendi et cum, meis timeam vix et, et duis debet nostro mel. Aeterno labitur per no, id nec tantas nemore. An minim molestie per, mei sumo vulputate cu."
-                            </p>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="rating">
-                                        <i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i>
-                                    </div>
-                                    Food Quality
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="rating">
-                                        <i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i>
-                                    </div>
-                                    Price
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="rating">
-                                        <i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i>
-                                    </div>
-                                    Punctuality
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="rating">
-                                        <i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i>
-                                    </div>
-                                    Courtesy
-                                </div>
-                            </div><!-- End row -->
-                        </div><!-- End review strip -->
-
                     </div><!-- End box_style_1 -->
                 </div>
             </div><!-- End row -->
@@ -1052,57 +920,28 @@
                 {!! csrf_field() !!}
                 <div class="login_icon"><i class="icon_comment_alt"></i></div>
                <!-- <input name="chef_id" id="chef_id" type="hidden" value="{{$chef->id}}"> -->
-                <div class="row">
-                    <div class="col-md-6">
-                        <select class="form-control form-white" name="amount_review" id="amount_review">
-                            <option value="0">Quantité</option>
-                            <option value="1">Peu</option>
-                            <option value="2">Suffisante</option>
-                            <option value="3">Bonne</option>
-                            <option value="4">Excellente</option>
-                            <option value="5">Super</option>
-                            <option value="0">Je ne sais pas</option>
-                        </select>
+                @foreach($types as $type)
+                    <div class="stars" style="display:flex">
+                            <div class="col-md-6 col-xs-12" style="flex-wrap: wrap;align-items: center;display: flex;">
+                                <?php if($type==1) echo "<label>Quantité</label>"; elseif($type == 2) echo "Propreté";elseif($type == 3) echo "Rapidité";elseif($type == 4) echo "Prix";?>
+                            </div>
+                            <div class="col-md-6 col-xs-12 col-sm-pull-4 col-xs-pull-4 col-md-pull-1 col-xss-6 col-xss-7">
+                                <input class="star star-5" id="star-5-{{$chef->id}}-{{$type}}" type="radio" value="5" name="star{{$type}}" />
+                                <label class="star star-5" for="star-5-{{$chef->id}}-{{$type}}"></label>
+                                <input class="star star-4" id="star-4-{{$chef->id}}-{{$type}}" type="radio" value="4" name="star{{$type}}" />
+                                <label class="star star-4" for="star-4-{{$chef->id}}-{{$type}}"></label>
+                                <input class="star star-3" id="star-3-{{$chef->id}}-{{$type}}" type="radio" value="3" name="star{{$type}}" />
+                                <label class="star star-3" for="star-3-{{$chef->id}}-{{$type}}"></label>
+                                <input class="star star-2" id="star-2-{{$chef->id}}-{{$type}}" type="radio" value="2" name="star{{$type}}" />
+                                <label class="star star-2" for="star-2-{{$chef->id}}-{{$type}}"></label>
+                                <input class="star star-1" id="star-1-{{$chef->id}}-{{$type}}" type="radio" value="1" name="star{{$type}}" />
+                                <label class="star star-1" for="star-1-{{$chef->id}}-{{$type}}"></label>
+                            </div>
                     </div>
-                    <div class="col-md-6">
-                        <select class="form-control form-white"  name="clean_review" id="clean_review">
-                            <option value="0">Propreté</option>
-                            <option value="1">Sale</option>
-                            <option value="2">Peu sale</option>
-                            <option value="3">Propre</option>
-                            <option value="4">Excellente</option>
-                            <option value="5">Super</option>
-                            <option value="0">Je ne sais pas</option>
-                        </select>
-                    </div>
-                </div><!--End Row -->
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <select class="form-control form-white"  name="speed_review" id="speed_review">
-                            <option value="0">Rapidité</option>
-                            <option value="1">Lente</option>
-                            <option value="2">Moyenne</option>
-                            <option value="3">Bonne</option>
-                            <option value="4">Excellente</option>
-                            <option value="5">Super</option>
-                            <option value="0">Je ne sais pas</option>
-                        </select>                       </div>
-                    <div class="col-md-6">
-                        <select class="form-control form-white"  name="price_review" id="price_review">
-                            <option value="0">Prix</option>
-                            <option value="1">Trop Cher</option>
-                            <option value="2">Cher</option>
-                            <option value="3">Moyennement Cher</option>
-                            <option value="4">Peu Cher</option>
-                            <option value="5">Bon marché</option>
-                            <option value="0">Je ne sais pas</option>
-                        </select>
-                    </div>
-                </div><!--End Row -->
+                @endforeach
                 <textarea name="review_text" id="review_text" class="form-control form-white" style="height:100px" placeholder="Donnez votre avis"></textarea>
               <!--  <input type="text" id="verify_review" class="form-control form-white" placeholder="Are you human? 3 + 1 ="> -->
-                <input type="submit" value="Envoyer" class="btn btn-submit" id="submit-review">
+                <button type="submit" class="btn btn-submit" id="submit-review">Envoyer</button>
             </form>
             <div id="message-review"></div>
         </div>
