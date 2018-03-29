@@ -6,6 +6,7 @@ use App\Modules\Chef\Models\Chef;
 use App\Modules\Chef\Models\KitchenImage;
 use App\Modules\Chef\Models\Review;
 use App\Modules\Chef\Models\ReviewRating;
+use App\Modules\Food\Models\FoodOrderReview;
 use App\Modules\Order\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -29,6 +30,7 @@ class ChefController extends Controller
         $reviews = $chef->reviews;
          $kitchenImages=$chef->getKitchenImages;
         $orders = Order::where('chef_id','=',$chef->id)->orderBy('created_at','desc') ->get();
+        $orderIdTable=array();
         foreach ($orders as $order)
         {
             $orderIdTable[]=$order->id;
