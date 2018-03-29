@@ -29,12 +29,18 @@ class ChefController extends Controller
         $reviews = $chef->reviews;
          $kitchenImages=$chef->getKitchenImages;
         $orders = Order::where('chef_id','=',$chef->id)->orderBy('created_at','desc') ->get();
-        return view('Chef::backOffice.chefProfile',compact('user','chef','drinks','kitchenImages','orders','entrees','desserts','mains','reviews'));
+        foreach ($orders as $order)
+        {
+            $orderIdTable[]=$order->id;
+        }
+        $foodOrderReviews = FoodOrderReview::whereIn('order_id',$orderIdTable)->get();
+        return view('Chef::backOffice.chefProfile',compact('user','chef','drinks','kitchenImages','orders','entrees','desserts','mains','reviews','foodOrderReviews'));
     }
 
 
     public function showChefSearchedProfile($id)
     {
+        $amount = $clean = $speed = $price = 0;
         $chef=Chef::find($id);
         $user=$chef->user;
         $entrees = $chef->getFoods->where('category_id','=',1);
@@ -42,10 +48,24 @@ class ChefController extends Controller
         $desserts = $chef->getFoods->where('category_id','=',3);
         $drinks = $chef->getFoods->where('category_id','=',4);
         $reviews = $chef->reviews;
+        foreach($reviews as $review)
+        {
+            $reviewRatings = $review->reviewRating;
+            $amount+= $reviewRatings->where('rating_type_id','=',1)->first()->rating;
+            $clean+= $reviewRatings->where('rating_type_id','=',2)->first()->rating;
+            $speed+= $reviewRatings->where('rating_type_id','=',3)->first()->rating;
+            $price+= $reviewRatings->where('rating_type_id','=',4)->first()->rating;
+        }
+        $amount=$amount/count($reviews);
+        $clean=$clean/count($reviews);
+        $speed=$speed/count($reviews);
+        $price=$price/count($reviews);
+        $total = ($price+$speed+$amount+$clean)/4;
         $kitchenImages=$chef->getKitchenImages;
         $types[0]=1;$types[1]=2;$types[2]=3;$types[3]=4;
         $currentUserReview = Review::where('client_id','=',Auth::user()->id)->where('chef_id','=',$id)->get();
-        return view('Chef::frontOffice.chefProfile',compact('user','currentUserReview','types','chef','entrees','mains','drinks','desserts','reviews','kitchenImages'));
+        return view('Chef::frontOffice.chefProfile',compact('user','currentUserReview','types','chef','entrees','mains','drinks',
+                      'desserts','reviews','kitchenImages','amount','clean','speed','price','total'));
     }
 
     public function handleChefReview(Request $request,$id)
