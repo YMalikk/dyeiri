@@ -67,7 +67,7 @@
                     </div><!-- End box_style_1 -->
                 </div>
                 @foreach($reviews as $review)
-                    <div class="review_strip_single">
+                    <div class="review_strip_single col-md-12">
                         <img src="{{asset('../storage/img/users/avatar/') . '/' . $users[$review->id]->image}}" alt="" class="img-circle" style="width: 80px">
                         <small> - {{date("j F Y",strtotime($review->created_at))}} -</small>
                         <h4>{{$users[$review->id]->name}} {{$users[$review->id]->surname}}</h4>

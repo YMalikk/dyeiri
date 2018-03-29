@@ -43,18 +43,29 @@ class ChefController extends Controller
         $drinks = $chef->getFoods->where('category_id','=',4);
         $reviews = $chef->reviews;
         $kitchenImages=$chef->getKitchenImages;
-        return view('Chef::frontOffice.chefProfile',compact('user','chef','entrees','mains','drinks','desserts','reviews','kitchenImages'));
+        $types[0]=1;$types[1]=2;$types[2]=3;$types[3]=4;
+        $currentUserReview = Review::where('client_id','=',Auth::user()->id)->where('chef_id','=',$id)->get();
+        return view('Chef::frontOffice.chefProfile',compact('user','currentUserReview','types','chef','entrees','mains','drinks','desserts','reviews','kitchenImages'));
     }
-    
-    
-    public function handleChefReview(Request $request, $id)
+
+    public function handleChefReview(Request $request,$id)
     {
-        $user=Auth::user();
-        $reviews = $user->reviews->where('chef_id','=',$id)->first();
-        if(isset($reviews))
+        $user = Auth::user();
+        $chef = Chef::find($id);
+        $review = Review::where('client_id','=',$user->id)->where('chef_id','=',$chef->id)->get();
+        if(count($review) > 0)
         {
-            alert()->error('Vous avez deja donné votre avis', 'Erreur')->persistent('Ok');
-            return redirect()->back();
+            $ratings = ReviewRating::where('review_id','=',$review[0]->id)
+                ->orderBy('id','asc')
+                ->get();
+            $ratings[0]->rating = $request->star1;
+            $ratings[0]->save();
+            $ratings[1]->rating = $request->star2;
+            $ratings[1]->save();
+            $ratings[2]->rating = $request->star3;
+            $ratings[2]->save();
+            $ratings[3]->rating = $request->star4;
+            $ratings[4]->save();
         }
         else
         {
@@ -62,28 +73,27 @@ class ChefController extends Controller
             $review = Review::create([
                 'content' => $request->review_text,
                 'status' => 1,
-                'chef_id' => $id,
+                'chef_id' => $chef->id,
                 'client_id' => $user->id
             ]);
 
-            // ici notes
             $reviewRatingAmount = ReviewRating::create([
-                'rating' => $request->amount_review,
+                'rating' => $request->star1,
                 'review_id' => $review->id,
                 'rating_type_id' => 1
             ]);
             $reviewRatingClean = ReviewRating::create([
-                'rating' => $request->clean_review,
+                'rating' => $request->star2,
                 'review_id' => $review->id,
                 'rating_type_id' => 2
             ]);
             $reviewRatingSpeed = ReviewRating::create([
-                'rating' => $request->speed_review,
+                'rating' => $request->star3,
                 'review_id' => $review->id,
                 'rating_type_id' => 3
             ]);
             $reviewRatingPrice = ReviewRating::create([
-                'rating' => $request->price_review,
+                'rating' => $request->star4,
                 'review_id' => $review->id,
                 'rating_type_id' => 4
             ]);
@@ -91,6 +101,8 @@ class ChefController extends Controller
         alert()->success('Avis ajouté', 'Reussi')->persistent('Ok');
         return redirect()->back();
     }
+    
+
     
     public function showChefRegisterStepTwo()
     {

@@ -158,7 +158,7 @@
                 <div class="col-xs-12">
                     <button  type="submit" class="btn btn-success pull-right"><i class="fa fa-check-circle-o"></i>&nbsp;&nbsp;Confirmez commande
                     </button>
-                    <button onclick="location.href='{{route('showChefProfil',['id' => $chef->id])}}'" type="button" class="btn btn-primary pull-right" style="margin-right: 5px">
+                    <button onclick="location.href='{{route('showChefSearchedProfile',['id' => $chef->id])}}'" type="button" class="btn btn-primary pull-right" style="margin-right: 5px">
                         <i class="fa fa-times-circle"></i>&nbsp;&nbsp;Annulez
                     </button>
                 </div>
