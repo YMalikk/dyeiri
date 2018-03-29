@@ -81,6 +81,40 @@
         {
             margin-left: -14px;
         }
+        
+        div.stars {
+
+        }
+
+        input.star { display: none; }
+
+        label.star {
+            float: right;
+            padding: 2px;
+            font-size: 24px;
+            color: #444;
+            transition: all .2s;
+        }
+
+        input.star:checked ~ label.star:before {
+            content: '\f005';
+            color: #FD4;
+            transition: all .25s;
+        }
+
+        input.star-5:checked ~ label.star:before {
+            color: #FE7;
+            text-shadow: 0 0 20px #952;
+        }
+
+        input.star-1:checked ~ label.star:before { color: #F62; }
+
+        label.star:hover { transform: rotate(-15deg) scale(1.3); }
+
+        label.star:before {
+            content: '\f006';
+            font-family: FontAwesome;
+        }
     </style>
    <section class="page_content">
        <div class="container">
@@ -344,7 +378,7 @@
 
    @foreach($orders as $order)
        @foreach($order->foods as $food)
-           <?php $i=0; $plat=\App\Modules\Food\Models\Food::find($food->food_id) ?>
+           <?php $j=0; $plat=\App\Modules\Food\Models\Food::find($food->food_id) ?>
            <div class="modal fade" id="foodReview{{$order->id}}{{$plat->id}}" tabindex="-1" role="dialog" aria-labelledby="review" aria-hidden="true">
                <div class="modal-dialog">
                    <div class="modal-content modal-popup">
@@ -355,13 +389,13 @@
                                @if($order->status!=4)
                                <div class="row">
                                    <h4>Vous ne pouvez pas commenter ce plat</h4>
-                                   <input href="#" value="Retour" class="btn btn-submit close-link" >
+                                   <button href="#" class="btn btn-submit close-link" >Retour</button>
                                 </div>
                                @else
                                    @foreach($foodOrderReviews as $foodOrderReview)
                                        @if($foodOrderReview->user_id == $user->id && $foodOrderReview->food_id == $plat->id
                                                 && $foodOrderReview->order_id == $order->id)
-                                            <?php $i=1; ?>
+                                            <?php $j=1; ?>
                                                 <div class="review_strip_single">
                                                     <img src="{{asset('../storage/img/users/avatar/') . '/' . $user->image}}" alt="" class="img-circle" style="width: 80px">
                                                     <small> - {{date("j F Y",strtotime($foodOrderReview->created_at))}} -</small>
@@ -370,61 +404,84 @@
                                                         {{$foodOrderReview->content}}
                                                     </p>
                                                 </div><!-- End review strip -->
-                                                <input href="#" value="Retour" class="btn btn-submit close-link" >
+                                                div class="row">
+                                                    <div class="col-md-3">
+                                                        <div class="rating">
+                                                            @for($i=0;$i<5;$i++)
+                                                                @if($i<($foodOrderReview->foodOrderReviewRating->where('rating_type_id','=',1)->first())->rating)
+                                                                    <i class="icon_star voted"></i>
+                                                                @else
+                                                                    <i class="icon_star"></i>
+                                                                @endif
+                                                            @endfor
+                                                        </div>
+                                                        Quantité servie
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="rating">
+                                                            @for($i=0;$i<5;$i++)
+                                                                @if($i<($foodOrderReview->foodOrderReviewRating->where('rating_type_id','=',2)->first())->rating)
+                                                                    <i class="icon_star voted"></i>
+                                                                @else
+                                                                    <i class="icon_star"></i>
+                                                                @endif
+                                                            @endfor
+                                                        </div>
+                                                        Propreté
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="rating">
+                                                            @for($i=0;$i<5;$i++)
+                                                                @if($i<($foodOrderReview->foodOrderReviewRating->where('rating_type_id','=',3)->first())->rating)
+                                                                    <i class="icon_star voted"></i>
+                                                                @else
+                                                                    <i class="icon_star"></i>
+                                                                @endif
+                                                            @endfor
+                                                        </div>
+                                                        Rapidité
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="rating">
+                                                            @for($i=0;$i<5;$i++)
+                                                                @if($i<($foodOrderReview->foodOrderReviewRating->where('rating_type_id','=',4)->first())->rating)
+                                                                    <i class="icon_star voted"></i>
+                                                                @else
+                                                                    <i class="icon_star"></i>
+                                                                @endif
+                                                            @endfor
+                                                        </div>
+                                                        Prix
+                                                    </div>
+                                                </div><!-- End row -->
+                                                <button href="#"  class="btn btn-submit close-link" >Retour</button>
                                         @endif
                                    @endforeach
-                                   @if($i!=1)
-                                   <div class="row">
-                                       <div class="col-md-6">
-                                           <select class="form-control form-white" name="amount_review" id="amount_review">
-                                               <option value="0">Quantité</option>
-                                               <option value="1">Peu</option>
-                                               <option value="2">Suffisante</option>
-                                               <option value="3">Bonne</option>
-                                               <option value="4">Excellente</option>
-                                               <option value="5">Super</option>
-                                               <option value="0">Je ne sais pas</option>
-                                           </select>
-                                       </div>
-                                       <div class="col-md-6">
-                                           <select class="form-control form-white"  name="clean_review" id="clean_review">
-                                               <option value="0">Propreté</option>
-                                               <option value="1">Sale</option>
-                                               <option value="2">Peu sale</option>
-                                               <option value="3">Propre</option>
-                                               <option value="4">Excellente</option>
-                                               <option value="5">Super</option>
-                                               <option value="0">Je ne sais pas</option>
-                                           </select>
-                                       </div>
-                                   </div>
-                                   <div class="row">
-                               <div class="col-md-6">
-                                   <select class="form-control form-white"  name="speed_review" id="speed_review">
-                                       <option value="0">Rapidité</option>
-                                       <option value="1">Lente</option>
-                                       <option value="2">Moyenne</option>
-                                       <option value="3">Bonne</option>
-                                       <option value="4">Excellente</option>
-                                       <option value="5">Super</option>
-                                       <option value="0">Je ne sais pas</option>
-                                   </select>                       </div>
-                               <div class="col-md-6">
-                                   <select class="form-control form-white"  name="price_review" id="price_review">
-                                       <option value="0">Prix</option>
-                                       <option value="1">Trop Cher</option>
-                                       <option value="2">Cher</option>
-                                       <option value="3">Moyennement Cher</option>
-                                       <option value="4">Peu Cher</option>
-                                       <option value="5">Bon marché</option>
-                                       <option value="0">Je ne sais pas</option>
-                                   </select>
-                               </div>
-                           </div><!--End Row -->
-                                   <input type="hidden" name="order_id" value="{{$order->id}}">
-                               <textarea name="review_text" id="review_text" class="form-control form-white" style="height:100px" placeholder="Donnez votre avis"></textarea>
-                               <button type="submit" class="btn btn-submit">Envoyer</button>
-                                       <?php $i=0; ?>
+                                   @if($j!=1)
+                                       @foreach($types as $type)
+                                                   <div class="stars" style="display:flex">
+                                                       <div class="col-md-3 col-md-offset-2 col-xs-12" style="flex-wrap: wrap;align-items: center;display: flex;">
+                                                           <?php if($type==1) echo "<label style='color: white;font-size: 16px'>Quantité</label>"; elseif($type == 2) echo "<label style='color: white;font-size: 16px'>Propreté</label>";elseif($type == 3) echo "<label style='color: white;font-size: 16px'>Rapidité</label>";elseif($type == 4) echo "<label style='color: white;font-size: 16px'>Prix</label>";?>
+                                                       </div>
+                                                       <div class="col-md-6 col-xs-12 col-sm-pull-4 col-xs-pull-4 col-md-pull-1 col-xss-6 col-xss-7">
+                                                           <input class="star star-5" id="star-5-{{$order}}-{{$plat->id}}-{{$type}}" type="radio" value="5" name="star{{$type}}" />
+                                                           <label class="star star-5" for="star-5-{{$order}}-{{$plat->id}}-{{$type}}"></label>
+                                                           <input class="star star-4" id="star-4-{{$order}}-{{$plat->id}}-{{$type}}" type="radio" value="4" name="star{{$type}}" />
+                                                           <label class="star star-4" for="star-4-{{$order}}-{{$plat->id}}-{{$type}}"></label>
+                                                           <input class="star star-3" id="star-3-{{$order}}-{{$plat->id}}-{{$type}}" type="radio" value="3" name="star{{$type}}" />
+                                                           <label class="star star-3" for="star-3-{{$order}}-{{$plat->id}}-{{$type}}"></label>
+                                                           <input class="star star-2" id="star-2-{{$order}}-{{$plat->id}}-{{$type}}" type="radio" value="2" name="star{{$type}}" />
+                                                           <label class="star star-2" for="star-2-{{$order}}-{{$plat->id}}-{{$type}}"></label>
+                                                           <input class="star star-1" id="star-1-{{$order}}-{{$plat->id}}-{{$type}}" type="radio" value="1" name="star{{$type}}" />
+                                                           <label class="star star-1" for="star-1-{{$order}}-{{$plat->id}}-{{$type}}"></label>
+                                                       </div>
+                                                   </div>
+                                               @endforeach
+                                           <!--End Row -->
+                                       <input type="hidden" name="order_id" value="{{$order->id}}">
+                                       <textarea name="review_text" id="review_text" class="form-control form-white" style="height:100px" placeholder="Donnez votre avis"></textarea>
+                                       <button type="submit" class="btn btn-submit">Envoyer</button>
+                                           <?php $j=0; ?>
                                        @endif
                                @endif
                        </form>
