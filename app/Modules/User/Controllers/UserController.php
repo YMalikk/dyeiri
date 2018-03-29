@@ -19,7 +19,8 @@ class UserController extends Controller
       $user = Auth::user();
       $orders = Order::where('client_id','=',$user->id)->orderBy('created_at','desc')->get();
       $foodOrderReviews = FoodOrderReview::where('user_id','=',$user->id)->get();
-      return view('User::frontOffice.profile',compact('orders','foodOrderReviews','user'));
+      $types[0]=1;$types[1]=2;$types[2]=3;$types[3]=4;
+      return view('User::frontOffice.profile',compact('orders','foodOrderReviews','user','types'));
     }
 
     public function changeCurrentUser($currentUser)
