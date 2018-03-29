@@ -14,13 +14,15 @@ Route::group(['module' => 'User', 'middleware' => ['web'], 'namespace' => 'App\M
     Route::get('/subscriptionProvider/{provider}', 'LoginController@authenticate')->name('authenticate');
     Route::post('/subscriptionProviderType', 'LoginController@handleSubscriptionProviderType')->name('handleSubscriptionProviderType');
     Route::get('login/{provider}/callback', 'LoginController@loginProvider')->name('loginProvider')->where(['provider' => 'facebook|google']);
-
+    Route::get('/change_user/{currentUser}',['uses'=>'UserController@changeCurrentUser','as'=>'changeCurrentUser']);
 });
+
 
 
 Route::group(['module' => 'User','middleware'=>'client', 'namespace' => 'App\Modules\User\Controllers'], function() {
 
-
     Route::get('/profile', 'UserController@showProfile')->name('showProfile');
+    Route::post('/profile', 'UserController@editProfile')->name('editProfile');
+
 });
 

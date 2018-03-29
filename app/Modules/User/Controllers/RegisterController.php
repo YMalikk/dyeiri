@@ -145,6 +145,7 @@ class RegisterController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'confirmation_code' => $confirmation_code,
+            'current_user'=>1,
             'status' => 0,
         ];
 
@@ -176,7 +177,6 @@ class RegisterController extends Controller
 
         $user->assignRole(3);  //role 3 => chef
         Auth::logout();
-
 
         $content = array('confirmation_code' => $confirmation_code);
         Mail::send('User::emails.verify_account', $content, function ($message) use ($request) {

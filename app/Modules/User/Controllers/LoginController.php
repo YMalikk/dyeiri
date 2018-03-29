@@ -144,6 +144,8 @@ class LoginController extends Controller
             if ($request->userType == "client")
             {
                 $user->assignRole(2);
+                $user->current_user=2;
+                $user->save();
                 Auth::login($user);
                 return redirect()->route('showProfile');
             }
@@ -151,6 +153,8 @@ class LoginController extends Controller
             {
                 $destinationPathCoverPhoto='storage/uploads/chefs/chefCover.jpg';
                 $user->assignRole(3);
+                $user->current_user=1;
+                $user->save();
                 $dataChef=[
                     'cover_photo'=>$destinationPathCoverPhoto,
                     'likes_count'=>0,

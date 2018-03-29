@@ -25,6 +25,7 @@ class User extends Authenticatable {
         'password',
         'lat',
         'lng',
+        'current_user',
         'image',
         'mobile',
         'status',

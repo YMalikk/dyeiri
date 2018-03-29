@@ -48,7 +48,7 @@ class AuthenticateUser
         }
         else
         {
-            if($this->auth->user()->roles()->pluck('title')->first()!=="client")
+            if($this->auth->user()->current_user==1)
             {
                 return redirect('/');
             }

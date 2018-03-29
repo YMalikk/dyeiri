@@ -13,6 +13,66 @@
 @stop
 
 @section('content')
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <style>
+        .onoffswitch {
+            position: relative; width: 90px;
+            -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+        }
+
+        .onoffswitch-checkbox {
+            display: none;
+        }
+
+        .onoffswitch-label {
+            display: block; overflow: hidden; cursor: pointer;
+            border: 2px solid #999999; border-radius: 20px;
+        }
+
+        .onoffswitch-inner {
+            display: block; width: 200%; margin-left: -100%;
+            -moz-transition: margin 0.3s ease-in 0s; -webkit-transition: margin 0.3s ease-in 0s;
+            -o-transition: margin 0.3s ease-in 0s; transition: margin 0.3s ease-in 0s;
+        }
+
+        .onoffswitch-inner:before, .onoffswitch-inner:after {
+            display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+            font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+            -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+        }
+
+        .onoffswitch-inner:before {
+            content: "Chef";
+            padding-left: 10px;
+            background-color: #7dc440; color: #FFFFFF;
+        }
+
+        .onoffswitch-inner:after {
+            content: "Client";
+            padding-right: 10px;
+            background-color: #2d3d99; color: white;
+            text-align: right;
+        }
+
+        .onoffswitch-switch {
+            display: block; width: 18px; margin: 6px;
+            background: #FFFFFF;
+            border: 2px solid #999999; border-radius: 20px;
+            position: absolute; top: 0; bottom: 0; right: 56px;
+            -moz-transition: all 0.3s ease-in 0s; -webkit-transition: all 0.3s ease-in 0s;
+            -o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s;
+        }
+
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+            margin-left: 0;
+        }
+
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+            right: 0px;
+        }
+
+    </style>
 <!-- SubHeader =============================================== -->
 <section class="parallax-window" data-parallax="scroll" data-image-src="{{asset($chef->cover_photo)}}" data-natural-width="1400" data-natural-height="470">
     <div id="subheader">
@@ -36,12 +96,31 @@
     </div>
 </div><!-- Position -->
 <div class="container">
-    <div class=" container col-md-5 col-xs-12">
+    <div class=" container col-md-12 col-xs-12">
         <ul class="nav nav-pills">
             <li class="active"><a data-toggle="pill"  href="#menu">Menu</a></li>
             <li><a data-toggle="pill" href="#kicthen" id="kitchen_tab">Cuisine</a></li>
             <li><a data-toggle="pill" href="#setting">Paramétre</a></li>
             <li><a data-toggle="pill" href="#orders">Mes Commandes</a></li>
+            <li class="pull-right">
+                @if($chef->user->current_user==1)
+                <div class="onoffswitch">
+                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+                    <label class="onoffswitch-label" for="myonoffswitch">
+                        <span class="onoffswitch-inner"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </div>
+                    @else
+                    <div class="onoffswitch">
+                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch">
+                        <label class="onoffswitch-label" for="myonoffswitch">
+                            <span class="onoffswitch-inner"></span>
+                            <span class="onoffswitch-switch"></span>
+                        </label>
+                    </div>
+                @endif
+            </li>
         </ul>
     </div>
 </div>
@@ -699,9 +778,6 @@
                 <div class="box_style_2" id="main_menu">
                     <h2 class="inner text-center">Mes Commandes</h2>
                     <h3 class="nomargin_top" id="starters">Commandes</h3>
-                    <p>
-                        Te ferri iisque aliquando pro, posse nonumes efficiantur in cum. Sensibus reprimique eu pro. Fuisset mentitum deleniti sit ea.
-                    </p>
                     <div class="panel-group" id="accordion">
                         <div class="panel panel-default">
                             <div class="panel-heading" style="padding: 3px 25px!important;">
@@ -907,4 +983,10 @@
 
             });
         </script>
+    <script>
+        $("#myonoffswitch").click(function()
+        {
+            window.location.replace("{{route('changeCurrentUser',array($chef->user->current_user))}}");
+        });
+    </script>
 @endsection

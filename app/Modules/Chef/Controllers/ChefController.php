@@ -304,4 +304,17 @@ class ChefController extends Controller
         alert()->success('Votre avez confirmé que votre plat est prêt', 'Plat prêt')->persistent('Ok');
         return redirect()->back();
     }
+
+    public function changeCurrentUser($currentUser)
+    {
+
+        $user=Auth::user();
+        switch($currentUser)
+        {
+            case 1 : $user->current_user=2;break;
+            case 2 : $user->current_user=1;break;
+        }
+        $user->save();
+        return redirect()->back();
+    }
 }

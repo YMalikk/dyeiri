@@ -36,7 +36,7 @@
                                 <li><a href="{{route('showClientRegister')}}">S'inscrire</a></li>
                                 <li><a href="#0" data-toggle="modal" data-target="#login_2">Connexion</a></li>
                             @else
-                                @if(\Illuminate\Support\Facades\Auth::user()->hasRole('chef'))
+                                @if(\Illuminate\Support\Facades\Auth::user()->current_user==1)
                                   <li><a href="{{route('showChefProfile')}}" >Mon profil</a></li>
                                 @else
                                   <li><a href="{{route('showProfile')}}" >Mon profil</a></li>
