@@ -36,4 +36,9 @@ class FoodOrderReview extends Model
     {
         return $this->belongsTo(Order::class);
     }
+    
+      public function foodOrderReviewRating()
+    {
+        return $this->hasMany(FoodOrderReviewRating::class);
+    }
 }
