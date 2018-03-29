@@ -910,7 +910,10 @@
                             @if(!$order->food_order_reviews($plat->id))
                                 <h4>Pas de commentaire pour ce plat</h4>
                             @else
-                                <div class="review_strip_single">
+                                @foreach($foodOrderReviews as $foodOrderReview)
+                                    @if($foodOrderReview->food_id == $plat->id
+                                                && $foodOrderReview->order_id == $order->id)
+                                         <div class="review_strip_single">
                                     <?php $client=\App\Modules\User\Models\User::find($order->food_order_reviews($plat->id)->user_id) ?>
                                     <img src="{{asset('../storage/img/users/avatar/') . '/' . $client->image}}" alt="" class="img-circle" style="width: 80px">
                                     <small> - {{date("j F Y",strtotime($order->food_order_reviews($plat->id)->created_at))}} -</small>
@@ -918,11 +921,63 @@
                                     <p>
                                         {{$order->food_order_reviews($plat->id)->content}}
                                     </p>
+                                    <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="rating">
+                                                    @for($i=0;$i<5;$i++)
+                                                        @if($i<($foodOrderReview->foodOrderReviewRating->where('rating_type_id','=',1)->first())->rating)
+                                                            <i class="icon_star voted"></i>
+                                                        @else
+                                                            <i class="icon_star"></i>
+                                                        @endif
+                                                    @endfor
+                                                </div>
+                                                Quantité servie
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="rating">
+                                                    @for($i=0;$i<5;$i++)
+                                                        @if($i<($foodOrderReview->foodOrderReviewRating->where('rating_type_id','=',2)->first())->rating)
+                                                            <i class="icon_star voted"></i>
+                                                        @else
+                                                            <i class="icon_star"></i>
+                                                        @endif
+                                                    @endfor
+                                                </div>
+                                                Propreté
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="rating">
+                                                    @for($i=0;$i<5;$i++)
+                                                        @if($i<($foodOrderReview->foodOrderReviewRating->where('rating_type_id','=',3)->first())->rating)
+                                                            <i class="icon_star voted"></i>
+                                                        @else
+                                                            <i class="icon_star"></i>
+                                                        @endif
+                                                    @endfor
+                                                </div>
+                                                Rapidité
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="rating">
+                                                    @for($i=0;$i<5;$i++)
+                                                        @if($i<($foodOrderReview->foodOrderReviewRating->where('rating_type_id','=',4)->first())->rating)
+                                                            <i class="icon_star voted"></i>
+                                                        @else
+                                                            <i class="icon_star"></i>
+                                                        @endif
+                                                    @endfor
+                                                </div>
+                                                Prix
+                                            </div>
+                                        </div><!-- End row -->
                                     <!-- End row -->
                                 </div>
+                                    @endif
+                                @endforeach
                             @endif
                         </div><!--End Row -->
-                        <input href="#" value="Fermer" class="btn btn-submit close-link">
+                        <button href="#" class="btn btn-submit close-link">Fermer</button>
                     </form>
                 </div>
             </div>
