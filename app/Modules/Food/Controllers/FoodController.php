@@ -48,22 +48,22 @@ class FoodController extends Controller
 
             // ici notes
             $reviewRatingAmount = FoodOrderReviewRating::create([
-                'rating' => $request->amount_review,
+                'rating' => $request->star1,
                 'food_order_review_id' => $foodOrderReview->id,
                 'rating_type_id' => 1
             ]);
             $reviewRatingClean = FoodOrderReviewRating::create([
-                'rating' => $request->clean_review,
+                'rating' => $request->star2,
                 'food_order_review_id' => $foodOrderReview->id,
                 'rating_type_id' => 2
             ]);
             $reviewRatingSpeed = FoodOrderReviewRating::create([
-                'rating' => $request->speed_review,
+                'rating' => $request->star3,
                 'food_order_review_id' => $foodOrderReview->id,
                 'rating_type_id' => 3
             ]);
             $reviewRatingPrice = FoodOrderReviewRating::create([
-                'rating' => $request->price_review,
+                'rating' => $request->star4,
                 'food_order_review_id' => $foodOrderReview->id,
                 'rating_type_id' => 4
             ]);
