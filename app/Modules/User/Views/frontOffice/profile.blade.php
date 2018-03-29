@@ -9,12 +9,104 @@
 @stop
 
 @section('content')
+    <style>
+        .onoffswitch {
+            position: relative; width: 90px;
+            -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+        }
+
+        .onoffswitch-checkbox {
+            display: none;
+        }
+
+        .onoffswitch-label {
+            display: block; overflow: hidden; cursor: pointer;
+            border: 2px solid #999999; border-radius: 20px;
+        }
+
+        .onoffswitch-inner {
+            display: block; width: 200%; margin-left: -100%;
+            -moz-transition: margin 0.3s ease-in 0s; -webkit-transition: margin 0.3s ease-in 0s;
+            -o-transition: margin 0.3s ease-in 0s; transition: margin 0.3s ease-in 0s;
+        }
+
+        .onoffswitch-inner:before, .onoffswitch-inner:after {
+            display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+            font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+            -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+        }
+
+        .onoffswitch-inner:before {
+            content: "Chef";
+            padding-left: 10px;
+            background-color: #7dc440; color: #FFFFFF;
+        }
+
+        .onoffswitch-inner:after {
+            content: "Client";
+            padding-right: 10px;
+            background-color: #2d3d99; color: white;
+            text-align: right;
+        }
+
+        .onoffswitch-switch {
+            display: block; width: 18px; margin: 6px;
+            background: #FFFFFF;
+            border: 2px solid #999999; border-radius: 20px;
+            position: absolute; top: 0; bottom: 0; right: 56px;
+            -moz-transition: all 0.3s ease-in 0s; -webkit-transition: all 0.3s ease-in 0s;
+            -o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s;
+        }
+
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+            margin-left: 0;
+        }
+
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+            right: 0px;
+        }
+        .page_content
+        {
+            border-top:1px solid black!important;
+        }
+        .container
+        {
+            margin-top:10px;
+        }
+        #user_information_form input[type=text],input[type=password]
+        {
+            width:250px!important;
+        }
+        #user_information_form
+        {
+            margin-left: -14px;
+        }
+    </style>
    <section class="page_content">
        <div class="container">
-           <div class=" container col-md-5 col-xs-12">
+           <div class=" container col-md-12 col-xs-12">
                <ul class="nav nav-pills">
                    <li class="active"><a data-toggle="pill"  href="#account">Mon compte</a></li>
                    <li><a data-toggle="pill" href="#orders">Mes commandes</a></li>
+                   <li class="pull-right">
+                       @if($user->current_user==1)
+                           <div class="onoffswitch">
+                               <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+                               <label class="onoffswitch-label" for="myonoffswitch">
+                                   <span class="onoffswitch-inner"></span>
+                                   <span class="onoffswitch-switch"></span>
+                               </label>
+                           </div>
+                       @else
+                           <div class="onoffswitch">
+                               <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch">
+                               <label class="onoffswitch-label" for="myonoffswitch">
+                                   <span class="onoffswitch-inner"></span>
+                                   <span class="onoffswitch-switch"></span>
+                               </label>
+                           </div>
+                       @endif
+                   </li>
                </ul>
            </div>
        </div>
@@ -25,12 +117,67 @@
                     <div class="col-md-4 col-xs-4 col-sm-4">
                         <img src="{{asset('img/user.jpg')}}" class="profile_img"/>
                     </div>
-                    <div class="col-md-8 col-xs-12 user_information col-sm-8">
-                        <span class="username">Bonjour je m'appelle Yousfi Malik</span><br/><br/>
-                        <span class="address">Ariana 23 zéro nahj la3mé, membre depuis 20/10/2018</span><br/><br/>
-                        <span class="report_user"><a href="#"><i class="icon icon-flag h4"></i> Signaler ce client</a></span><br/><br/>
-                        <span class="user_verified"><i class="fa fa-check"></i> Vérifier</span>
-                    </div>
+                    <div class="col-md-8 col-xs-12  col-sm-8">
+                        <form method="POST" action="{{route('editProfile')}}" id="user_information_form">
+                            {!! csrf_field() !!}
+                        <div class="form-group">
+                            <label class="control-label col-sm-3">Nom<span class="text-danger"></span></label>
+                            <div class="col-md-8 col-sm-9">
+                                <div class="input-group address_result">
+                                    <input type="text" disabled="" class="form-control"  name="name"  id="name" required value="{{$user->name}}"/>
+                                </div>
+                                <small>Votre nom sera visible par tout les utilisateurs. </small> </div>
+                         </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">Prénom<span class="text-danger"></span></label>
+                                <div class="col-md-8 col-sm-9">
+                                    <div class="input-group address_result">
+                                        <input type="text" disabled="" id="surname" name="surname" required class="form-control" value="{{$user->surname}}"/>
+                                    </div>
+                                    <small>Votre prénom sera visible par tout les utilisateurs. </small> </div>
+                             </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">Adresse<span class="text-danger"></span></label>
+                                <div class="col-md-8 col-sm-9">
+                                    <div class="input-group address_result">
+                                        <input type="text" disabled="" id="address" required class="form-control" value="{{$user->surname}}"/>
+                                    </div>
+                                    <small>Votre prénom sera visible par tout les utilisateurs. </small> </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">Email<span class="text-danger"></span></label>
+                                <div class="col-md-8 col-sm-9">
+                                    <div class="input-group address_result">
+                                        <input type="text" disabled="" id="email"  name="email" required class="form-control" value="{{$user->email}}"/>
+                                    </div>
+                                    <small>Votre email n'est visible que par vous.</small> </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">Password<span class="text-danger"></span></label>
+                                <div class="col-md-8 col-sm-9">
+                                    <div class="input-group address_result">
+                                        <input type="password" disabled="" name="password" id="password" class="form-control"/>
+                                    </div>
+                                    <small>Votre prénom sera visible par tout les utilisateurs. </small> </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">  <input type="button" class="btn btn-success" id="btn_edit_profile" value="Modifier"/></label>
+                                <div class="col-md-8 col-sm-9">
+                                    <div class="input-group address_result">
+                                        <input type="submit" style="display:none;" id="submit_form" class="btn btn-success" value="Enregistrer"> </div>
+
+
+
+                                </div>
+                            </div>
+
+
+                        </form>
+                   </div>
                 </div>
                 <div class="row margin_10">
                     <div class="col-md-4 col-xs-4">
@@ -284,8 +431,39 @@
                    </div>
                </div>
            </div>
+
        @endforeach
    @endforeach
+   <script>
+       $("#myonoffswitch").click(function()
+       {
+           window.location.replace("{{route('changeCurrentUser',array($user->current_user))}}");
+       });
+
+       $(document).on("click","#btn_edit_profile",function()
+       {
+            $("#email").removeAttr("disabled");
+            $("#name").removeAttr("disabled");
+            $("#surname").removeAttr("disabled");
+            $("#name").removeAttr("disabled");
+            $("#password").removeAttr("disabled");
+            $("#btn_edit_profile").val("Annuler");
+            $("#btn_edit_profile").attr("id","btn_cancel_edit");
+           $("#submit_form").css("display","block");
+       });
+
+       $(document).on("click","#btn_cancel_edit",function () {
+           $("#btn_cancel_edit").text("Modifier");
+           $("#email").attr("disabled",true);
+           $("#name").attr("disabled",true);
+           $("#surname").attr("disabled",true);
+           $("#password").attr("disabled",true);
+           $("#name").attr("disabled",true);
+           $("#submit_form").css("display","none");
+           $("#btn_cancel_edit").val("Modifier");
+           $("#btn_cancel_edit").attr("id","btn_edit_profile");
+       })
+   </script>
 @stop
 @section('footer')
     @include('frontOffice.inc.footer')

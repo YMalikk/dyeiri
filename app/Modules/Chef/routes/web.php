@@ -16,6 +16,7 @@ Route::group(['module'=> 'User','middleware'=>'chef','namespace'=>'App\Modules\C
     Route::get('/confirmOrderChef/{id}', 'ChefController@confirmOrderChef')->name('confirmOrderChef');
     Route::get('/denyOrderChef/{id}', 'ChefController@denyOrderChef')->name('denyOrderChef');
     Route::get('/confirmDishReadyChef/{id}', 'ChefController@confirmDishReadyChef')->name('confirmDishReadyChef');
+
 });
 
 Route::group(['module'=> 'User','middleware'=>'client','namespace'=>'App\Modules\Chef\Controllers'],function () {
