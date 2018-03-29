@@ -737,35 +737,65 @@
             <div id="general_rating">
                 {{count($reviews)}} Avis
                 <div class="rating">
-                    <i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i>
+                    @for($i=0;$i<5;$i++)
+                        @if($i<$total)
+                            <i class="icon_star voted"></i>
+                        @else
+                            <i class="icon_star"></i>
+                        @endif
+                    @endfor
                 </div>
             </div>
 
             <div class="row" id="rating_summary">
                 <div class="col-md-6">
                     <ul>
-                        <li>Food Quality
+                        <li>Quantité
                             <div class="rating">
-                                <i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i>
+                                @for($i=0;$i<5;$i++)
+                                    @if($i<$amount)
+                                        <i class="icon_star voted"></i>
+                                    @else
+                                        <i class="icon_star"></i>
+                                    @endif
+                                @endfor
                             </div>
                         </li>
-                        <li>Price
+                        <li>Propreté
                             <div class="rating">
-                                <i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i>
+                                @for($i=0;$i<5;$i++)
+                                    @if($i<$clean)
+                                        <i class="icon_star voted"></i>
+                                    @else
+                                        <i class="icon_star"></i>
+                                    @endif
+                                @endfor
                             </div>
                         </li>
                     </ul>
                 </div>
                 <div class="col-md-6">
                     <ul>
-                        <li>Punctuality
-                            <div class="rating">
-                                <i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i>
+                        <li>Rapidité
+                           <div class="rating">
+                                @for($i=0;$i<5;$i++)
+                                    @if($i<$speed)
+                                        <i class="icon_star voted"></i>
+                                    @else
+                                        <i class="icon_star"></i>
+                                    @endif
+                                @endfor
                             </div>
                         </li>
-                        <li>Courtesy
+                        <li>Prix
                             <div class="rating">
-                                <i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i>
+                                @for($i=0;$i<5;$i++)
+                                    @if($i<$price)
+                                        <i class="icon_star voted"></i>
+                                    @else
+                                        <i class="icon_star"></i>
+                                    @endif
+                                @endfor
                             </div>
                         </li>
                     </ul>
@@ -782,7 +812,7 @@
         @foreach($reviews as $review)
             <div class="review_strip_single">
                 <img src="" alt="" class="img-circle">
-                <small> - {{$review->created_at}} -</small>
+                <small> - {{date("j F Y",strtotime($review->created_at))}} -</small>
                 <h4>{{$review->client->name}} {{$review->client->surname}}</h4>
                 <p>
                     {{$review->content}}
@@ -922,8 +952,8 @@
                <!-- <input name="chef_id" id="chef_id" type="hidden" value="{{$chef->id}}"> -->
                 @foreach($types as $type)
                     <div class="stars" style="display:flex">
-                            <div class="col-md-6 col-xs-12" style="flex-wrap: wrap;align-items: center;display: flex;">
-                                <?php if($type==1) echo "<label>Quantité</label>"; elseif($type == 2) echo "Propreté";elseif($type == 3) echo "Rapidité";elseif($type == 4) echo "Prix";?>
+                            <div class="col-md-3 col-md-offset-2 col-xs-12" style="flex-wrap: wrap;align-items: center;display: flex;">
+                                <?php if($type==1) echo "<label style='color: white;font-size: 16px'>Quantité</label>"; elseif($type == 2) echo "<label style='color: white;font-size: 16px'>Propreté</label>";elseif($type == 3) echo "<label style='color: white;font-size: 16px'>Rapidité</label>";elseif($type == 4) echo "<label style='color: white;font-size: 16px'>Prix</label>";?>
                             </div>
                             <div class="col-md-6 col-xs-12 col-sm-pull-4 col-xs-pull-4 col-md-pull-1 col-xss-6 col-xss-7">
                                 <input class="star star-5" id="star-5-{{$chef->id}}-{{$type}}" type="radio" value="5" name="star{{$type}}" />
