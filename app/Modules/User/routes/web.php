@@ -20,7 +20,11 @@ Route::group(['module' => 'User', 'middleware' => ['web'], 'namespace' => 'App\M
 
 Route::group(['module'=>'User','middleware'=>'web','namespace' => 'App\Modules\User\Controllers'], function() {
 
-    Route::get('/messages', 'UserController@showMessages')->name('showMessages');
+    Route::get('/messages', 'UserController@showMessages')->name('showMessages')->middleware('auth');
+    Route::post('/sendMessage',['uses'=>'UserController@handleSendMessage','as'=>'handleSendMessage']);
+    Route::post('/deleteMessage/{id}',['uses'=>'UserController@handleDeleteMessage','as'=>'handleDeleteMessage']);
+    Route::post('/restoreMessage/{id}',['uses'=>'UserController@handleRestoreMessage','as'=>'handleRestoreMessage']);
+    Route::post('/readMessage',['uses'=>'UserController@handleReadMessage','as'=>'handleReadMessage']);
 
 });
 

@@ -111,7 +111,7 @@ class LoginController extends Controller
         else {
             Session::put('providerInfo', $socialUserInfo);
             Session::put('provider', $provider);
-            return view('User::frontOffice.subscriptionProvider');
+            return view('User::auth.subscriptionProvider');
         }
     }
 

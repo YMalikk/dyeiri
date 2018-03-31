@@ -5,6 +5,7 @@ namespace App\Modules\User\Controllers;
 use App\Modules\Chef\Models\Chef;
 use App\Modules\Food\Models\FoodOrderReview;
 use App\Modules\Order\Models\Order;
+use App\Modules\User\Models\Message;
 use App\Modules\User\Models\Schedule;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -22,7 +23,7 @@ class UserController extends Controller
       $orders = Order::where('client_id','=',$user->id)->orderBy('created_at','desc')->get();
       $foodOrderReviews = FoodOrderReview::where('user_id','=',$user->id)->get();
       $types[0]=1;$types[1]=2;$types[2]=3;$types[3]=4;
-      return view('User::frontOffice.profile',compact('orders','foodOrderReviews','user','types'));
+      return view('User::backOffice.profile',compact('orders','foodOrderReviews','user','types'));
     }
 
     public function changeCurrentUser($currentUser)
@@ -134,7 +135,102 @@ class UserController extends Controller
 
     public function showMessages()
     {
-        return Auth::user()->messages;
+        $user=Auth::user();
+        $deletedSentMessages=$user->messagesSentDeleted;
+        $deletedReceivedMessages=$user->messagesReceiveDeleted;
+        $sentMessages=$user->messagesSent;
+        $receivedMessages=$user->messagesReceived;
+
+        return view('User::backOffice.showMessage',compact('user','deletedReceivedMessages','receivedMessages','sentMessages','deletedSentMessages'));
+    }
+
+    public function handleSendMessage(Request $request)
+    {
+        $user=Auth::user();
+        $verifyForm = Validator::make($request->all(), [
+            'subject' => 'required|max:190|min:1',
+            'message' => 'required|max:190|min:1',
+        ]);
+        if($verifyForm->fails())
+        {
+            $translator = new TranslateClient('en', 'fr');
+            $result="";
+            $errorArray=$verifyForm->messages()->all();
+            $checkAddress=false;
+
+            foreach($errorArray as $error)
+            {
+
+                //check if lat or lng or address is empty -> same error message
+                if(($error=="The lng field is required.") || ($error=="The lat field is required.") || ($error=="The address field is required."))
+                {
+
+                    if($checkAddress===false)
+                    {
+                        $checkAddress=true;
+                        $result.=$translator->translate('Vérifier votre adresse').", ";
+                    }
+                }
+                else
+                {
+                    $result .= $translator->translate($error).", ";
+                }
+            }
+            //i use the substr cause always if we found error in the form the last caractére w'll be always ","
+            alert()->error(substr($result,0,strlen($result)-1),'Erreur')->persistent('Ok');
+            return redirect()->back();
+        }
+        else
+        {
+            Message::create([
+                'subject'=>$request->subject,
+                'content'=>$request->message,
+                'sender_id'=>$user->id,
+                'to_id'=>1
+            ]);
+            alert()->success("Votre message a été envoyer avec succès",'Information')->persistent('Ok');
+            return redirect()->back();
+        }
+    }
+
+    public function handleDeleteMessage($id)
+    {
+        $message=Message::find($id);
+        if($message)
+        {
+            $message->status=2;
+            $message->save();
+            alert()->success("Votre message a été supprimer avec succès",'Information')->persistent('Ok');
+        }
+        return redirect()->back();
+    }
+
+    public function handleRestoreMessage($id)
+    {
+        $message=Message::find($id);
+        if($message)
+        {
+            $message->status=1;
+            $message->save();
+            alert()->success("Votre message a été restoré avec succès",'Information')->persistent('Ok');
+        }
+        return redirect()->back();
+    }
+
+    public function handleReadMessage(Request $request)
+    {
+       $messageRead=Message::find($request->messageId);
+       if($messageRead)
+       {
+           $messageRead->status=1;
+           $messageRead->save();
+           return "done";
+       }
+       else
+       {
+           return "error 404";
+       }
+
     }
 
 }

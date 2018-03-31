@@ -82,9 +82,37 @@ class User extends Authenticatable {
     {
         return $this->hasMany('App\Modules\User\Models\Message', 'user_id','id');
     }
-  public function messagesNotRead()
+
+
+    public function messagesSent()
     {
-        return $this->hasMany('App\Modules\User\Models\Message', 'user_id','id')->where('status','=',0);
+        return $this->hasMany('App\Modules\User\Models\Message', 'sender_id','id');
+    }
+
+    public function messagesReceived()
+    {
+        return $this->hasMany('App\Modules\User\Models\Message', 'to_id','id');
+
+    }
+
+    public function messagesSentNotRead()
+    {
+        return $this->hasMany('App\Modules\User\Models\Message', 'sender_id','id')->where('status','=',0);
+    }
+
+    public function messagesNotRead()
+    {
+        return $this->hasMany('App\Modules\User\Models\Message', 'to_id','id')->where('status','=',0);
+    }
+
+    public function messagesSentDeleted()
+    {
+        return $this->hasMany('App\Modules\User\Models\Message', 'sender_id','id')->where('status','=',2);
+    }
+
+    public function messagesReceiveDeleted()
+    {
+        return $this->hasMany('App\Modules\User\Models\Message', 'to_id','id')->where('status','=',2);
     }
 
 }

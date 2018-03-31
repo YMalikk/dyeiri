@@ -18,10 +18,10 @@ class CreateMessagesTable extends Migration
             $table->string('subject');
             $table->string('content');
             $table->integer('status')->default(0);// 0 => non lu , 1 => lue, 2 supprimé par client, 3 supprimé par admin
-            $table->integer('admin_id')->unsigned();
-            $table->foreign('admin_id')->references('id')->on('users');
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('sender_id')->unsigned();
+            $table->foreign('sender_id')->references('id')->on('users');
+            $table->integer('to_id')->unsigned();
+            $table->foreign('to_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

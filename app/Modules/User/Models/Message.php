@@ -31,8 +31,8 @@ class Message extends Model
         'content',
         'subject',
         'status',
-        'admin_id',
-        'user_id'
+        'sender_id',
+        'to_id'
     ];
 
     public function user()

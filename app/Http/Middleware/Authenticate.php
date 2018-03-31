@@ -37,7 +37,7 @@ class Authenticate
     {
         if ( !$this->auth->user() ){
 
-            return redirect()->route('');
+            return redirect()->route('showLogin');
         }
         else
         {
