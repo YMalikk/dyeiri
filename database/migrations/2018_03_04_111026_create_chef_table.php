@@ -16,6 +16,7 @@ class CreateChefTable extends Migration
     {
         Schema::create('chef', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('mobile')->nullable();
             $table->string('address')->nullable();
             $table->string('lat')->nullable();
             $table->string('lng')->nullable();

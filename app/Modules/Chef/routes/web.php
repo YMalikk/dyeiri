@@ -16,6 +16,10 @@ Route::group(['module'=> 'User','middleware'=>'chef','namespace'=>'App\Modules\C
     Route::get('/confirmOrderChef/{id}', 'ChefController@confirmOrderChef')->name('confirmOrderChef');
     Route::get('/denyOrderChef/{id}', 'ChefController@denyOrderChef')->name('denyOrderChef');
     Route::get('/confirmDishReadyChef/{id}', 'ChefController@confirmDishReadyChef')->name('confirmDishReadyChef');
+    Route::post('/handleEditChefProfile',['uses'=>'ChefController@handleEditChefProfile','as'=>'handleEditChefProfile']);
+    Route::post('/handleChefChangeImage',['uses'=>'ChefController@handleChefChangeImage','as'=>'handleChefChangeImage']);
+    Route::post('/handleChefChangeCover',['uses'=>'ChefController@handleChefChangeCover','as'=>'handleChefChangeCover']);
+
 
 });
 

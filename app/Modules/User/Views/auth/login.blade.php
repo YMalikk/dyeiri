@@ -9,7 +9,8 @@
 @stop
 
 @section('content')
-    <div>
+    <div class="page_content">
+        <div class="">
                 <form action="{{route('handleConnection')}}" method="POST" class="popup-form" id="myLogin">
                     {!! csrf_field() !!}
                     <div class="login_icon"><i class="icon_lock_alt"></i></div>
@@ -32,6 +33,7 @@
                     </div>
                     <button type="submit" class="btn btn-submit">Connexion</button>
                 </form>
+        </div>
     </div><!-- End modal -->
 
 @stop

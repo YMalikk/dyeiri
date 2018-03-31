@@ -78,4 +78,13 @@ class User extends Authenticatable {
         return $this->hasMany('App\Modules\Food\Models\FoodOrderReview', 'user_id','id');
     }
 
+    public function messages()
+    {
+        return $this->hasMany('App\Modules\User\Models\Message', 'user_id','id');
+    }
+  public function messagesNotRead()
+    {
+        return $this->hasMany('App\Modules\User\Models\Message', 'user_id','id')->where('status','=',0);
+    }
+
 }

@@ -2,8 +2,10 @@
 
 namespace App\Modules\User\Controllers;
 
+use App\Modules\Chef\Models\Chef;
 use App\Modules\Food\Models\FoodOrderReview;
 use App\Modules\Order\Models\Order;
+use App\Modules\User\Models\Schedule;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Alert;
@@ -31,7 +33,34 @@ class UserController extends Controller
         switch($currentUser)
         {
             case 1 : $user->current_user=2;$user->save(); return redirect()->route('showProfile');
-            case 2 : $user->current_user=1;$user->save(); return redirect()->route('showChefProfile');
+            case 2 : $user->current_user=1;
+            if(!$user->hasRole("chef"))
+            {
+                $destinationPathCoverPhoto='storage/uploads/chefs/chefCover.jpg';
+                $dataChef=[
+                    'cover_photo'=>$destinationPathCoverPhoto,
+                    'likes_count'=>0,
+                    'description'=>'',
+                    'work'=>'',
+                    'language'=>'Arabic',
+                    'status'=>0,
+                    'user_id'=>$user->id
+                ];
+
+                Chef::create($dataChef);
+                for($i=1;$i<=7;$i++)
+                {
+                    Schedule::create([
+                        'day'=>$i,
+                        'status'=>0,
+                        'user_id'=>$user->id
+                    ]);
+                }
+                $user->assignRole(3);
+            }
+
+            $user->save();
+            return redirect()->route('showChefProfile');
         }
         }
         else
@@ -46,7 +75,9 @@ class UserController extends Controller
         $verifyForm = Validator::make($request->all(), [
             'name' => 'required|max:190|min:1',
             'surname' => 'required|max:190|min:1',
-            'email' => 'required|email|'
+            'email' => 'required|email|',
+            'lng' => 'between:-180.00,180.00',
+            'lat' => 'between:-90.00,90.00',
         ]);
         if($verifyForm->fails())
         {
@@ -89,10 +120,21 @@ class UserController extends Controller
             {
                 $request->password=bcrypt($request->password);
             }
+            if($request->address!=null)
+            {
+                $user->address=$request->address;
+                $user->lat=$request->lat;
+                $user->lng=$request->lng;
+            }
             $user->save();
             alert()->success("Vos informations on été mise à jour avec succès","Information")->persistent("Ok");
             return redirect()->route('showProfile');
         }
+    }
+
+    public function showMessages()
+    {
+        return Auth::user()->messages;
     }
 
 }

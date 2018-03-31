@@ -109,12 +109,11 @@ $(document).ready(function () {
             if(currentForm==3)
             {
                 currentForm++;
-
                 $(".results_images").empty();
                 $(".tel_result").empty();
                 $(".address_result").empty();
                 $(".address_result").append($("#address").clone().attr("disabled","disabled"));
-                $(".tel_result").append($("#tel_int").clone().attr("disabled","disabled"));
+                $(".tel_result").append($("#my_mobile").clone().attr("disabled","disabled").attr("type","text").addClass("form-control"));
             }
             console.log("Current form : "+currentForm);
         }
@@ -133,9 +132,37 @@ $(document).ready(function () {
         console.log("Current form : "+currentForm);
 
     });
+
+
+    $(".timepicker").focus(function()
+    {
+        $(".glyph-icon.icon-chevron-down").each(function()
+        {
+            $(this).attr("class","fas fa-chevron-down");
+            console.log("Down");
+        });
+
+        $(".glyph-icon.icon-chevron-up").each(function()
+        {
+            $(this).attr("class","fas fa-chevron-up");
+            console.log("Up");
+        });
+    });
+
+
+    $('.toggle_disponibility').change(function () {
+        if (this.checked) {
+            $(this).parent().next().show();
+
+        }
+        else {
+            $(this).parent().next().hide();
+
+        }
+    });
 });
 
-function addImage(input) {
+function addImages(input) {
     var files = input.files;
     var wrongImage = false,currentImageNumber = parseInt($("#images_count").text()),
         keep = true;
@@ -186,7 +213,7 @@ function addImage(input) {
     }
 }
 $("#kitchen_image").change(function(){
-    addImage(this);
+    addImages(this);
 
 });
 

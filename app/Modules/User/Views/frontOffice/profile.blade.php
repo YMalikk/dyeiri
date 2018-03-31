@@ -191,6 +191,20 @@
                             </div>
 
                             <div class="form-group">
+                                <label class="control-label col-sm-3">Address<span class="text-danger"></span></label>
+                                <div class="col-md-8 col-sm-9">
+                                    <div class="input-group address_result">
+                                        <input type="text" disabled="" name="address" id="address" value="{{$user->address}}" class="form-control"/>
+                                        <input type="hidden" name="lat" id="lat" value="{{$user->lat}}"/>
+                                        <input type="hidden" name="lng" id="lng" value="{{$user->lng}}"/>
+                                        <input type="hidden" name="city" id="city"/>
+                                        <input type="hidden" name="country" id="country"/>
+                                        </div>
+                                    <small>Votre adresse va nous aidez à livrer votre commande chez vous.</small> </div>
+                            </div>
+
+
+                            <div class="form-group">
                                 <label class="control-label col-sm-3">Password<span class="text-danger"></span></label>
                                 <div class="col-md-8 col-sm-9">
                                     <div class="input-group address_result">
@@ -198,6 +212,7 @@
                                     </div>
                                     <small>Votre prénom sera visible par tout les utilisateurs. </small> </div>
                             </div>
+
                             <div class="form-group">
                                 <label class="control-label col-sm-3">  <input type="button" class="btn btn-success" id="btn_edit_profile" value="Modifier"/></label>
                                 <div class="col-md-8 col-sm-9">
@@ -504,6 +519,8 @@
             $("#surname").removeAttr("disabled");
             $("#name").removeAttr("disabled");
             $("#password").removeAttr("disabled");
+            $("#address").removeAttr("disabled");
+            $("#email").removeAttr("disabled");
             $("#btn_edit_profile").val("Annuler");
             $("#btn_edit_profile").attr("id","btn_cancel_edit");
            $("#submit_form").css("display","block");
@@ -516,6 +533,8 @@
            $("#surname").attr("disabled",true);
            $("#password").attr("disabled",true);
            $("#name").attr("disabled",true);
+           $("#address").attr("disabled",true);
+           $("#email").attr("disabled",true);
            $("#submit_form").css("display","none");
            $("#btn_cancel_edit").val("Modifier");
            $("#btn_cancel_edit").attr("id","btn_edit_profile");
@@ -524,4 +543,6 @@
 @stop
 @section('footer')
     @include('frontOffice.inc.footer')
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCj1cCyUDGUciWPWK7kzjrxjLx4wDDS9c&libraries=places&callback=initAutocomplete"
+            async defer></script>
 @endsection

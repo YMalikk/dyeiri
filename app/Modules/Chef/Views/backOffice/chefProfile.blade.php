@@ -13,6 +13,10 @@
 @stop
 
 @section('content')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="{{ asset ('plugins/intlTelInput/css')}}/intlTelInput.css"/>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="{{ asset ('plugins/intlTelInput/js')}}/intlTelInput.js"></script>
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     <style>
@@ -71,17 +75,85 @@
         .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
             right: 0px;
         }
+        #chef_information_form input[type=text],input[type=password],input[type=tel],input[type=email]
+        {
+            width:250px!important;
+        }
+        .country-list
+        {
+            z-index: 9999999!important;
+        }
+        #tel_int:focus
+        {
+            position: initial;
+        }
+        .update_img
+        {
+            display:none!important;
+        }
+     .update_cover_image
+        {
+            display:none!important;
+        }
+
+        .chef_image
+        {
+            width: 120px!important;
+            height: 100%!important;
+
+        }
+
+      #change_cover_photo
+      {
+          display:block;
+      }
+        .text_aling_left
+        {
+            text-align: left;
+
+        }
+        .camera_icon
+        {
+            background: white;
+            color: black;
+        }
+        .lbl_change_cover_photo
+        {
+            color:#7dc440;
+            display:inline;
+        }
 
     </style>
 <!-- SubHeader =============================================== -->
 <section class="parallax-window" data-parallax="scroll" data-image-src="{{asset($chef->cover_photo)}}" data-natural-width="1400" data-natural-height="470">
     <div id="subheader">
         <div id="sub_content">
-            <div id="thumb"><img src="{{asset($user->image)}}" alt=""></div>
+            <div class="row show_cover_change">
+                <div class="col-md-6 col-xs-12 pull-left text_aling_left">
+                        <i class="fas fa-camera fa-2x camera_icon btn"></i>
+                <div id="change_cover_photo">
+                    <input type="file" name="cover_photo" id="cover_photo" class="form-control update_cover_image" accept="image/jpeg"/>
+
+                    <label title="Modifier photo" class="lbl_change_cover_photo" style="cursor: pointer;" for="cover_photo">
+                     Changer votre photo de couveture
+
+                    </label>
+                </div>
+                </div>
+            </div>
+            <div id="thumb">
+                <div id="my_img">
+                    <input type="file" name="chef_image" id="chef_image" class="form-control update_img" accept="image/jpeg"/>
+                    <label title="Modifier photo" style="cursor: pointer;" for="chef_image">
+                        <img src="{{asset($user->image)}}" id="change_chef_image" alt="">
+                    </label>
+                </div>
+
+            </div>
             <div class="rating"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i> (<small><a href="detail_page_2.html">Read 98 reviews</a></small>)</div>
             <h1>{{ucfirst($user->name)}} {{ucfirst($user->surname)}}</h1>
             <div><em>{{$chef->speciality}}</em></div>
-            <div><i class="icon_pin"></i> {{$user->address}}</div>
+            <div><i class="icon_pin"></i> {{$chef->address}}</div>
         </div><!-- End sub_content -->
     </div><!-- End subheader -->
 </section><!-- End section -->
@@ -768,7 +840,81 @@
     <div id="setting" class="tab-pane fade">
         <div class="row">
             <h3>Paramétre </h3>
-            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <form id="chef_information_form"  action="{{route('handleEditChefProfile')}}" method="POST">
+                {!! csrf_field() !!}
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Nom<span class="text-danger"></span></label>
+                    <div class="col-md-8 col-sm-9">
+                        <div class="input-group">
+                            <input id="name" type="text" name="name" class="form-control" disabled value="{{$chef->user->name}}"/>
+
+                      </div>
+                        <small>Seule la premiére lettre de votre nom sera visible par les utilisateurs</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Prénom<span class="text-danger"></span></label>
+                    <div class="col-md-8 col-sm-9">
+                        <div class="input-group">
+                            <input id="surname" type="text" class="form-control" name="surname" disabled value="{{$chef->user->surname}}"/>
+
+                        </div>
+                        <small>Votre prénom sera visible par les utilisateurs</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Numéro de téléphone<span class="text-danger"></span></label>
+                    <div class="col-md-8 col-sm-9">
+                        <div class="input-group">
+                            <input id="code_tel_int"  type="hidden" name="countryCode"/>
+                            <input name="mobile" type="hidden" id="my_mobile"/>
+                            <input type="hidden" name="pays" id="my_pays"/>
+
+                            <input type="tel" id="tel_int" class="form-control" disabled required> </div>
+                        <small>Votre numéro de téléphone sera visible que par l'administrateur du site web.</small> </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Email<span class="text-danger"></span></label>
+                    <div class="col-md-8 col-sm-9">
+                        <div class="input-group">
+                            <input id="email" type="email" class="form-control" name="email" disabled value="{{$chef->user->email}}"/>
+
+                        </div>
+                        <small>Votre email vous aide à vous connectez</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Adresse<span class="text-danger"></span></label>
+                    <div class="col-md-8 col-sm-9">
+                        <div class="input-group">
+                            <input id="address" type="text" class="form-control" name="address" disabled value="{{$chef->address}}"/>
+                            <input type="hidden" name="lat" id="lat" value="{{$chef->lat}}"/>
+                            <input type="hidden" name="lng" id="lng" value="{{$chef->lng}}"/>
+                            <input type="hidden" name="city" id="city"/>
+                            <input type="hidden" name="country" id="country"/>
+                        </div>
+                        <small>Votre email vous aide à vous connectez</small>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="control-label col-sm-3">  <input type="button" class="btn btn-success" id="btn_edit_profile" value="Modifier"/></label>
+                    <div class="col-md-8 col-sm-9">
+                        <div class="input-group address_result">
+                            <input type="submit" style="display:none;" id="submit_form" class="btn btn-success" value="Enregistrer"> </div>
+
+
+
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     
@@ -1012,7 +1158,8 @@
 @stop
 @section('footer')
     @include('frontOffice.inc.footer')
-
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCj1cCyUDGUciWPWK7kzjrxjLx4wDDS9c&libraries=places&callback=initAutocomplete"
+            async defer></script>
         <script src="{{asset("js/jquery.sliderPro.min.js")}}"></script>
         <script type="text/javascript">
             function initCarousel()
@@ -1035,6 +1182,11 @@
             }
             $(document).ready(function() {
                 initCarousel();
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
 
             });
         </script>
@@ -1042,6 +1194,130 @@
         $("#myonoffswitch").click(function()
         {
             window.location.replace("{{route('changeCurrentUser',array($chef->user->current_user))}}");
+        });
+    </script>
+    <script>
+        $("#tel_int").intlTelInput(
+            {
+                utilsScript:'{{asset('plugins/intlTelInput/js/utils.js')}}',
+                separateDialCode: false
+            }
+        );
+        $("#tel_int").intlTelInput("setNumber", "{{$chef->mobile}}");
+        function valideTel() {
+
+            var result = true;
+            if (!$("#tel_int").intlTelInput("isValidNumber")) {
+                $("#tel_int").focus();
+                console.log("nop");
+                result = false;
+            }
+            else {
+                var countryData = $("#tel_int").intlTelInput("getSelectedCountryData");
+                $("#code_tel_int").val(countryData.dialCode);
+                $("#my_mobile").val($("#tel_int").intlTelInput("getNumber"));
+                $("#my_pays").val(countryData.name);
+            }
+            return result;
+        }
+        var form=document.getElementById("chef_information_form");
+        $(document).ready(function()
+        {
+            form.onsubmit=valideTel;
+
+        });
+
+        $(document).on("click","#btn_edit_profile",function()
+        {
+            $("#email").removeAttr("disabled");
+            $("#name").removeAttr("disabled");
+            $("#surname").removeAttr("disabled");
+            $("#name").removeAttr("disabled");
+            $("#address").removeAttr("disabled");
+            $("#tel_int").removeAttr("disabled");
+            $("#password").removeAttr("disabled");
+            $("#email").removeAttr("disabled");
+            $("#btn_edit_profile").val("Annuler");
+            $("#btn_edit_profile").attr("id","btn_cancel_edit");
+            $("#submit_form").css("display","block");
+        });
+
+        $(document).on("click","#btn_cancel_edit",function () {
+            $("#btn_cancel_edit").text("Modifier");
+            $("#email").attr("disabled",true);
+            $("#name").attr("disabled",true);
+            $("#surname").attr("disabled",true);
+            $("#password").attr("disabled",true);
+            $("#name").attr("disabled",true);
+            $("#address").attr("disabled",true);
+            $("#tel_int").attr("disabled",true);
+            $("#email").attr("disabled",true);
+            $("#submit_form").css("display","none");
+            $("#btn_cancel_edit").val("Modifier");
+            $("#btn_cancel_edit").attr("id","btn_edit_profile");
+        })
+    </script>
+    <script>
+        function updateProfileImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var myPhoto=new FormData();
+                    myPhoto.append('photo',e.target.result);
+                    $.ajax({
+                        url:"{{route('handleChefChangeImage')}}",
+                        type:"POST",
+                        data:myPhoto,
+                        contentType: false,
+                        processData: false,
+                        success:function(result)
+                        {
+                            $("#change_chef_image").attr("src",e.target.result);
+
+                            },
+                        error:function(result)
+                        {
+                            console.log(("erreur : "+JSON.stringify(result)));
+                        }
+                    });
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function updateCoverImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var myPhoto=new FormData();
+                    myPhoto.append('photo',e.target.result);
+                    $.ajax({
+                        url:"{{route('handleChefChangeCover')}}",
+                        type:"POST",
+                        data:myPhoto,
+                        contentType: false,
+                        processData: false,
+                        success:function(result)
+                        {
+                            $(".parallax-window").css("background-image","url('"+e.target.result+"')");
+                            $(".parallax-window").css("background-size","100% 100%");
+                            $(".parallax-window").css("background-repeat","no-repeat");
+                        },
+                        error:function(result)
+                        {
+                            console.log("erreur : "+JSON.stringify(result));
+                        }
+                    });
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $(".update_img").change(function(){
+            updateProfileImage(this);
+        });
+
+        $(".update_cover_image").change(function(){
+            updateCoverImage(this);
         });
     </script>
 @endsection
