@@ -42,6 +42,8 @@ class AuthenticateChef
         }
         else
         {
+            if(!$this->auth->user()->hasRole("admin"))
+            {
             if($this->auth->user()->current_user==2)
             {
                 return redirect('/');
@@ -53,6 +55,11 @@ class AuthenticateChef
                 {
                     return redirect()->route("showChefRegisterStepTwo");
                 }
+            }
+            }
+            else
+            {
+                return redirect()->route('showAdminLogin');
             }
         }
 

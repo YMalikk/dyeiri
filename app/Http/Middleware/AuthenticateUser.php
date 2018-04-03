@@ -48,9 +48,14 @@ class AuthenticateUser
         }
         else
         {
-            if($this->auth->user()->current_user==1)
+            if(!$this->auth->user()->hasRole("admin")) {
+                if ($this->auth->user()->current_user == 1) {
+                    return redirect('/');
+                }
+            }
+            else
             {
-                return redirect('/');
+                return redirect()->route('showAdminLogin');
             }
         }
 

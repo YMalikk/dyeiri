@@ -30,7 +30,7 @@
                         @if($user==null)
                             <li><a href="{{route('showChefRegister')}}" style="border: none;" class="be_delivery_man become_chef">Proposer un plat</a></li>
                         @endif
-                            <li><a href="about.html">Blog</a></li>
+                            <li><a href="{{route('showBlogs')}}">Blog</a></li>
                             <li><a href="about.html">A propos de nous</a></li>
                             @if($user==null)
                                 <li><a href="{{route('showClientRegister')}}">S'inscrire</a></li>

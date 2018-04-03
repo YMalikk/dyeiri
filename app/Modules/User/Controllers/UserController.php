@@ -7,6 +7,7 @@ use App\Modules\Food\Models\FoodOrderReview;
 use App\Modules\Order\Models\Order;
 use App\Modules\User\Models\Message;
 use App\Modules\User\Models\Schedule;
+use App\Modules\User\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Alert;
@@ -231,6 +232,108 @@ class UserController extends Controller
            return "error 404";
        }
 
+    }
+
+    public function showDashboard()
+    {
+        $months=array(0,0,0,0,0,0,0,0,0,0,0,0);
+        $monthsUser=array(0,0,0,0,0,0,0,0,0,0,0,0);
+        $chefs= User::whereHas('roles', function($q){
+            $q->where('title', 'chef');
+        })->get();
+
+        $users= User::whereHas('roles', function($q){
+            $q->where('title', 'client');
+        })->get();
+
+
+        foreach($chefs as $chef)
+        {
+            $months[$chef->created_at->month-1]++;
+        }
+
+        foreach($users as $user)
+        {
+            $monthsUser[$user->created_at->month-1]++;
+        }
+
+        return view('User::admin.dashboard',compact('chefs','months','users','monthsUser'));
+    }
+
+    public function handleAdminSendMessage(Request $request)
+    {
+        $user = Auth::user();
+        $verifyForm = Validator::make($request->all(), [
+            'to'=>'required',
+            'subject' => 'required|max:190|min:1',
+            'message' => 'required|max:190|min:1',
+        ]);
+
+        if ($verifyForm->fails()) {
+            $translator = new TranslateClient('en', 'fr');
+            $result = "";
+            $errorArray = $verifyForm->messages()->all();
+            $checkAddress = false;
+
+            foreach ($errorArray as $error) {
+
+                //check if lat or lng or address is empty -> same error message
+                if (($error == "The lng field is required.") || ($error == "The lat field is required.") || ($error == "The address field is required.")) {
+
+                    if ($checkAddress === false) {
+                        $checkAddress = true;
+                        $result .= $translator->translate('Vérifier votre adresse') . ", ";
+                    }
+                } else {
+                    $result .= $translator->translate($error) . ", ";
+                }
+            }
+            //i use the substr cause always if we found error in the form the last caractére w'll be always ","
+            alert()->error(substr($result, 0, strlen($result) - 1), 'Erreur')->persistent('Ok');
+            return redirect()->back();
+        } else {
+
+            Message::create([
+                'subject'=>$request->subject,
+                'content'=>$request->message,
+                'to_id'=>$request->to,
+                'sender_id'=>$user->id,
+            ]);
+            alert()->success("Votre message a été envoyer avec succès",'Information')->persistent('Ok');
+            return redirect()->back();
+        }
+
+    }
+
+    public function showAdminMessages()
+    {
+        $user=Auth::user();
+        $deletedSentMessages=$user->messagesSentDeleted;
+        $deletedReceivedMessages=$user->messagesReceiveDeleted;
+        $sentMessages=$user->messagesSent;
+        $receivedMessages=$user->messagesReceived;
+        $users= User::whereHas('roles', function($q){
+            $q->where('title', '!=','admin');
+        })->get();
+        return view('User::admin.message',compact('user','deletedReceivedMessages','receivedMessages','sentMessages','deletedSentMessages','users'));
+    }
+
+    public function showChefList()
+    {
+        $chefs= User::whereHas('roles', function($q){
+            $q->where('title', 'chef');
+        })->get();
+
+        return view('User::admin.chefList',compact('chefs'));
+    }
+
+    public function showClientList()
+    {
+        $users= User::whereHas('roles', function($q){
+            $q->where('title', 'client');
+        })->get();
+
+        return view('User::admin.clientList',compact('users'));
     }
 
 }

@@ -2,9 +2,11 @@
 
 namespace App\Modules\Content\Controllers;
 
+use App\Modules\Blog\Models\Blog;
 use App\Modules\Chef\Models\Category;
 use App\Modules\Chef\Models\Chef;
 use App\Modules\Chef\Models\Food;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +20,25 @@ class ContentController extends Controller
         return view('Content::home',compact('categories'));
     }
 
+    public function showBlogs()
+    {
+        $posts = Blog::Where("status","=",1)->orderBy('created_at','desc')->get();
+        return view('Content::showBlogs',compact('posts'));
+    }
+
+    public function showBlog($id)
+    {
+        $post = Blog::find($id);
+        if($post)
+        {
+        return view('Content::showBlog',compact('post'));
+        }
+        else
+        {
+            alert()->error("La publication cherché n'exste pas","Erreur")->persistent("Ok");
+            return redirect()->back();
+        }
+    }
     public function handleSearchFood(Request $request)
     {
         if(!isset($request->lat) || !isset($request->lng))
@@ -79,4 +100,6 @@ class ContentController extends Controller
         }
         return view('Content::searchResults',compact('chefs','lat','lng'));
     }
+
+
 }

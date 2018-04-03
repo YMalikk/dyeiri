@@ -79,6 +79,7 @@ ul.recent_post li:last-child{
 	font-size:22px;
 }
 .post img {
+	width: -webkit-fill-available;
 }
 .post p {
 	margin-bottom:20px;

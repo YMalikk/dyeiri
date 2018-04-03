@@ -189,4 +189,26 @@ class LoginController extends Controller
     {
             return view('User::auth.login');
     }
+
+    public function showAdminLogin()
+    {
+        return view('User::admin.auth.login');
+    }
+
+    public function handleAdminLogin(Request $request)
+    {
+        $credentials = $this->credentials($request);
+        $remember_me = $request->has('remember_me') ? true : false;
+        if (auth()->attempt(['email' => $request->input('email'), 'password' => $request->input('password')], $remember_me)) {
+            $user = Auth::getLastAttempted($credentials, true);
+                if ($user->hasRole('admin')) {
+                    Auth::login($user);
+                    return redirect()->route('showDashboard');
+                }
+        } else {
+            Auth::logout();
+            alert()->error('Vérifier vos données', 'Erreur')->persistent('Ok');
+            return redirect()->back();
+        }
+    }
 }

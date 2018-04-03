@@ -35,14 +35,13 @@ class Message extends Model
         'to_id'
     ];
 
-    public function user()
+    public function receiver()
     {
-        return $this->belongsTo('App\Modules\User\Models\User', 'id','user_id');
+        return $this->belongsTo('App\Modules\User\Models\User', 'to_id','id');
     }
 
-    public function admin()
-
+    public function sender()
     {
-        return $this->belongsTo('App\Modules\User\Models\User', 'id','admin_id');
+        return $this->belongsTo('App\Modules\User\Models\User', 'sender_id','id');
     }
 }
