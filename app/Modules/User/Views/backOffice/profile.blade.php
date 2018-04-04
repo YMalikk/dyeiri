@@ -269,7 +269,7 @@
             </div>
            </div>
 
-           <div id="orders" class="tab-pane fade">
+        <div id="orders" class="tab-pane fade">
            <div class="row">
                <div class="col-md-12">
                    <div class="box_style_2" id="main_menu">
@@ -313,7 +313,12 @@
                                                    @if($order->status == 0)
                                                        <h4><span class="label label-warning">En attente</span></h4>
                                                    @elseif($order->status == 1)
-                                                       <h4><span class="label" style="background-color: lightseagreen">Confirmé par le chef</span></h4>
+                                                       @if($order->message)
+                                                           <h4 class="tooltip_styled tooltip-effect-4"><span class="label" style="background-color: lightseagreen">Confirmé par le chef</span>
+                                                               <div class="fs1" style="display: inherit;" aria-hidden="true" data-icon="r"></div> <div class="tooltip-content">Le chef a laissé un message</div></h4>
+                                                       @else
+                                                           <h4 class="fs1 tooltip_styled tooltip-effect-4"><span class="label" style="background-color: lightseagreen">Confirmé par le chef</span>
+                                                       @endif
                                                    @elseif($order->status == 2)
                                                        <h4><span class="label" style="background-color: #415F95">Prêt</span></h4>
                                                    @elseif($order->status == 3)
@@ -376,8 +381,18 @@
                                                @endforeach
                                                </tbody>
                                            </table>
+                                           @if($order->message)
+                                               <div class="pull-left">
+                                                   <h4>Message du Chef : </h4>
+                                                   <h5>{{$order->message}}</h5>
+                                               </div>
+                                           @endif
                                            @if($order->status == 0)
                                                <button onclick="location.href={{route('denyOrderClient',['id' => $order->id])}}" class="btn_2 add_bottom_15 pull-right">Annulez la commande</button>
+                                           @elseif($order->status == 1 && isset($order->message) && (\Carbon\Carbon::parse($order->updated_at)->diffInMinutes($now) < 15))
+                                               <button onclick="location.href={{route('denyOrderClient',['id' => $order->id])}}" class="btn_2 add_bottom_15 pull-right">Annulez la commande</button>
+                                           @else
+                                               <button disabled="disabled" onclick="location.href={{route('denyOrderClient',['id' => $order->id])}}" class="btn_2 add_bottom_15 pull-right">Annulez la commande</button>
                                            @endif
                                        </div>
                                    </div>
