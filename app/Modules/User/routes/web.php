@@ -46,6 +46,7 @@ Route::group(['module' => 'User','middleware'=>'admin', 'namespace' => 'App\Modu
     Route::get('/admin/messages', 'UserController@showAdminMessages')->name('showAdminMessages');
     Route::get('/admin/chefs', 'UserController@showChefList')->name('showChefList');
     Route::get('/admin/clients', 'UserController@showClientList')->name('showClientList');
+    Route::get('/admin/orders', 'UserController@showOrderList')->name('showOrderList');
     Route::post('/admin/sendMessage', 'UserController@handleAdminSendMessage')->name('handleAdminSendMessage');
 });
 
