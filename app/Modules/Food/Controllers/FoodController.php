@@ -9,6 +9,7 @@ use App\Modules\User\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
+use Illuminate\Queue\RedisQueue;
 
 class FoodController extends Controller
 {
@@ -70,5 +71,26 @@ class FoodController extends Controller
         }
         alert()->success('Avis ajouté', 'Reussi')->persistent('Ok');
         return redirect()->back();
+    }
+
+    public function handleChefAddFood(Request $request)
+    {
+        $food = Food::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'preparation_time' => $request->preparation_time,
+            'status' =>1,
+            'category_id' => $request->category_id,
+            'chef_id' => $request->chef_id
+        ]);
+        if($food->exists)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
     }
 }
