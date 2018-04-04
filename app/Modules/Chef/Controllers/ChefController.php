@@ -27,6 +27,7 @@ class ChefController extends Controller
         $mains = $chef->getFoods->where('category_id','=',2);
         $desserts = $chef->getFoods->where('category_id','=',3);
         $drinks = $chef->getFoods->where('category_id','=',4);
+        $dayFoods =  $chef->getFoods->where('category_id','=',5);
         $reviews = $chef->reviews;
         $kitchenImages=$chef->getKitchenImages;
         $orders = Order::where('chef_id','=',$chef->id)->orderBy('created_at','desc') ->get();
@@ -36,7 +37,7 @@ class ChefController extends Controller
             $orderIdTable[]=$order->id;
         }
         $foodOrderReviews = FoodOrderReview::whereIn('order_id',$orderIdTable)->get();
-        return view('Chef::backOffice.chefProfile',compact('user','chef','drinks','kitchenImages','orders','entrees','desserts','mains','reviews','foodOrderReviews'));
+        return view('Chef::backOffice.chefProfile',compact('user','chef','dayFoods','drinks','kitchenImages','orders','entrees','desserts','mains','reviews','foodOrderReviews'));
     }
 
 
@@ -49,6 +50,7 @@ class ChefController extends Controller
         $mains = $chef->getFoods->where('category_id','=',2);
         $desserts = $chef->getFoods->where('category_id','=',3);
         $drinks = $chef->getFoods->where('category_id','=',4);
+        $dayFoods =  $chef->getFoods->where('category_id','=',5);
         $reviews = $chef->reviews;
         foreach($reviews as $review)
         {
@@ -58,15 +60,23 @@ class ChefController extends Controller
             $speed+= $reviewRatings->where('rating_type_id','=',3)->first()->rating;
             $price+= $reviewRatings->where('rating_type_id','=',4)->first()->rating;
         }
-        $amount=$amount/count($reviews);
-        $clean=$clean/count($reviews);
-        $speed=$speed/count($reviews);
-        $price=$price/count($reviews);
-        $total = ($price+$speed+$amount+$clean)/4;
+        if(count($reviews)==0)
+        {
+            $total=0;
+        }
+        else
+        {
+            $amount=$amount/count($reviews);
+            $clean=$clean/count($reviews);
+            $speed=$speed/count($reviews);
+            $price=$price/count($reviews);
+            $total = ($price+$speed+$amount+$clean)/4;
+        }
+        
         $kitchenImages=$chef->getKitchenImages;
         $types[0]=1;$types[1]=2;$types[2]=3;$types[3]=4;
         $currentUserReview = Review::where('client_id','=',Auth::user()->id)->where('chef_id','=',$id)->get();
-        return view('Chef::frontOffice.chefProfile',compact('user','currentUserReview','types','chef','entrees','mains','drinks',
+        return view('Chef::frontOffice.chefProfile',compact('user','dayFoods','currentUserReview','types','chef','entrees','mains','drinks',
                       'desserts','reviews','kitchenImages','amount','clean','speed','price','total'));
     }
 
@@ -327,6 +337,7 @@ class ChefController extends Controller
     {
         $order = Order::find($id);
         $order->status = 5;
+        $order->cancelled_by = 2;
         $order->save();
         alert()->success('La commande a été annulé.', 'Commande annulé')->persistent('Ok');
         return redirect()->back();
@@ -336,6 +347,7 @@ class ChefController extends Controller
     {
         $order = Order::find($id);
         $order->status = 5;
+        $order->cancelled_by = 1;
         $order->save();
         alert()->success('La commande a été annulé.', 'Commande annulé')->persistent('Ok');
         return redirect()->back();
