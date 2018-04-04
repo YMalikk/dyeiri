@@ -24,7 +24,7 @@ class Chef extends Model {
 
     public function getFoods()
     {
-        return $this->hasMany('App\Modules\Chef\Models\Food','chef_id','id');
+        return $this->hasMany('App\Modules\Food\Models\Food','chef_id','id');
     }
 
     function user()
