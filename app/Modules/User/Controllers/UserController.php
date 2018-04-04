@@ -24,7 +24,14 @@ class UserController extends Controller
       $orders = Order::where('client_id','=',$user->id)->orderBy('created_at','desc')->get();
       $foodOrderReviews = FoodOrderReview::where('user_id','=',$user->id)->get();
       $types[0]=1;$types[1]=2;$types[2]=3;$types[3]=4;
-      return view('User::backOffice.profile',compact('orders','foodOrderReviews','user','types'));
+      $now = Carbon::now();
+      return view('User::backOffice.profile',compact('orders','foodOrderReviews','user','types','now'));
+    }
+    
+     public function showProfileFront($id)
+    {
+      $user = User::find($id);
+      return view('User::frontOffice.profile',compact('user'));
     }
 
     public function changeCurrentUser($currentUser)
