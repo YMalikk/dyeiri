@@ -47,7 +47,7 @@
                 </a>
                 <div class="sidebar-submenu">
                     <ul>
-                        <li><a href="" title="Panel boxes"><span>Afficher les commandes</span></a></li>
+                        <li><a href="{{route('showOrderList')}}" title="Panel boxes"><span>Afficher les commandes</span></a></li>
                     </ul>
 
                 </div><!-- .sidebar-submenu -->
