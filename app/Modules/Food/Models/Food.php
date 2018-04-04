@@ -12,8 +12,11 @@ class Food extends Model
     protected $table = 'foods';
 
     protected $fillable = [
+        'name',
         'image',
         'description',
+        'preparation_time',
+        'price',
         'status',
         'category_id',
         'chef_id',
