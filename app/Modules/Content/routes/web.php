@@ -7,4 +7,6 @@ Route::group(['module' => 'Content', 'middleware' => ['web'], 'namespace' => 'Ap
     Route::post('/contact', 'ContentController@showContact')->name('handleContact');
     Route::get('/showSalesTerms',['uses'=>'ContentController@showSalesTerms','as'=>'showSalesTerms']);
     Route::post('/searchFood', 'ContentController@handleSearchFood')->name('handleSearchFood');
+    Route::get('/showBlogs', 'ContentController@showBlogs')->name('showBlogs');
+    Route::get('/showBlog/{id}', 'ContentController@showBlog')->name('showBlog');
 });

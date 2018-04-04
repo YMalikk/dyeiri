@@ -10,7 +10,7 @@
     <meta name="keywords" content="pizza, delivery food, fast food, sushi, take away, chinese, italian food">
     <meta name="description" content="">
     <meta name="author" content="Ansonika">
-    <title>QuickFood - Quality delivery or take away food</title>
+    <title>Dyeiri</title>
 
     <!-- Favicons-->
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
@@ -39,5 +39,7 @@
     <script src="{{asset('plugins/sweetalert')}}/sweetalert.min.js"></script>
 
     <![endif]-->
+
+
 
 </head>

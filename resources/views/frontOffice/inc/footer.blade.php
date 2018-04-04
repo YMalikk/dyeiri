@@ -79,3 +79,4 @@
 <script src="{{asset('js')}}/functions.js"></script>
 <script src="{{asset('assets')}}/validate.js"></script>
 <script src="{{asset('js')}}/script.js"></script>
+

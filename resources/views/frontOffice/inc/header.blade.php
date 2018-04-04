@@ -30,15 +30,17 @@
                         @if($user==null)
                             <li><a href="{{route('showChefRegister')}}" style="border: none;" class="be_delivery_man become_chef">Proposer un plat</a></li>
                         @endif
-                            <li><a href="about.html">Blog</a></li>
+                            <li><a href="{{route('showBlogs')}}">Blog</a></li>
                             <li><a href="about.html">A propos de nous</a></li>
                             @if($user==null)
                                 <li><a href="{{route('showClientRegister')}}">S'inscrire</a></li>
                                 <li><a href="#0" data-toggle="modal" data-target="#login_2">Connexion</a></li>
                             @else
+                                <li><a href="{{route('showMessages')}}">Boite de reception ({{count($user->messagesNotRead)}})</a></li>
                                 @if(\Illuminate\Support\Facades\Auth::user()->current_user==1)
                                   <li><a href="{{route('showChefProfile')}}" >Mon profil</a></li>
                                 @else
+
                                   <li><a href="{{route('showProfile')}}" >Mon profil</a></li>
                                 @endif
                                     <li><a href="{{route('logout')}}">Déconnexion</a></li>

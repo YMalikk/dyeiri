@@ -10,6 +10,7 @@ class Chef extends Model {
     protected $table = 'chef';
 
     protected $fillable = [
+        'mobile',
         'cover_photo',
         'address',
         'likes_count',
@@ -40,6 +41,12 @@ class Chef extends Model {
     {
         return $this->hasMany('App\Modules\Chef\Models\KitchenImage','chef_id','id');
     }
+
+    function schedule()
+    {
+        return $this->hasMany('App\Modules\Chef\Models\ChefSchedule','user_id','user_id');
+    }
+
 
 
 }

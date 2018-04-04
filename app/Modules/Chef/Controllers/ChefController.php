@@ -28,7 +28,7 @@ class ChefController extends Controller
         $desserts = $chef->getFoods->where('category_id','=',3);
         $drinks = $chef->getFoods->where('category_id','=',4);
         $reviews = $chef->reviews;
-         $kitchenImages=$chef->getKitchenImages;
+        $kitchenImages=$chef->getKitchenImages;
         $orders = Order::where('chef_id','=',$chef->id)->orderBy('created_at','desc') ->get();
         $orderIdTable=array();
         foreach ($orders as $order)
@@ -123,7 +123,22 @@ class ChefController extends Controller
         alert()->success('Avis ajouté', 'Reussi')->persistent('Ok');
         return redirect()->back();
     }
-    
+
+    public function fillSchedule($dayCheckbox,$chef,$day,$start,$end)
+    {
+        if($dayCheckbox)
+        {
+            $chef->schedule[$day]->start_at=date("G:i", strtotime($start));
+            $chef->schedule[$day]->ends_at=date("G:i", strtotime($end));
+            $chef->schedule[$day]->status=1;
+        }
+        else
+        {
+            $chef->schedule[$day]->status=0;
+        }
+
+        $chef->schedule[$day]->save();
+    }
 
     
     public function showChefRegisterStepTwo()
@@ -249,8 +264,6 @@ class ChefController extends Controller
                 alert()->error('Vérifié vote photo de couverture','Erreur')->persistent('Ok');
                 return redirect()->back();
             }
-
-
         }
 
 
@@ -280,7 +293,17 @@ class ChefController extends Controller
             ]);
         }
 
+
+        $this->fillSchedule($request->mondayCheckbox,$user->chef,0,$request->mondayStart,$request->mondayEnd);
+        $this->fillSchedule($request->tuesdayCheckbox,$user->chef,1,$request->tuesdayStart,$request->tuesdayEnd);
+        $this->fillSchedule($request->wednesdayCheckbox,$user->chef,2,$request->wednesdayStart,$request->wednesdayEnd);
+        $this->fillSchedule($request->thursdayCheckbox,$user->chef,3,$request->thursdayStart,$request->thursdayEnd);
+        $this->fillSchedule($request->fridayCheckbox,$user->chef,4,$request->fridayStart,$request->fridayEnd);
+        $this->fillSchedule($request->saturdayCheckbox,$user->chef,5,$request->saturdayStart,$request->saturdayEnd);
+        $this->fillSchedule($request->sundayCheckbox,$user->chef,6,$request->sundayStart,$request->sundayEnd);
         $user->save();
+
+        $user->chef->mobile=$request->mobile;
         $user->chef->status=1;
         $user->chef->address=$request->address;
         $user->chef->lat=$request->lat;
@@ -339,4 +362,107 @@ class ChefController extends Controller
         $user->save();
         return redirect()->back();
     }
+
+    public function handleEditChefProfile(Request $request)
+    {
+        $user=Auth::user();
+
+        $verifyForm = Validator::make($request->all(), [
+            'name'=>'required',
+            'surname'=>'required',
+            'address' => 'required|min:1',
+            'mobile'=>'required|numeric',
+            'lng' => 'required|between:-180.00,180.00',
+            'lat' => 'required|between:-90.00,90.00',
+            'email' => 'required|email|',
+        ]);
+
+        if($verifyForm->fails())
+        {
+            $translator = new TranslateClient('en', 'fr');
+            $result="";
+            $errorArray=$verifyForm->messages()->all();
+            $checkAddress=false;
+
+            foreach($errorArray as $error)
+            {
+
+                //check if lat or lng or address is empty -> same error message
+                if(($error=="The lng field is required.") || ($error=="The lat field is required.") || ($error=="The address field is required."))
+                {
+
+                    if($checkAddress===false)
+                    {
+                        $checkAddress=true;
+                        $result.=$translator->translate('Vérifier votre adresse').", ";
+                    }
+                }
+                else
+                {
+                    $result .= $translator->translate($error).", ";
+                }
+            }
+            //i use the substr cause always if we found error in the form the last caractére w'll be always ","
+            alert()->error(substr($result,0,strlen($result)-1),'Erreur')->persistent('Ok');
+            return redirect()->back();
+        }
+        else
+        {
+            $user->name=$request->name;
+            $user->surname=$request->surname;
+            $user->chef->address=$request->address;
+            $user->chef->lat=$request->lat;
+            $user->chef->lng=$request->lng;
+
+            $user->chef->mobile=$request->mobile;
+            if($user->email!= $request->email)
+            {
+                $user->email=$request->email;
+            }
+            if($request->password!=null)
+            {
+                $request->password=bcrypt($request->password);
+            }
+            $user->chef->save();
+            $user->save();
+            alert()->success("Vos informations on été mise à jour avec succès","Information")->persistent("Ok");
+            return redirect()->route('showChefProfile');
+        }
+
+
+
+
+    }
+
+    public function handleChefChangeImage(Request $request)
+    {
+        $user=Auth::user();
+        $img = $request->photo;
+        $img = str_replace('data:image/jpeg;base64,', '', $img);
+        $img = str_replace(' ', '+', $img);
+        $data= base64_decode($img);
+        $image_name=$user->id.'-'.time().'.jpeg';
+        $imagePath = 'storage/uploads/chefs/'.$image_name;
+        file_put_contents($imagePath,$data);
+        $user->image=$imagePath;
+        $user->save();
+        return $img;
+    }
+
+    public function handleChefChangeCover(Request $request)
+    {
+        $user=Auth::user();
+        $img = $request->photo;
+        $img = str_replace('data:image/jpeg;base64,', '', $img);
+        $img = str_replace(' ', '+', $img);
+        $data= base64_decode($img);
+        $image_name=$user->id.'-'.time().'.jpeg';
+        $imagePath = 'storage/uploads/chefs/'.$image_name;
+        file_put_contents($imagePath,$data);
+        $user->chef->cover_photo=$imagePath;
+        $user->chef->save();
+
+        return $img;
+    }
+
 }

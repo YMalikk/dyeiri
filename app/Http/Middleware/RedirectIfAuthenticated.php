@@ -20,11 +20,7 @@ class RedirectIfAuthenticated
         if (Auth::guard($guard)->check()) {
             if(Auth::user()->roles()->pluck('title')->first()==='admin')
             {
-                return redirect()->route('showAdminDashboard');
-            }
-            else  if(Auth::user()->roles()->pluck('title')->first()=='restaurant')
-            {
-                return redirect()->route('showRestaurantDashboard');
+                return redirect()->route('showDashboard');
             }
             else
             {
