@@ -27,6 +27,10 @@ class CategoriesSeeder extends Seeder
            Category::create([
                'name'=>'Drinks'
            ]);
+        
+           Category::create([
+               'name'=>'Plat du jour'
+           ]);
 
     }
 }
