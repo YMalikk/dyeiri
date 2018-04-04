@@ -36,6 +36,7 @@ Route::group(['module'=>'User','middleware'=>'web','namespace' => 'App\Modules\U
 Route::group(['module' => 'User','middleware'=>'client', 'namespace' => 'App\Modules\User\Controllers'], function() {
 
     Route::get('/profile', 'UserController@showProfile')->name('showProfile');
+    Route::get('/profileUser', 'UserController@showProfileFront')->name('showProfileFront');
     Route::post('/profile', 'UserController@editProfile')->name('editProfile');
 });
 
