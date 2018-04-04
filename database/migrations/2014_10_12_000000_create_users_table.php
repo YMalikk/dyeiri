@@ -32,6 +32,12 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+        
+        Schema::create('plateform', function (Blueprint $table) {
+            $table->increments('id');
+            $table->time('time_limit')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -42,5 +48,6 @@ class CreateUsersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('users');
+        Schema::dropIfExists('plateform');
     }
 }
