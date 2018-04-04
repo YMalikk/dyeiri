@@ -16,7 +16,10 @@ class Order extends Model {
         'chef_id',
         'client_id',
         'status',
-        'price'
+        'price',
+        'delivery_time_id',
+        'message',
+        'cancelled_by'
     ];
 
     public function client()
@@ -43,6 +46,11 @@ class Order extends Model {
     {
         return $this->hasMany('App\Modules\Food\Models\FoodOrderReview', 'order_id','id')
             ->where('food_id','=',$id)->first();
+    }
+
+    public function delivery_time()
+    {
+        return $this->hasOne("App\Modules\Order\Models\DeliveryTime",'id','delivery_time_id');
     }
 
 }
