@@ -14,6 +14,7 @@ use Alert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Stichoza\GoogleTranslate\TranslateClient;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -341,6 +342,12 @@ class UserController extends Controller
         })->get();
 
         return view('User::admin.clientList',compact('users'));
+    }
+    
+    public function showOrderList()
+    {
+        $orders= Order::all();
+        return view('User::admin.orderList',compact('orders'));
     }
 
 }
