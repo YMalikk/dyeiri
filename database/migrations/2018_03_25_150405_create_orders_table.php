@@ -21,6 +21,9 @@ class CreateOrdersTable extends Migration
             $table->foreign("client_id")->references('id')->on("users");
             $table->integer('status')->default(0);
             $table->integer('price');
+            $table->integer('delivery_time_id')->nullable();
+            $table->string('message')->nullable();
+            $table->integer('cancelled_by')->nullable();
             $table->timestamps();
         });
 
@@ -30,7 +33,7 @@ class CreateOrdersTable extends Migration
             $table->foreign('order_id')->references('id')->on('orders');
             $table->integer('food_id')->unsigned();
             $table->foreign('food_id')->references('id')->on('foods');
-            $table->integer('price');
+            $table->integer('quantity');
             $table->timestamps();
         });
     }
