@@ -40,7 +40,7 @@
 
 <!-- Content ================================================== -->
 <div class="container margin_60_35 tab-content">
-    <form method="POST" action="{{ route('handleOrder',['chef' => $chef->id])}}"  id="form-id" enctype="multipart/form-data" class="invoice invoiceBorder">
+    <form method="POST" action="{{ route('handleOrder',['chef' => $chef->id])}}"  id="orderForm" enctype="multipart/form-data" class="invoice invoiceBorder">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         {!! csrf_field() !!}
         @if ($errors)
@@ -61,11 +61,15 @@
             <!-- /.col -->
         </div>
         <!-- info row -->
-        <?php $i=0;$totalPrice=0;?>
+        <?php $i=0;$totalPrice=0;$delai=0;?>
         @if(count($foods)>0)
             @foreach($foods as $key => $food)
+                @if($food->category_id == 2 || $food->category_id == 5 )
+                    <?php $delai=1; ?>
+                @endif
                 <input type="hidden" name="foods[]" value="{{$food->id}}">
                 <input type="hidden" name="quantities[]" value="{{$quantities[$key]}}">
+                <input type="hidden" name="type" value="{{$type}}">
                 <div class="row invoice-info invoiceInfo">
                     <div class="col-sm-3 invoice-col">
                         Chef
@@ -123,10 +127,44 @@
             @endforeach
 
             <div class="row fontLargerMargin">
-                <!-- accepted payments column -->
                 <div class="col-xs-6">
+                    @if($type=="delivery")
+                        <div class="col-md-12">
+                            <h3 class="text-center">Selectionner le créneau de livraison</h3>
+                            <div class="styled-select" style="text-align: -webkit-center;">
+                                <select class="form-control" name="deliveryTime" id="lang" style="width: 50%;text-align-last: center;">
+                                    @foreach($deliveryTimes as $deliveryTime)
+                                        <option value="{{$deliveryTime->id}}">{{$deliveryTime->time}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <h3 class="text-center">Selectionner l'adresse de livraison</h3>
+                            @if($currentUser->address!=null)
+                                <div class="styled-select" style="text-align: -webkit-center;">
+                                    <input type="text" class="form-control search-query" name="address" style="width: 50%" id="address" value="{{$currentUser->address}}">
+                                    <input type="hidden" name="lat" id="lat" value="{{$currentUser->lat}}"/>
+                                    <input type="hidden" name="lng" id="lng" value="{{$currentUser->lng}}"/>
+                                    <h4>Ou</h4>
+                                    <span class="input-group-addon btn_localise" title="Se localiser" style="width: 50%;border-bottom-left-radius: 5px;border-top-left-radius: 5px;">
+                                    <span id="arround_me_value"></span>
+                                    <span class="fa fa-location-arrow"  aria-hidden="true"> </span></span>
+                                </div>
+                            @else
+                                <div class="styled-select">
+                                    <input type="text" class="form-control search-query" name="address" style="width: 50%" id="address" placeholder="Où voulez-vous etre livré ?">
+                                    <input type="hidden" name="lat"  id="lat"/>
+                                    <input type="hidden" name="lng" id="lng"/>
+                                    <h4>Ou</h4>
+                                    <span class="input-group-addon btn_localise" title="Se localiser" style="width: 50%;border-bottom-left-radius: 5px;border-top-left-radius: 5px;">
+                                    <span id="arround_me_value"></span>
+                                    <span class="fa fa-location-arrow"  aria-hidden="true"></span></span>
+                                </div>
+                            @endif
+                        </div>
+                    @endif
                 </div>
-                <!-- /.col -->
                 <div class="col-xs-6">
                     <p class="lead colorInfo"><b>A payer</b></p>
 
@@ -139,11 +177,16 @@
                             </tr>
                             <tr>
                                 <th>Frais de livraison:</th>
-                                <td>4 DT</td>
+                                @if($type=="delivery")
+                                    <td>4 DT</td>
+                                @else
+                                    <td>0 DT (à emporter)</td>
+                                @endif
                             </tr>
                             <tr>
                                 <th>Total:</th>
-                                <td><?php $p=$price+4;echo $p;?> DT</td>
+                                <?php if($type=="delivery") $p=$price+4; else $p=$price; ?>
+                                <td><?php echo $p;?> DT</td>
                             </tr>
                             <tr>
                                 <td colspan="2">
@@ -153,14 +196,30 @@
                     </div>
                 </div>
             </div>
-            <!-- this row will not appear when printing -->
             <div class="row no-print">
                 <div class="col-xs-12">
-                    <button  type="submit" class="btn btn-success pull-right"><i class="fa fa-check-circle-o"></i>&nbsp;&nbsp;Confirmez commande
-                    </button>
-                    <button onclick="location.href='{{route('showChefSearchedProfile',['id' => $chef->id])}}'" type="button" class="btn btn-primary pull-right" style="margin-right: 5px">
-                        <i class="fa fa-times-circle"></i>&nbsp;&nbsp;Annulez
-                    </button>
+                    @if($delai==0)
+                        <button  type="submit" class="btn btn-success pull-right"><i class="fa fa-check-circle-o"></i>&nbsp;&nbsp;Confirmez commande</button>
+                        <button onclick="location.href='{{route('showChefSearchedProfile',['id' => $chef->id])}}'" type="button" class="btn btn-primary pull-right" style="margin-right: 5px">
+                            <i class="fa fa-times-circle"></i>&nbsp;&nbsp;Annulez
+                        </button>
+                    @else
+                        @if($todayDate->toTimeString() > $plateform->time_limit)
+                            <button  type="submit" disabled="disabled" class="btn btn-success pull-right"><i class="fa fa-check-circle-o"></i>&nbsp;&nbsp;Confirmez commande</button>
+                            <button onclick="location.href='{{route('showChefSearchedProfile',['id' => $chef->id])}}'" type="button" class="btn btn-primary pull-right" style="margin-right: 5px">
+                                <i class="fa fa-times-circle"></i>&nbsp;&nbsp;Annulez
+                            </button>
+                            <div class="col-md-12" style="text-align: right;margin-top: 10px;padding: 0;">
+                                <h4 style="color: red"><i class="fa fa-exclamation-circle deadLineOver" aria-hidden="true"></i>
+                                Vous avez depassé le delai de prise de commande !</h4>
+                            </div>
+                        @else
+                            <button  type="submit" class="btn btn-success pull-right"><i class="fa fa-check-circle-o"></i>&nbsp;&nbsp;Confirmez commande</button>
+                            <button onclick="location.href='{{route('showChefSearchedProfile',['id' => $chef->id])}}'" type="button" class="btn btn-primary pull-right" style="margin-right: 5px">
+                                <i class="fa fa-times-circle"></i>&nbsp;&nbsp;Annulez
+                            </button>
+                        @endif
+                    @endif
                 </div>
             </div>
         @else
@@ -194,4 +253,15 @@
 @stop
 @section('footer')
     @include('frontOffice.inc.footer')
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCj1cCyUDGUciWPWK7kzjrxjLx4wDDS9c&libraries=places&callback=initAutocomplete"
+            async defer></script>
+    <script>
+        $(document).ready(function(){
+         $("#orderForm").on("submit",function()
+         {
+             $("#address").removeAttr('disabled');
+         });
+
+        });
+    </script>
 @endsection
