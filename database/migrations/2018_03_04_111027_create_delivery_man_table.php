@@ -21,6 +21,12 @@ class CreateDeliveryManTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
+        
+        Schema::create('delivery_times', function (Blueprint $table) {
+            $table->increments('id');
+            $table->time('time');
+            $table->timestamps();
+        });
 
     }
 
@@ -33,5 +39,6 @@ class CreateDeliveryManTable extends Migration
     {
       //  Schema::dropIfExists('schedule_chef');
         Schema::dropIfExists('delivery_mans');
+        Schema::dropIfExists('delivery_times');
     }
 }
