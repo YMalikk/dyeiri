@@ -74,5 +74,7 @@ class CreateReviewsTable extends Migration
         Schema::dropIfExists('review_ratings');
         Schema::dropIfExists('review_rating_types');
         Schema::dropIfExists('reviews');
+        Schema::dropIfExists('food_order_reviews');
+        Schema::dropIfExists('food_order_review_ratings');
     }
 }
