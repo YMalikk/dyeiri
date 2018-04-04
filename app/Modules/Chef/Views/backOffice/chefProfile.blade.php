@@ -221,586 +221,773 @@
             </div><!-- End col-md-3 -->
 
             <div class="col-md-9">
-                <div class="box_style_2" id="main_menu">
-                    <h2 class="inner">Menu</h2>
-                    <h3 id="desserts">Menu du jour</h3>
-                    @if(count($entrees)==0)
-                        Aucun menu du jour
-                    @else
-                        <table class="table table-striped cart-list ">
-                            <thead>
-                            <tr>
-                                <th >
-                                    Item
-                                </th>
-                                <th>
-                                    Prix
-                                </th>
-                                <th class="text-center">
-                                    Commander
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($desserts as $key => $dessert)
-                                <tr>
-                                    <td>
-                                        <figure class="thumb_menu_list"><img src="{{asset('../storage/img/foods/'.$dessert->image)}}" alt="thumb"></figure>
-                                        <h5>{{++$key}}. {{$dessert->name}}</h5>
-                                        <p>
-                                            {{$dessert->description}}
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <strong>{{$dessert->price}} DT</strong>
-                                    </td>
-                                    <td class="options text-center">
-                                        <div class="dropdown dropdown-options">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i class="icon_plus_alt2"></i></a>
-                                            <div class="dropdown-menu">
-                                                <h5 class="text-center">Quantité</h5>
-                                                <label class="text-center margin-bottom-none">
-                                                    <input class="text-center" type="number" id="quantite{{$dessert->id}}" min="1" value="1" max="10">
-                                                </label>
-                                                <a href="javascript: void(0)" onclick="add('{{$dessert->id}}','{{$dessert->name}}','{{$dessert->price}}')" class="add_to_basket" style="margin-top: 10px">Add to cart</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    @endif
-                    <hr>
-                    <h3 class="nomargin_top" id="starters">Entrées</h3>
-                    @if(count($entrees)==0)
-                        Aucune entrée
-                    @else
-                        <table class="table table-striped cart-list">
-                            <thead>
-                            <tr>
-                                <th>
-                                    Photo
-                                </th>
-                                <th>
-                                    Nom
-                                </th>
-                                <th>
-                                    Heure estimé
-                                </th>
-                                <th>
-                                    Prix
-
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>
-                                    <figure class="thumb_menu_list"><img src="img/menu-thumb-1.jpg" alt="thumb"></figure>
-                                    <h5>1. Mexican Enchiladas</h5>
-                                    <p>
-                                        Fuisset mentitum deleniti sit ea.
-                                    </p>
-                                </td>
-                                <td>
-                                    <strong>€ 9,40</strong>
-                                </td>
-                                <td class="options">
-                                    <div class="dropdown dropdown-options">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i class="icon_plus_alt2"></i></a>
-                                        <div class="dropdown-menu">
-                                            <h5>Select an option</h5>
-                                            <label>
-                                                <input type="radio" value="option1" name="options_1" checked>Medium <span>+ $3.30</span>
-                                            </label>
-                                            <label>
-                                                <input type="radio" value="option2" name="options_1" >Large <span>+ $5.30</span>
-                                            </label>
-                                            <label>
-                                                <input type="radio" value="option3" name="options_1" >Extra Large <span>+ $8.30</span>
-                                            </label>
-                                            <h5>Add ingredients</h5>
-                                            <label>
-                                                <input type="checkbox" value="">Extra Tomato <span>+ $4.30</span>
-                                            </label>
-                                            <label>
-                                                <input type="checkbox" value="">Extra Peppers <span>+ $2.50</span>
-                                            </label>
-                                            <a href="#0" class="add_to_basket">Add to cart</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <figure class="thumb_menu_list"><img src="img/menu-thumb-2.jpg" alt="thumb"></figure>
-                                    <h5>2. Fajitas</h5>
-                                    <p>
-                                        Fuisset mentitum deleniti sit ea.
-                                    </p>
-                                </td>
-                                <td>
-                                    <strong>€ 6,80</strong>
-                                </td>
-                                <td class="options">
-                                    <div class="dropdown dropdown-options">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i class="icon_plus_alt2"></i></a>
-                                        <div class="dropdown-menu">
-                                            <h5>Select an option</h5>
-                                            <label>
-                                                <input type="radio" value="option1" name="options_2" checked>Medium <span>+ $3.30</span>
-                                            </label>
-                                            <label>
-                                                <input type="radio" value="option2" name="options_2" >Large <span>+ $5.30</span>
-                                            </label>
-                                            <label>
-                                                <input type="radio" value="option3" name="options_2" >Extra Large <span>+ $8.30</span>
-                                            </label>
-                                            <h5>Add ingredients</h5>
-                                            <label>
-                                                <input type="checkbox" value="">Extra Tomato <span>+ $4.30</span>
-                                            </label>
-                                            <label>
-                                                <input type="checkbox" value="">Extra Peppers <span>+ $2.50</span>
-                                            </label>
-                                            <a href="#0" class="add_to_basket">Add to cart</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <figure class="thumb_menu_list"><img src="img/menu-thumb-3.jpg" alt="thumb"></figure>
-                                    <h5>3. Royal Fajitas</h5>
-                                    <p>
-                                        Fuisset mentitum deleniti sit ea.
-                                    </p>
-                                </td>
-                                <td>
-                                    <strong>€ 5,70</strong>
-                                </td>
-                                <td class="options">
-                                    <div class="dropdown dropdown-options">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i class="icon_plus_alt2"></i></a>
-                                        <div class="dropdown-menu">
-                                            <h5>Select an option</h5>
-                                            <label>
-                                                <input type="radio" value="option1" name="options_3" checked>Medium <span>+ $3.30</span>
-                                            </label>
-                                            <label>
-                                                <input type="radio" value="option2" name="options_3" >Large <span>+ $5.30</span>
-                                            </label>
-                                            <label>
-                                                <input type="radio" value="option3" name="options_3" >Extra Large <span>+ $8.30</span>
-                                            </label>
-                                            <h5>Add ingredients</h5>
-                                            <label>
-                                                <input type="checkbox" value="">Extra Tomato <span>+ $4.30</span>
-                                            </label>
-                                            <label>
-                                                <input type="checkbox" value="">Extra Peppers <span>+ $2.50</span>
-                                            </label>
-                                            <a href="#0" class="add_to_basket">Add to cart</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <figure class="thumb_menu_list"><img src="img/menu-thumb-4.jpg" alt="thumb"></figure>
-                                    <h5>4. Chicken Enchilada Wrap</h5>
-                                    <p>
-                                        Fuisset mentitum deleniti sit ea.
-                                    </p>
-                                </td>
-                                <td>
-                                    <strong>€ 5,20</strong>
-                                </td>
-                                <td class="options">
-                                    <div class="dropdown dropdown-options">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i class="icon_plus_alt2"></i></a>
-                                        <div class="dropdown-menu">
-                                            <h5>Select an option</h5>
-                                            <label>
-                                                <input type="radio" value="option1" name="options_4" checked>Medium <span>+ $3.30</span>
-                                            </label>
-                                            <label>
-                                                <input type="radio" value="option2" name="options_4" >Large <span>+ $5.30</span>
-                                            </label>
-                                            <label>
-                                                <input type="radio" value="option3" name="options_4" >Extra Large <span>+ $8.30</span>
-                                            </label>
-                                            <h5>Add ingredients</h5>
-                                            <label>
-                                                <input type="checkbox" value="">Extra Tomato <span>+ $4.30</span>
-                                            </label>
-                                            <label>
-                                                <input type="checkbox" value="">Extra Peppers <span>+ $2.50</span>
-                                            </label>
-                                            <a href="#0" class="add_to_basket">Add to cart</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    @endif
-                    <hr>
-                    <h3 id="main_courses">Plats principal</h3>
-                    @if(count($mains)==0)
-                        Aucun menu principal
-                    @else
-                        <table class="table table-striped cart-list ">
-                            <thead>
-                            <tr>
-                                <th>
-                                    Item
-                                </th>
-                                <th>
-                                    Price
-                                </th>
-                                <th>
-                                    Order
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>
-                                    <figure class="thumb_menu_list"><img src="img/menu-thumb-5.jpg" alt="thumb"></figure>
-                                    <h5>5. Cheese Quesadilla</h5>
-                                    <p>
-                                        Fuisset mentitum deleniti sit ea.
-                                    </p>
-                                </td>
-                                <td>
-                                    <strong>€ 12,00</strong>
-                                </td>
-                                <td class="options">
-                                    <div class="dropdown dropdown-options">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i class="icon_plus_alt2"></i></a>
-                                        <div class="dropdown-menu">
-                                            <h5>Select an option</h5>
-                                            <label>
-                                                <input type="radio" value="option1" name="options_5" checked>Medium <span>+ $3.30</span>
-                                            </label>
-                                            <label>
-                                                <input type="radio" value="option2" name="options_5" >Large <span>+ $5.30</span>
-                                            </label>
-                                            <label>
-                                                <input type="radio" value="option3" name="options_5" >Extra Large <span>+ $8.30</span>
-                                            </label>
-                                            <h5>Add ingredients</h5>
-                                            <label>
-                                                <input type="checkbox" value="">Extra Tomato <span>+ $4.30</span>
-                                            </label>
-                                            <label>
-                                                <input type="checkbox" value="">Extra Peppers <span>+ $2.50</span>
-                                            </label>
-                                            <a href="#0" class="add_to_basket">Add to cart</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <figure class="thumb_menu_list"><img src="img/menu-thumb-6.jpg" alt="thumb"></figure>
-                                    <h5>6. Chorizo & Cheese</h5>
-                                    <p>
-                                        Fuisset mentitum deleniti sit ea.
-                                    </p>
-                                </td>
-                                <td>
-                                    <strong>€ 24,71</strong>
-                                </td>
-                                <td class="options">
-                                    <div class="dropdown dropdown-options">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i class="icon_plus_alt2"></i></a>
-                                        <div class="dropdown-menu">
-                                            <h5>Select an option</h5>
-                                            <label>
-                                                <input type="radio" value="option1" name="options_6" checked>Medium <span>+ $3.30</span>
-                                            </label>
-                                            <label>
-                                                <input type="radio" value="option2" name="options_6" >Large <span>+ $5.30</span>
-                                            </label>
-                                            <label>
-                                                <input type="radio" value="option3" name="options_6" >Extra Large <span>+ $8.30</span>
-                                            </label>
-                                            <h5>Add ingredients</h5>
-                                            <label>
-                                                <input type="checkbox" value="">Extra Tomato <span>+ $4.30</span>
-                                            </label>
-                                            <label>
-                                                <input type="checkbox" value="">Extra Peppers <span>+ $2.50</span>
-                                            </label>
-                                            <a href="#0" class="add_to_basket">Add to cart</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <figure class="thumb_menu_list"><img src="img/menu-thumb-7.jpg" alt="thumb"></figure>
-                                    <h5>7. Beef Taco</h5>
-                                    <p>
-                                        Fuisset mentitum deleniti sit ea.
-                                    </p>
-                                </td>
-                                <td>
-                                    <strong>€ 8,70</strong>
-                                </td>
-                                <td class="options">
-                                    <a href="#0"><i class="icon_plus_alt2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <figure class="thumb_menu_list"><img src="img/menu-thumb-8.jpg" alt="thumb"></figure>
-                                    <h5>8. Minced Beef Double Layer</h5>
-                                    <p>
-                                        Fuisset mentitum deleniti sit ea.
-                                    </p>
-                                </td>
-                                <td>
-                                    <strong>€ 6,30</strong>
-                                </td>
-                                <td class="options">
-                                    <div class="dropdown dropdown-options">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i class="icon_plus_alt2"></i></a>
-                                        <div class="dropdown-menu">
-                                            <h5>Select an option</h5>
-                                            <label>
-                                                <input type="radio" value="option1" name="options_7" checked>Medium <span>+ $3.30</span>
-                                            </label>
-                                            <label>
-                                                <input type="radio" value="option2" name="options_7" >Large <span>+ $5.30</span>
-                                            </label>
-                                            <label>
-                                                <input type="radio" value="option3" name="options_7" >Extra Large <span>+ $8.30</span>
-                                            </label>
-                                            <h5>Add ingredients</h5>
-                                            <label>
-                                                <input type="checkbox" value="">Extra Tomato <span>+ $4.30</span>
-                                            </label>
-                                            <label>
-                                                <input type="checkbox" value="">Extra Peppers <span>+ $2.50</span>
-                                            </label>
-                                            <a href="#0" class="add_to_basket">Add to cart</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <figure class="thumb_menu_list"><img src="img/menu-thumb-9.jpg" alt="thumb"></figure>
-                                    <h5>9. Piri Piri Chicken</h5>
-                                    <p>
-                                        Fuisset mentitum deleniti sit ea.
-                                    </p>
-                                </td>
-                                <td>
-                                    <strong>€ 7,40</strong>
-                                </td>
-                                <td class="options">
-                                    <div class="dropdown dropdown-options">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i class="icon_plus_alt2"></i></a>
-                                        <div class="dropdown-menu">
-                                            <h5>Select an option</h5>
-                                            <label>
-                                                <input type="radio" value="option1" name="options_8" checked>Medium <span>+ $3.30</span>
-                                            </label>
-                                            <label>
-                                                <input type="radio" value="option2" name="options_8" >Large <span>+ $5.30</span>
-                                            </label>
-                                            <label>
-                                                <input type="radio" value="option3" name="options_8" >Extra Large <span>+ $8.30</span>
-                                            </label>
-                                            <h5>Add ingredients</h5>
-                                            <label>
-                                                <input type="checkbox" value="">Extra Tomato <span>+ $4.30</span>
-                                            </label>
-                                            <label>
-                                                <input type="checkbox" value="">Extra Peppers <span>+ $2.50</span>
-                                            </label>
-                                            <a href="#0" class="add_to_basket">Add to cart</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <figure class="thumb_menu_list"><img src="img/menu-thumb-10.jpg" alt="thumb"></figure>
-                                    <h5>10. Burrito Al Pastor</h5>
-                                    <p>
-                                        Fuisset mentitum deleniti sit ea.
-                                    </p>
-                                </td>
-                                <td>
-                                    <strong>€ 7,70</strong>
-                                </td>
-                                <td class="options">
-                                    <div class="dropdown dropdown-options">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i class="icon_plus_alt2"></i></a>
-                                        <div class="dropdown-menu">
-                                            <h5>Select an option</h5>
-                                            <label>
-                                                <input type="radio" value="option1" name="options_9" checked>Medium <span>+ $3.30</span>
-                                            </label>
-                                            <label>
-                                                <input type="radio" value="option2" name="options_9" >Large <span>+ $5.30</span>
-                                            </label>
-                                            <label>
-                                                <input type="radio" value="option3" name="options_9" >Extra Large <span>+ $8.30</span>
-                                            </label>
-                                            <h5>Add ingredients</h5>
-                                            <label>
-                                                <input type="checkbox" value="">Extra Tomato <span>+ $4.30</span>
-                                            </label>
-                                            <label>
-                                                <input type="checkbox" value="">Extra Peppers <span>+ $2.50</span>
-                                            </label>
-                                            <a href="#0" class="add_to_basket">Add to cart</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    @endif
-                    <hr>
-                    <h3 id="desserts">Desserts</h3>
+                <div class="box_style_2" id="main_menu" style="padding-left: 0;padding-right: 0;margin-top: 0;margin-bottom: 0;padding-bottom: 0">
+                    <h2 class="inner" style="margin-left: auto;margin-right: auto;margin-bottom: 0;">Menu</h2>
+                    <div class="panel-group" id="accordion" style="margin-bottom: 0">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseDayMenu">
+                                    <h3 id="desserts">Menu du jour</h3>
+                                </a>
+                            </div>
+                        </div>
+                        @if(count($entrees)==0)
+                            <div id="collapseDayMenu" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <table class="table table-responsive cart-list">
+                                        <thead style="text-align: center">
+                                        <tr>
+                                            <th >
+                                                Image
+                                            </th>
+                                            <th >
+                                                Plat
+                                            </th>
+                                            <th>
+                                                Prix
+                                            </th>
+                                            <th>
+                                                Temps de préparation
+                                            </th>
+                                            <th class="text-center">
+                                                Ajouter
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <form  name="addFoodForm5" id="addFoodForm5" enctype="multipart/form-data">
+                                            {!! csrf_field() !!}
+                                            <tr style="border-bottom: hidden;">
+                                                <td rowspan="2">
+                                                    <figure class="thumb_menu_list"><img src="{{asset('storage/image/foods/default_food.png')}}" alt="thumb" style="width: 57px"></figure>
+                                                </td>
+                                                <td>
+                                                    <h5>1. <input type="text" class="form-control" name="name" placeholder="Nom du plat" style="width: 60%;display: initial"> </h5>
+                                                </td>
+                                                <td>
+                                                    <strong><input class="form-control" style="width: 50%;display: initial" type="number" min="1" name="price" placeholder="Prix"> DT</strong>
+                                                </td>
+                                                <td>
+                                                    <strong><input class="form-control" style="width: 50%;display: initial" type="number" min="1" name="preparation_time" placeholder="Temps"> min</strong>
+                                                </td>
+                                                <td class="options text-center" rowspan="2">
+                                                    <a href="javascript: void(0)" class="dropdown-toggle" onclick="addFood(5)"><i class="icon_plus_alt2"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3">
+                                                    <p>
+                                                        <textarea style="font-weight: bold;color: #999999;" rows="4" name="description" class="form-control">Description du plat</textarea>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <input type="hidden" name="category_id" value="5">
+                                            <input type="hidden" name="chef_id" value="{{$chef->id}}">
+                                        </form>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        @else
+                            <div id="collapseDayMenu" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <table class="table table-responsive cart-list">
+                                        <thead style="text-align: center">
+                                        <tr>
+                                            <th>
+                                                Image
+                                            </th>
+                                            <th >
+                                                Plat
+                                            </th>
+                                            <th>
+                                                Prix
+                                            </th>
+                                            <th>
+                                                Temps de préparation
+                                            </th>
+                                            <th class="text-center">
+                                                Modifier
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($entrees as $key => $entree)
+                                            <tr>
+                                                <td>
+                                                    <figure class="thumb_menu_list"><img src="{{asset('../storage/img/foods/'.$entree->image)}}" alt="thumb"></figure>
+                                                </td>
+                                                <td>
+                                                    <h5>{{++$key}}. {{$entree->name}}</h5>
+                                                    <p>
+                                                        {{$entree->description}}
+                                                    </p>
+                                                </td>
+                                                <td>
+                                                    <strong>{{$entree->price}} DT</strong>
+                                                </td>
+                                                <td><strong>{{$entree->preparation_time}} min</strong> </td>
+                                                <td class="options text-center">
+                                                    <div class="dropdown dropdown-options">
+                                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i class="icon_plus_alt2"></i></a>
+                                                        <div class="dropdown-menu">
+                                                            <h5 class="text-center">Quantité</h5>
+                                                            <label class="text-center margin-bottom-none">
+                                                                <input class="text-center" type="number" id="quantite{{$entree->id}}" min="1" value="1" max="10">
+                                                            </label>
+                                                            <a href="javascript: void(0)" onclick="add('{{$entree->id}}','{{$entree->name}}','{{$entree->price}}')" class="add_to_basket" style="margin-top: 10px">Add to cart</a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        <form  name="addFoodForm5" id="addFoodForm5" enctype="multipart/form-data">
+                                            {!! csrf_field() !!}
+                                            <tr style="border-bottom: hidden;">
+                                                <td rowspan="2">
+                                                    <figure class="thumb_menu_list"><img src="{{asset('storage/image/foods/default_food.png')}}" alt="thumb" style="width: 57px"></figure>
+                                                </td>
+                                                <td>
+                                                    <h5>{{++$key}}. <input type="text" class="form-control" name="name" placeholder="Nom du plat" style="width: 60%;display: initial"> </h5>
+                                                </td>
+                                                <td>
+                                                    <strong><input class="form-control" style="width: 50%;display: initial" type="number" min="1" name="price" placeholder="Prix"> DT</strong>
+                                                </td>
+                                                <td>
+                                                    <strong><input class="form-control" style="width: 50%;display: initial" type="number" min="1" name="preparation_time" placeholder="Temps"> min</strong>
+                                                </td>
+                                                <td class="options text-center" rowspan="2">
+                                                    <a href="javascript: void(0)" class="dropdown-toggle" onclick="addFood(5)"><i class="icon_plus_alt2"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3">
+                                                    <p>
+                                                        <textarea style="font-weight: bold;color: #999999;" rows="4" name="description" class="form-control">Description du plat</textarea>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <input type="hidden" name="category_id" value="5">
+                                            <input type="hidden" name="chef_id" value="{{$chef->id}}">
+                                        </form>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="panel-group" id="accordion" style="margin-bottom: 0">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseEntrees">
+                                    <h3 id="desserts">Entrées</h3>
+                                </a>
+                            </div>
+                        </div>
+                        @if(count($entrees)==0)
+                            <div id="collapseEntrees" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <table class="table table-responsive cart-list">
+                                        <thead style="text-align: center">
+                                        <tr>
+                                            <th >
+                                                Image
+                                            </th>
+                                            <th >
+                                                Plat
+                                            </th>
+                                            <th>
+                                                Prix
+                                            </th>
+                                            <th>
+                                                Temps de préparation
+                                            </th>
+                                            <th class="text-center">
+                                                Ajouter
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <form  name="addFoodForm1" id="addFoodForm1" enctype="multipart/form-data">
+                                            {!! csrf_field() !!}
+                                            <tr style="border-bottom: hidden;">
+                                                <td rowspan="2">
+                                                    <figure class="thumb_menu_list"><img src="{{asset('storage/image/foods/default_food.png')}}" alt="thumb" style="width: 57px"></figure>
+                                                </td>
+                                                <td>
+                                                    <h5>1. <input type="text" class="form-control" name="name" placeholder="Nom du plat" style="width: 60%;display: initial"> </h5>
+                                                </td>
+                                                <td>
+                                                    <strong><input class="form-control" style="width: 50%;display: initial" type="number" min="1" name="price" placeholder="Prix"> DT</strong>
+                                                </td>
+                                                <td>
+                                                    <strong><input class="form-control" style="width: 50%;display: initial" type="number" min="1" name="preparation_time" placeholder="Temps"> min</strong>
+                                                </td>
+                                                <td class="options text-center" rowspan="2">
+                                                    <a href="javascript: void(0)" class="dropdown-toggle" onclick="addFood(1)"><i class="icon_plus_alt2"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3">
+                                                    <p>
+                                                        <textarea style="font-weight: bold;color: #999999;" rows="4" name="description" class="form-control">Description du plat</textarea>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <input type="hidden" name="category_id" value="1">
+                                            <input type="hidden" name="chef_id" value="{{$chef->id}}">
+                                        </form>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        @else
+                            <div id="collapseEntrees" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <table class="table table-responsive cart-list">
+                                        <thead style="text-align: center">
+                                        <tr>
+                                            <th>
+                                                Image
+                                            </th>
+                                            <th >
+                                                Plat
+                                            </th>
+                                            <th>
+                                                Prix
+                                            </th>
+                                            <th>
+                                                Temps de préparation
+                                            </th>
+                                            <th class="text-center">
+                                                Modifier
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($entrees as $key => $entree)
+                                            <tr>
+                                                <td>
+                                                    <figure class="thumb_menu_list"><img src="{{asset('../storage/img/foods/'.$entree->image)}}" alt="thumb"></figure>
+                                                </td>
+                                                <td>
+                                                    <h5>{{++$key}}. {{$entree->name}}</h5>
+                                                    <p>
+                                                        {{$entree->description}}
+                                                    </p>
+                                                </td>
+                                                <td>
+                                                    <strong>{{$entree->price}} DT</strong>
+                                                </td>
+                                                <td><strong>{{$entree->preparation_time}} min</strong> </td>
+                                                <td class="options text-center">
+                                                    <div class="dropdown dropdown-options">
+                                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i class="icon_plus_alt2"></i></a>
+                                                        <div class="dropdown-menu">
+                                                            <h5 class="text-center">Quantité</h5>
+                                                            <label class="text-center margin-bottom-none">
+                                                                <input class="text-center" type="number" id="quantite{{$entree->id}}" min="1" value="1" max="10">
+                                                            </label>
+                                                            <a href="javascript: void(0)" onclick="add('{{$entree->id}}','{{$entree->name}}','{{$entree->price}}')" class="add_to_basket" style="margin-top: 10px">Add to cart</a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        <form  name="addFoodForm1" id="addFoodForm1" enctype="multipart/form-data">
+                                            {!! csrf_field() !!}
+                                            <tr style="border-bottom: hidden;">
+                                                <td rowspan="2">
+                                                    <figure class="thumb_menu_list"><img src="{{asset('storage/image/foods/default_food.png')}}" alt="thumb" style="width: 57px"></figure>
+                                                </td>
+                                                <td>
+                                                    <h5>{{++$key}}. <input type="text" class="form-control" name="name" placeholder="Nom du plat" style="width: 60%;display: initial"> </h5>
+                                                </td>
+                                                <td>
+                                                    <strong><input class="form-control" style="width: 50%;display: initial" type="number" min="1" name="price" placeholder="Prix"> DT</strong>
+                                                </td>
+                                                <td>
+                                                    <strong><input class="form-control" style="width: 50%;display: initial" type="number" min="1" name="preparation_time" placeholder="Temps"> min</strong>
+                                                </td>
+                                                <td class="options text-center" rowspan="2">
+                                                    <a href="javascript: void(0)" class="dropdown-toggle" onclick="addFood(1)"><i class="icon_plus_alt2"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3">
+                                                    <p>
+                                                        <textarea style="font-weight: bold;color: #999999;" rows="4" name="description" class="form-control">Description du plat</textarea>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <input type="hidden" name="category_id" value="1">
+                                            <input type="hidden" name="chef_id" value="{{$chef->id}}">
+                                        </form>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="panel-group" id="accordion" style="margin-bottom: 0">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseMains">
+                                    <h3 id="desserts">Plats principaux</h3>
+                                </a>
+                            </div>
+                        </div>
+                        @if(count($mains)==0)
+                            <div id="collapseMains" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <table class="table table-responsive cart-list">
+                                        <thead style="text-align: center">
+                                        <tr>
+                                            <th >
+                                                Image
+                                            </th>
+                                            <th >
+                                                Plat
+                                            </th>
+                                            <th>
+                                                Prix
+                                            </th>
+                                            <th>
+                                                Temps de préparation
+                                            </th>
+                                            <th class="text-center">
+                                                Ajouter
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <form  name="addFoodForm2" id="addFoodForm2" enctype="multipart/form-data">
+                                            {!! csrf_field() !!}
+                                            <tr style="border-bottom: hidden;">
+                                                <td rowspan="2">
+                                                    <figure class="thumb_menu_list"><img src="{{asset('storage/image/foods/default_food.png')}}" alt="thumb" style="width: 57px"></figure>
+                                                </td>
+                                                <td>
+                                                    <h5>1. <input type="text" class="form-control" name="name" placeholder="Nom du plat" style="width: 60%;display: initial"> </h5>
+                                                </td>
+                                                <td>
+                                                    <strong><input class="form-control" style="width: 50%;display: initial" type="number" min="1" name="price" placeholder="Prix"> DT</strong>
+                                                </td>
+                                                <td>
+                                                    <strong><input class="form-control" style="width: 50%;display: initial" type="number" min="1" name="preparation_time" placeholder="Temps"> min</strong>
+                                                </td>
+                                                <td class="options text-center" rowspan="2">
+                                                    <a href="javascript: void(0)" class="dropdown-toggle" onclick="addFood(2)"><i class="icon_plus_alt2"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3">
+                                                    <p>
+                                                        <textarea style="font-weight: bold;color: #999999;" rows="4" name="description" class="form-control">Description du plat</textarea>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <input type="hidden" name="category_id" value="2">
+                                            <input type="hidden" name="chef_id" value="{{$chef->id}}">
+                                        </form>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        @else
+                            <div id="collapseMains" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <table class="table table-responsive cart-list">
+                                        <thead style="text-align: center">
+                                        <tr>
+                                            <th>
+                                                Image
+                                            </th>
+                                            <th >
+                                                Plat
+                                            </th>
+                                            <th>
+                                                Prix
+                                            </th>
+                                            <th>
+                                                Temps de préparation
+                                            </th>
+                                            <th class="text-center">
+                                                Modifier
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($mains as $key => $main)
+                                            <tr>
+                                                <td>
+                                                    <figure class="thumb_menu_list"><img src="{{asset('../storage/img/foods/'.$main->image)}}" alt="thumb"></figure>
+                                                </td>
+                                                <td>
+                                                    <h5>{{++$key}}. {{$main->name}}</h5>
+                                                    <p>
+                                                        {{$main->description}}
+                                                    </p>
+                                                </td>
+                                                <td>
+                                                    <strong>{{$main->price}} DT</strong>
+                                                </td>
+                                                <td><strong>{{$main->preparation_time}} min</strong> </td>
+                                                <td class="options text-center">
+                                                    <div class="dropdown dropdown-options">
+                                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i class="icon_plus_alt2"></i></a>
+                                                        <div class="dropdown-menu">
+                                                            <h5 class="text-center">Quantité</h5>
+                                                            <label class="text-center margin-bottom-none">
+                                                                <input class="text-center" type="number" id="quantite{{$main->id}}" min="1" value="1" max="10">
+                                                            </label>
+                                                            <a href="javascript: void(0)" onclick="add('{{$main->id}}','{{$main->name}}','{{$main->price}}')" class="add_to_basket" style="margin-top: 10px">Add to cart</a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        <form  name="addFoodForm2" id="addFoodForm2" enctype="multipart/form-data">
+                                            {!! csrf_field() !!}
+                                            <tr style="border-bottom: hidden;">
+                                                <td rowspan="2">
+                                                    <figure class="thumb_menu_list"><img src="{{asset('storage/image/foods/default_food.png')}}" alt="thumb" style="width: 57px"></figure>
+                                                </td>
+                                                <td>
+                                                    <h5>{{++$key}}. <input type="text" class="form-control" name="name" placeholder="Nom du plat" style="width: 60%;display: initial"> </h5>
+                                                </td>
+                                                <td>
+                                                    <strong><input class="form-control" style="width: 50%;display: initial" type="number" min="1" name="price" placeholder="Prix"> DT</strong>
+                                                </td>
+                                                <td>
+                                                    <strong><input class="form-control" style="width: 50%;display: initial" type="number" min="1" name="preparation_time" placeholder="Temps"> min</strong>
+                                                </td>
+                                                <td class="options text-center" rowspan="2">
+                                                    <a href="javascript: void(0)" class="dropdown-toggle" onclick="addFood(2)"><i class="icon_plus_alt2"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3">
+                                                    <p>
+                                                        <textarea style="font-weight: bold;color: #999999;" rows="4" name="description" class="form-control">Description du plat</textarea>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <input type="hidden" name="category_id" value="2">
+                                            <input type="hidden" name="chef_id" value="{{$chef->id}}">
+                                        </form>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="panel-group" id="accordion" style="margin-bottom: 0">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseDesserts">
+                                    <h3 id="desserts">Desserts</h3>
+                                </a>
+                            </div>
+                        </div>
                     @if(count($desserts)==0)
-                        Aucun dessert
+                        <div id="collapseDesserts" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <table class="table table-responsive cart-list">
+                                        <thead style="text-align: center">
+                                        <tr>
+                                            <th >
+                                                Image
+                                            </th>
+                                            <th >
+                                                Plat
+                                            </th>
+                                            <th>
+                                                Prix
+                                            </th>
+                                            <th>
+                                                Temps de préparation
+                                            </th>
+                                            <th class="text-center">
+                                                Ajouter
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <form  name="addFoodForm3" id="addFoodForm3" enctype="multipart/form-data">
+                                            {!! csrf_field() !!}
+                                            <tr style="border-bottom: hidden;">
+                                                <td rowspan="2">
+                                                    <figure class="thumb_menu_list"><img src="{{asset('storage/image/foods/default_food.png')}}" alt="thumb" style="width: 57px"></figure>
+                                                </td>
+                                                <td>
+                                                    <h5>1. <input type="text" class="form-control" name="name" placeholder="Nom du plat" style="width: 60%;display: initial"> </h5>
+                                                </td>
+                                                <td>
+                                                    <strong><input class="form-control" style="width: 50%;display: initial" type="number" min="1" name="price" placeholder="Prix"> DT</strong>
+                                                </td>
+                                                <td>
+                                                    <strong><input class="form-control" style="width: 50%;display: initial" type="number" min="1" name="preparation_time" placeholder="Temps"> min</strong>
+                                                </td>
+                                                <td class="options text-center" rowspan="2">
+                                                    <a href="javascript: void(0)" class="dropdown-toggle" onclick="addFood(3)"><i class="icon_plus_alt2"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3">
+                                                    <p>
+                                                        <textarea style="font-weight: bold;color: #999999;" rows="4" name="description" class="form-control">Description du plat</textarea>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <input type="hidden" name="category_id" value="3">
+                                            <input type="hidden" name="chef_id" value="{{$chef->id}}">
+                                        </form>
+                                        </tbody>
+                                    </table>
+                                </div>
+                        </div>
                     @else
-                        <table class="table table-striped cart-list ">
-                            <thead>
-                            <tr>
-                                <th >
-                                    Item
-                                </th>
-                                <th>
-                                    Prix
-                                </th>
-                                <th class="text-center">
-                                    Commander
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($desserts as $key => $dessert)
-                                <tr>
-                                    <td>
-                                        <figure class="thumb_menu_list"><img src="{{asset('../storage/img/foods/'.$dessert->image)}}" alt="thumb"></figure>
-                                        <h5>{{++$key}}. {{$dessert->name}}</h5>
-                                        <p>
-                                            {{$dessert->description}}
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <strong>{{$dessert->price}} DT</strong>
-                                    </td>
-                                    <td class="options text-center">
-                                        <div class="dropdown dropdown-options">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i class="icon_plus_alt2"></i></a>
-                                            <div class="dropdown-menu">
-                                                <h5 class="text-center">Quantité</h5>
-                                                <label class="text-center margin-bottom-none">
-                                                    <input class="text-center" type="number" id="quantite{{$dessert->id}}" min="1" value="1" max="10">
-                                                </label>
-                                                <a href="javascript: void(0)" onclick="add('{{$dessert->id}}','{{$dessert->name}}','{{$dessert->price}}')" class="add_to_basket" style="margin-top: 10px">Add to cart</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                        <div id="collapseDesserts" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <table class="table table-responsive cart-list">
+                                    <thead style="text-align: center">
+                                    <tr>
+                                        <th>
+                                            Image
+                                        </th>
+                                        <th >
+                                            Plat
+                                        </th>
+                                        <th>
+                                            Prix
+                                        </th>
+                                        <th>
+                                            Temps de préparation
+                                        </th>
+                                        <th class="text-center">
+                                            Modifier
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($desserts as $key => $dessert)
+                                            <tr>
+                                                <td>
+                                                    <figure class="thumb_menu_list"><img src="{{asset('../storage/img/foods/'.$dessert->image)}}" alt="thumb"></figure>
+                                                </td>
+                                                <td>
+                                                    <h5>{{++$key}}. {{$dessert->name}}</h5>
+                                                    <p>
+                                                        {{$dessert->description}}
+                                                    </p>
+                                                </td>
+                                                <td>
+                                                    <strong>{{$dessert->price}} DT</strong>
+                                                </td>
+                                                <td><strong>{{$dessert->preparation_time}} min</strong> </td>
+                                                <td class="options text-center">
+                                                    <div class="dropdown dropdown-options">
+                                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i class="icon_plus_alt2"></i></a>
+                                                        <div class="dropdown-menu">
+                                                            <h5 class="text-center">Quantité</h5>
+                                                            <label class="text-center margin-bottom-none">
+                                                                <input class="text-center" type="number" id="quantite{{$dessert->id}}" min="1" value="1" max="10">
+                                                            </label>
+                                                            <a href="javascript: void(0)" onclick="add('{{$dessert->id}}','{{$dessert->name}}','{{$dessert->price}}')" class="add_to_basket" style="margin-top: 10px">Add to cart</a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        <form  name="addFoodForm3" id="addFoodForm3" enctype="multipart/form-data">
+                                            {!! csrf_field() !!}
+                                            <tr style="border-bottom: hidden;">
+                                                <td rowspan="2">
+                                                    <figure class="thumb_menu_list"><img src="{{asset('storage/image/foods/default_food.png')}}" alt="thumb" style="width: 57px"></figure>
+                                                </td>
+                                                <td>
+                                                    <h5>{{++$key}}. <input type="text" class="form-control" name="name" placeholder="Nom du plat" style="width: 60%;display: initial"> </h5>
+                                                </td>
+                                                <td>
+                                                    <strong><input class="form-control" style="width: 50%;display: initial" type="number" min="1" name="price" placeholder="Prix"> DT</strong>
+                                                </td>
+                                                <td>
+                                                    <strong><input class="form-control" style="width: 50%;display: initial" type="number" min="1" name="preparation_time" placeholder="Temps"> min</strong>
+                                                </td>
+                                                <td class="options text-center" rowspan="2">
+                                                    <a href="javascript: void(0)" class="dropdown-toggle" onclick="addFood(3)"><i class="icon_plus_alt2"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                            <td colspan="3">
+                                                <p>
+                                                    <textarea style="font-weight: bold;color: #999999;" rows="4" name="description" class="form-control">Description du plat</textarea>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                            <input type="hidden" name="category_id" value="3">
+                                            <input type="hidden" name="chef_id" value="{{$chef->id}}">
+                                        </form>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     @endif
-                    <hr>
-                    <h3 id="drinks">Drinks</h3>
-                    @if(count($drinks)==0)
-                        Aucune Boisson
-                    @else
-                        <table class="table table-striped cart-list ">
-                            <thead>
-                            <tr>
-                                <th>
-                                    Item
-                                </th>
-                                <th>
-                                    Price
-                                </th>
-                                <th>
-                                    Order
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>
-                                    <figure class="thumb_menu_list"><img src="img/menu-thumb-17.jpg" alt="thumb"></figure>
-                                    <h5>17. Chocolate Fudge Cake</h5>
-                                    <p>
-                                        Fuisset mentitum deleniti sit ea.
-                                    </p>
-                                </td>
-                                <td>
-                                    <strong>€ 24,71</strong>
-                                </td>
-                                <td class="options">
-                                    <a href="#0"><i class="icon_plus_alt2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <figure class="thumb_menu_list"><img src="img/menu-thumb-18.jpg" alt="thumb"></figure>
-                                    <h5>18. Cheesecake</h5>
-                                    <p>
-                                        Fuisset mentitum deleniti sit ea.
-                                    </p>
-                                </td>
-                                <td>
-                                    <strong>€ 7,50</strong>
-                                </td>
-                                <td class="options">
-                                    <a href="#0"><i class="icon_plus_alt2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <figure class="thumb_menu_list"><img src="img/menu-thumb-19.jpg" alt="thumb"></figure>
-                                    <h5>19. Apple Pie & Custard</h5>
-                                    <p>
-                                        Fuisset mentitum deleniti sit ea.
-                                    </p>
-                                </td>
-                                <td>
-                                    <strong>€ 9,70</strong>
-                                </td>
-                                <td class="options">
-                                    <a href="#0"><i class="icon_plus_alt2"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <figure class="thumb_menu_list"><img src="img/menu-thumb-20.jpg" alt="thumb"></figure>
-                                    <h5>20. Profiteroles</h5>
-                                    <p>
-                                        Fuisset mentitum deleniti sit ea.
-                                    </p>
-                                </td>
-                                <td>
-                                    <strong>€ 12,00</strong>
-                                </td>
-                                <td class="options">
-                                    <a href="#0"><i class="icon_plus_alt2"></i></a>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    @endif
+                    </div>
+                    <div class="panel-group" id="accordion" style="margin-bottom: 0">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseDrinks">
+                                    <h3 id="desserts">Drinks</h3>
+                                </a>
+                            </div>
+                        </div>
+                        @if(count($drinks)==0)
+                            <div id="collapseDrinks" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <table class="table table-responsive cart-list">
+                                        <thead style="text-align: center">
+                                        <tr>
+                                            <th >
+                                                Image
+                                            </th>
+                                            <th >
+                                                Plat
+                                            </th>
+                                            <th>
+                                                Prix
+                                            </th>
+                                            <th>
+                                                Temps de préparation
+                                            </th>
+                                            <th class="text-center">
+                                                Ajouter
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <form  name="addFoodForm4" id="addFoodForm4" enctype="multipart/form-data">
+                                            {!! csrf_field() !!}
+                                            <tr style="border-bottom: hidden;">
+                                                <td rowspan="2">
+                                                    <figure class="thumb_menu_list"><img src="{{asset('storage/image/foods/default_food.png')}}" alt="thumb" style="width: 57px"></figure>
+                                                </td>
+                                                <td>
+                                                    <h5>1. <input type="text" class="form-control" name="name" placeholder="Nom du plat" style="width: 60%;display: initial"> </h5>
+                                                </td>
+                                                <td>
+                                                    <strong><input class="form-control" style="width: 50%;display: initial" type="number" min="1" name="price" placeholder="Prix"> DT</strong>
+                                                </td>
+                                                <td>
+                                                    <strong><input class="form-control" style="width: 50%;display: initial" type="number" min="1" name="preparation_time" placeholder="Temps"> min</strong>
+                                                </td>
+                                                <td class="options text-center" rowspan="2">
+                                                    <a href="javascript: void(0)" class="dropdown-toggle" onclick="addFood(4)"><i class="icon_plus_alt2"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3">
+                                                    <p>
+                                                        <textarea style="font-weight: bold;color: #999999;" rows="4" name="description" class="form-control">Description du plat</textarea>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <input type="hidden" name="category_id" value="4">
+                                            <input type="hidden" name="chef_id" value="{{$chef->id}}">
+                                        </form>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        @else
+                            <div id="collapseDrinks" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <table class="table table-responsive cart-list">
+                                        <thead style="text-align: center">
+                                        <tr>
+                                            <th>
+                                                Image
+                                            </th>
+                                            <th >
+                                                Plat
+                                            </th>
+                                            <th>
+                                                Prix
+                                            </th>
+                                            <th>
+                                                Temps de préparation
+                                            </th>
+                                            <th class="text-center">
+                                                Modifier
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($drinks as $key => $drink)
+                                            <tr>
+                                                <td>
+                                                    <figure class="thumb_menu_list"><img src="{{asset('../storage/img/foods/'.$drink->image)}}" alt="thumb"></figure>
+                                                </td>
+                                                <td>
+                                                    <h5>{{++$key}}. {{$drink->name}}</h5>
+                                                    <p>
+                                                        {{$drink->description}}
+                                                    </p>
+                                                </td>
+                                                <td>
+                                                    <strong>{{$drink->price}} DT</strong>
+                                                </td>
+                                                <td><strong>{{$drink->preparation_time}} min</strong> </td>
+                                                <td class="options text-center">
+                                                    <div class="dropdown dropdown-options">
+                                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i class="icon_plus_alt2"></i></a>
+                                                        <div class="dropdown-menu">
+                                                            <h5 class="text-center">Quantité</h5>
+                                                            <label class="text-center margin-bottom-none">
+                                                                <input class="text-center" type="number" id="quantite{{$drink->id}}" min="1" value="1" max="10">
+                                                            </label>
+                                                            <a href="javascript: void(0)" onclick="add('{{$drink->id}}','{{$drink->name}}','{{$drink->price}}')" class="add_to_basket" style="margin-top: 10px">Add to cart</a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        <form  name="addFoodForm4" id="addFoodForm4" enctype="multipart/form-data">
+                                            {!! csrf_field() !!}
+                                            <tr style="border-bottom: hidden;">
+                                                <td rowspan="2">
+                                                    <figure class="thumb_menu_list"><img src="{{asset('storage/image/foods/default_food.png')}}" alt="thumb" style="width: 57px"></figure>
+                                                </td>
+                                                <td>
+                                                    <h5>{{++$key}}. <input type="text" class="form-control" name="name" placeholder="Nom du plat" style="width: 60%;display: initial"> </h5>
+                                                </td>
+                                                <td>
+                                                    <strong><input class="form-control" style="width: 50%;display: initial" type="number" min="1" name="price" placeholder="Prix"> DT</strong>
+                                                </td>
+                                                <td>
+                                                    <strong><input class="form-control" style="width: 50%;display: initial" type="number" min="1" name="preparation_time" placeholder="Temps"> min</strong>
+                                                </td>
+                                                <td class="options text-center" rowspan="2">
+                                                    <a href="javascript: void(0)" class="dropdown-toggle" onclick="addFood(4)"><i class="icon_plus_alt2"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3">
+                                                    <p>
+                                                        <textarea style="font-weight: bold;color: #999999;" rows="4" name="description" class="form-control">Description du plat</textarea>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            <input type="hidden" name="category_id" value="4">
+                                            <input type="hidden" name="chef_id" value="{{$chef->id}}">
+                                        </form>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
                 </div><!-- End box_style_1 -->
             </div><!-- End col-md-9 -->
 
@@ -1027,8 +1214,8 @@
                                             </tbody>
                                         </table>
                                         @if($order->status == 0)
-                                            <button onclick="location.href='{{route('denyOrderChef',['id' => $order->id])}}'" class="btn_2 add_bottom_15 pull-right">Rejeter la commande</button>
-                                            <button onclick="location.href='{{route('confirmOrderChef',['id' => $order->id])}}'" class="btn_1 add_bottom_15 pull-right" style="margin-right: 5px">Confirmer la commande</button>
+                                            <a class="btn_2 add_bottom_15 pull-right" href="#" aria-expanded="true" data-toggle="modal" data-target="#denyOrder{{$order->id}}">Rejeter la commande</a>
+                                            <a class="btn_1 add_bottom_15 pull-right" href="#" aria-expanded="true" data-toggle="modal" data-target="#confirmOrder{{$order->id}}" style="margin-right: 5px">Confirmer la commande</a>
                                         @elseif($order->status == 1)
                                             <button onclick="location.href='{{route('confirmDishReadyChef',['id' => $order->id])}}'" class="btn_1 add_bottom_15 pull-right">Plat prêt</button>
                                         @endif
@@ -1127,8 +1314,48 @@
                     </form>
                 </div>
             </div>
-</div>
+        </div>
     @endforeach
+    @if($order->status == 0)
+        <div class="modal fade" id="confirmOrder{{$order->id}}" tabindex="-1" role="dialog" aria-labelledby="review" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content modal-popup">
+                    <a href="#" class="close-link"><i class="icon_close_alt2"></i></a>
+                    <form method="post" action="{{route('confirmOrderChef',['id' => $order->id])}}" name="review" style="width: 100%;max-width: 650px" class="popup-form">
+                        {!! csrf_field() !!}   
+                        <div class="login_icon"><i class="icon_comment_alt"></i></div>
+                        <div class="row">
+                            <h4>Confirmation de la commande du {{date("j F Y",strtotime($order->created_at))}}<br>
+                                pour la somme de {{$order->price}} DT.</h4>
+                            <input type="hidden" name="order_id" value="{{$order->id}}">
+                            <textarea name="confirmReason" id="confirmReason" class="form-control form-white" style="height:100px" placeholder="Remplir ce champ uniquement si vous avez une remarque concernant la commande (retard...)"></textarea>
+                        </div><!--End Row -->
+                        <button href="#" class="btn btn-primary close-link col-md-4 col-md-offset-1">Fermer</button>
+                        <button type="submit" class="btn btn-success col-md-4 col-md-offset-2">Valider</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="denyOrder{{$order->id}}" tabindex="-1" role="dialog" aria-labelledby="review" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content modal-popup">
+                    <a href="#" class="close-link"><i class="icon_close_alt2"></i></a>
+                    <form method="post" action="{{route('denyOrderChef',['id' => $order->id])}}" name="review" style="width: 100%;max-width: 650px" class="popup-form">
+                        {!! csrf_field() !!}
+                        <div class="login_icon"><i class="icon_comment_alt"></i></div>
+                        <div class="row">
+                            <h4>Rejet de la commande du {{date("j F Y",strtotime($order->created_at))}}<br>
+                                pour la somme de {{$order->price}} DT.</h4>
+                            <input type="hidden" name="order_id" value="{{$order->id}}">
+                            <textarea name="denyReason" id="denyReason" class="form-control form-white" style="height:100px" placeholder="Remplir ici les raisons du refus (optionnel)"></textarea>
+                        </div><!--End Row -->
+                        <button href="#" class="btn btn-primary close-link col-md-4 col-md-offset-1">Fermer</button>
+                        <button type="submit" class="btn btn-success col-md-4 col-md-offset-2">Valider</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endif
 @endforeach
 
 <!-- End container -->
@@ -1191,6 +1418,19 @@
             });
         </script>
     <script>
+        function addFood(id) {
+            $.post('{{route('handleChefAddFood')}}', $('#addFoodForm'+id).serialize(),function (result) {
+                if(result==1)
+                {
+                    swal("Ajouté", "Le plat a été ajouté", "success");
+                }
+                else
+                {
+                    swal("Erreur", "Erreur lors de l'ajout du plat", "error");
+                }
+            }) ;
+        }
+    
         $("#myonoffswitch").click(function()
         {
             window.location.replace("{{route('changeCurrentUser',array($chef->user->current_user))}}");
