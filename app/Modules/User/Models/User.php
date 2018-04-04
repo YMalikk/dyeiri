@@ -28,6 +28,7 @@ class User extends Authenticatable {
         'current_user',
         'image',
         'mobile',
+        'address',
         'status',
         'provider',
         'provider_id',
