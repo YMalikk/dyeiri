@@ -23,6 +23,7 @@ class User extends Authenticatable {
         'surname',
         'email',
         'password',
+        'gender',
         'lat',
         'lng',
         'current_user',

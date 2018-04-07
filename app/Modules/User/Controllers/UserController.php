@@ -58,7 +58,7 @@ class UserController extends Controller
                 ];
 
                 Chef::create($dataChef);
-                for($i=1;$i<=7;$i++)
+                for($i=0;$i<=6;$i++)
                 {
                     Schedule::create([
                         'day'=>$i,

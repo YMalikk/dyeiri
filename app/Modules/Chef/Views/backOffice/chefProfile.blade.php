@@ -19,46 +19,55 @@
     <script src="{{ asset ('plugins/intlTelInput/js')}}/intlTelInput.js"></script>
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+    <!-- Add mousewheel plugin (this is optional) -->
+    <script type="text/javascript" src="{{asset('plugins/fancyBox')}}/lib/jquery.mousewheel-3.0.6.pack.js"></script>
+
+    <!-- Add fancyBox -->
+    <link rel="stylesheet" href="{{asset('plugins/fancyBox')}}//source/jquery.fancybox.css?v=2.1.7" type="text/css" media="screen" />
+    <script type="text/javascript" src="{{asset('plugins/fancyBox')}}//source/jquery.fancybox.pack.js?v=2.1.7"></script>
+
+    <!-- Optionally add helpers - button, thumbnail and/or media -->
+    <link rel="stylesheet" href="{{asset('plugins/fancyBox')}}/source/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" media="screen" />
+    <script type="text/javascript" src="{{asset('plugins/fancyBox')}}//source/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+    <script type="text/javascript" src="{{asset('plugins/fancyBox')}}//source/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+
+    <link rel="stylesheet" href="{{asset('plugins/fancyBox')}}/source/helpers/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
+    <script type="text/javascript" src="{{asset('plugins/fancyBox')}}//source/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset ('css/images.css') }}"/>
     <style>
         .onoffswitch {
             position: relative; width: 90px;
             -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
         }
-
         .onoffswitch-checkbox {
             display: none;
         }
-
         .onoffswitch-label {
             display: block; overflow: hidden; cursor: pointer;
             border: 2px solid #999999; border-radius: 20px;
         }
-
         .onoffswitch-inner {
             display: block; width: 200%; margin-left: -100%;
             -moz-transition: margin 0.3s ease-in 0s; -webkit-transition: margin 0.3s ease-in 0s;
             -o-transition: margin 0.3s ease-in 0s; transition: margin 0.3s ease-in 0s;
         }
-
         .onoffswitch-inner:before, .onoffswitch-inner:after {
             display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
             font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
             -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
         }
-
         .onoffswitch-inner:before {
             content: "Chef";
             padding-left: 10px;
             background-color: #7dc440; color: #FFFFFF;
         }
-
         .onoffswitch-inner:after {
             content: "Client";
             padding-right: 10px;
             background-color: #2d3d99; color: white;
             text-align: right;
         }
-
         .onoffswitch-switch {
             display: block; width: 18px; margin: 6px;
             background: #FFFFFF;
@@ -67,11 +76,9 @@
             -moz-transition: all 0.3s ease-in 0s; -webkit-transition: all 0.3s ease-in 0s;
             -o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s;
         }
-
         .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
             margin-left: 0;
         }
-
         .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
             right: 0px;
         }
@@ -91,26 +98,22 @@
         {
             display:none!important;
         }
-     .update_cover_image
+        .update_cover_image
         {
             display:none!important;
         }
-
         .chef_image
         {
             width: 120px!important;
             height: 100%!important;
-
         }
-
-      #change_cover_photo
-      {
-          display:block;
-      }
+        #change_cover_photo
+        {
+            display:block;
+        }
         .text_aling_left
         {
             text-align: left;
-
         }
         .camera_icon
         {
@@ -122,44 +125,50 @@
             color:#7dc440;
             display:inline;
         }
-
+        .photo_gallery
+        {
+            min-height: 250px;
+            max-height: 250px;
+            min-width: 250px;
+            max-width: 251px;
+        }
     </style>
-<!-- SubHeader =============================================== -->
-<section class="parallax-window" data-parallax="scroll" data-image-src="{{asset($chef->cover_photo)}}" data-natural-width="1400" data-natural-height="470">
-    <div id="subheader">
-        <div id="sub_content">
-            <div class="row show_cover_change">
-                <div class="col-md-6 col-xs-12 pull-left text_aling_left">
+    <!-- SubHeader =============================================== -->
+    <section class="parallax-window" data-parallax="scroll" data-image-src="{{asset($chef->cover_photo)}}" data-natural-width="1400" data-natural-height="470">
+        <div id="subheader">
+            <div id="sub_content">
+                <div class="row show_cover_change">
+                    <div class="col-md-6 col-xs-12 pull-left text_aling_left">
                         <i class="fas fa-camera fa-2x camera_icon btn"></i>
-                <div id="change_cover_photo">
-                    <input type="file" name="cover_photo" id="cover_photo" class="form-control update_cover_image" accept="image/jpeg"/>
+                        <div id="change_cover_photo">
+                            <input type="file" name="cover_photo" id="cover_photo" class="form-control update_cover_image" accept="image/jpeg"/>
 
-                    <label title="Modifier photo" class="lbl_change_cover_photo" style="cursor: pointer;" for="cover_photo">
-                     Changer votre photo de couveture
+                            <label title="Modifier photo" class="lbl_change_cover_photo" style="cursor: pointer;" for="cover_photo">
+                                Changer votre photo de couveture
 
-                    </label>
+                            </label>
+                        </div>
+                    </div>
                 </div>
-                </div>
-            </div>
-            <div id="thumb">
-                <div id="my_img">
-                    <input type="file" name="chef_image" id="chef_image" class="form-control update_img" accept="image/jpeg"/>
-                    <label title="Modifier photo" style="cursor: pointer;" for="chef_image">
-                        <img src="{{asset($user->image)}}" id="change_chef_image" alt="">
-                    </label>
-                </div>
+                <div id="thumb">
+                    <div id="my_img">
+                        <input type="file" name="chef_image" id="chef_image" class="form-control update_img" accept="image/jpeg"/>
+                        <label title="Modifier photo" style="cursor: pointer;" for="chef_image">
+                            <img src="{{asset($user->image)}}" id="change_chef_image" alt="">
+                        </label>
+                    </div>
 
-            </div>
-            <div class="rating"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i> (<small><a href="detail_page_2.html">Read 98 reviews</a></small>)</div>
-            <h1>{{ucfirst($user->name)}} {{ucfirst($user->surname)}}</h1>
-            <div><em>{{$chef->speciality}}</em></div>
-            <div><i class="icon_pin"></i> {{$chef->address}}</div>
-        </div><!-- End sub_content -->
-    </div><!-- End subheader -->
-</section><!-- End section -->
-<!-- End SubHeader ============================================ -->
+                </div>
+                <div class="rating"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i> (<small><a href="detail_page_2.html">Read 98 reviews</a></small>)</div>
+                <h1>{{ucfirst($user->name)}} {{ucfirst($user->surname)}}</h1>
+                <div><em>{{$chef->speciality}}</em></div>
+                <div><i class="icon_pin"></i> {{$chef->address}}</div>
+            </div><!-- End sub_content -->
+        </div><!-- End subheader -->
+    </section><!-- End section -->
+    <!-- End SubHeader ============================================ -->
 
-<div id="position">
+    <div id="position">
     <div class="container">
         <ul>
             <li><a href="{{route('showHome')}}">Acceuil</a></li>
@@ -172,6 +181,7 @@
         <ul class="nav nav-pills">
             <li class="active"><a data-toggle="pill"  href="#menu">Menu</a></li>
             <li><a data-toggle="pill" href="#kicthen" id="kitchen_tab">Cuisine</a></li>
+            <li><a data-toggle="pill" href="#gallerys" id="gallerys_tab">Gallery</a></li>
             <li><a data-toggle="pill" href="#setting">Paramétre</a></li>
             <li><a data-toggle="pill" href="#orders">Mes Commandes</a></li>
             <li class="pull-right">
@@ -998,32 +1008,61 @@
 
     <div id="kicthen" class="tab-pane fade">
         <div class="row">
-            <h3>Cuisine</h3>
-
+            <h3>Cuisine
+                 <a href="#" data-toggle="modal" class="btn btn-md btn-success fileinput-button" data-target="#addKitchenImage">
+                    <i class="glyph-icon icon-plus"></i>
+                </a></h3>
             <div class="col-md-8">
-                <div class="box_style_2">
-                    <h2 class="inner">Description</h2>
-
-                    <div id="Img_carousel" class="slider-pro">
-                        <div class="sp-slides">
-                            @foreach($kitchenImages as $image)
-                                <div class="sp-slide">
-                                    <img alt="" class="sp-image" src="{{asset($image->image)}}">
+                @foreach($kitchenImages as $image)
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="thumbnail-box">
+                            <div class="thumb-content">
+                                <div class="center-vertical" style="margin-top: 50%;">
+                                    <div class="center-content">
+                                        <div class="thumb-btn animated zoomIn">
+                                            <a rel="fancybox-button" class="btn btn-lg btn-round btn-success fancybox-button" href="{{asset($image->image)}}" title=""><i class="glyph-icon icon-eye"></i></a>
+                                            <a href="{{route('handleKitchenDeleteImage',$image->id)}}" class="btn btn-lg btn-round btn-danger" title=""><i class="glyph-icon icon-trash"></i></a>
+                                        </div>
+                                    </div>
                                 </div>
-                            @endforeach
-                        </div>
-                        <div class="sp-thumbnails">
-                            @foreach($kitchenImages as $image)
-                                <img alt="" class="sp-thumbnail" src="{{asset($image->image)}}">
-                            @endforeach
+                            </div>
+                            <div class="thumb-overlay bg-gray"></div>
+                            <img alt="" class="photo_gallery" src="{{asset($image->image)}}">
                         </div>
                     </div>
-
-                </div><!-- End box_style_1 -->
+                @endforeach
             </div>
     </div>
     </div>
-
+    <div id="gallerys" class="tab-pane fade">
+        <div class="row">
+            <h3>Gallerie
+                <a href="#" data-toggle="modal" class="btn btn-md btn-success fileinput-button" data-target="#addImage">
+                        <i class="glyph-icon icon-plus"></i>
+                </a>
+            </h3>
+            <div class="col-md-8">
+                @foreach($gallery as $image)
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="thumbnail-box">
+                            <div class="thumb-content">
+                                <div class="center-vertical" style="margin-top: 50%;">
+                                    <div class="center-content">
+                                        <div class="thumb-btn animated zoomIn">
+                                            <a rel="fancybox-button" class="btn btn-lg btn-round btn-success fancybox-button" href="{{asset($image->image)}}" title=""><i class="glyph-icon icon-eye"></i></a>
+                                            <a href="{{route('handleGalleryDeleteImage',array($image->id))}}" class="btn btn-lg btn-round btn-danger" title=""><i class="glyph-icon icon-trash"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="thumb-overlay bg-gray"></div>
+                            <img alt="" class="photo_gallery" src="{{asset($image->image)}}">
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
     <div id="setting" class="tab-pane fade">
         <div class="row">
             <h3>Paramétre </h3>
@@ -1357,8 +1396,89 @@
         </div>
     @endif
 @endforeach
+    <div class="modal" tabindex="-1" role="dialog" id="addImage">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Ajouter une image</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="add_to_gallery" action="{{route('handleAddGalleryImage')}}" method="POST" enctype="multipart/form-data">
+                    {!! csrf_field() !!}
 
-<!-- End container -->
+                    <div class="modal-body">
+                       <div class="row">
+                        <div class="form-group">
+
+                            <label class="control-label col-md-4 col-xs-12">Selectionner votre photo<span class="text-danger"></span></label>
+
+                                <div class="input-group col-md-6">
+                                    <input  type="file" name="image" class="form-control"/>
+                                </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-4 col-xs-12">Choisir la categorie<span class="text-danger"></span></label>
+
+                                <div class="input-group col-md-6">
+                                    <select name="category" class="form-control">
+                                        @foreach($categories as $category)
+                                            <option value="{{$category->id}}">{{$category->name}}</option>
+                                        @endforeach
+                                    </select>
+
+                            </div>
+                        </div>
+                        </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success col-md-4 col-md-offset-2">Ajouter</button>
+                    <button type="button" class="btn btn-danger col-md-4 col-md-offset-2" data-dismiss="modal">Fermer</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal" tabindex="-1" role="dialog" id="addKitchenImage">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Ajouter une image</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="add_to_gallery" action="{{route('handleAddKitchenImage')}}" method="POST" enctype="multipart/form-data">
+                    {!! csrf_field() !!}
+
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-group">
+
+                                <label class="control-label col-md-4 col-xs-12">Selectionner votre photo<span class="text-danger"></span></label>
+
+                                <div class="input-group col-md-6">
+                                    <input  type="file" name="image" class="form-control"/>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success col-md-4 col-md-offset-2">Ajouter</button>
+                        <button type="button" class="btn btn-danger col-md-4 col-md-offset-2" data-dismiss="modal">Fermer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- End container -->
 <!-- End Content =============================================== -->
 <script>
     $('#cat_nav a[href^="#"]').on('click', function (e) {
@@ -1497,6 +1617,27 @@
             $("#btn_cancel_edit").attr("id","btn_edit_profile");
         })
     </script>
+            <script>
+                $(document).ready(function() {
+                    $(".fancybox-button").fancybox({
+                        prevEffect		: 'none',
+                        nextEffect		: 'none',
+                        closeBtn		: false,
+                        'width'         : 940,
+                        'height'        : 400,
+                        helpers		: {
+                            title	: { type : 'inside' },
+                            buttons	: {}
+                        }
+                    });
+
+                    $(".fancybox-logo").fancybox({
+                        prevEffect		: false,
+                        nextEffect		: false,
+                        closeBtn		: false,
+                    });
+                });
+            </script>
     <script>
         function updateProfileImage(input) {
             if (input.files && input.files[0]) {
@@ -1558,6 +1699,10 @@
 
         $(".update_cover_image").change(function(){
             updateCoverImage(this);
+        });
+
+        $("#add_image").change(function(){
+            $("#add_to_gallery").submit();
         });
     </script>
 @endsection

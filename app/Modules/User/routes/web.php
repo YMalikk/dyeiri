@@ -6,6 +6,7 @@ Route::group(['module' => 'User', 'middleware' => ['web'], 'namespace' => 'App\M
     Route::get('/chef_register', 'RegisterController@showChefRegister')->name('showChefRegister');
     Route::get('/client_register', 'RegisterController@showClientRegister')->name('showClientRegister');
     Route::post('/handleChefRegister', 'RegisterController@handleChefRegister')->name('handleChefRegister');
+    Route::post('/handleClientRegister', 'RegisterController@handleClientRegister')->name('handleClientRegister');
     Route::post('/handleConnection', 'LoginController@handleConnection')->name('handleConnection');
     Route::get('/user/verify/{token}', 'RegisterController@verifyUser');
     Route::get('/login',['uses'=>'LoginController@showLogin','as'=>'showLogin']);

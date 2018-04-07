@@ -99,6 +99,7 @@ class LoginController extends Controller
     public function loginProvider($provider)
     {
         $socialUserInfo = Socialite::driver($provider)->stateless()->user();
+
         $user = User::where(['email' => $socialUserInfo->getEmail()])->first();
         if(isset($user))
         {
@@ -119,6 +120,8 @@ class LoginController extends Controller
     {
         if (Session::has('providerInfo')) {
             $socialUserInfo = session('providerInfo');
+            $json= json_encode($socialUserInfo);
+            $array= json_decode($json,true);
             $provider = session('provider');
             $nameComposed = explode(" ", Str::lower($socialUserInfo->getName()));
             if($provider=="facebook")
@@ -131,9 +134,18 @@ class LoginController extends Controller
                 $surname= $nameComposed[0];
                 $name= $nameComposed[1];
             }
+            if($array['user']['gender']=="male")
+            {
+                $gender=1;
+            }
+            else
+            {
+                $gender=2;
+            }
             $user = User::create([
                 'name' => $name,
                 'surname' => $surname,
+                'gender'=>$gender,
                 'email' => $socialUserInfo->getEmail(),
                 'provider' => $provider,
                 'provider_id' => $socialUserInfo->getId(),
@@ -167,7 +179,7 @@ class LoginController extends Controller
 
                 Chef::create($dataChef);
 
-                for($i=1;$i<=7;$i++)
+                for($i=0;$i<=6;$i++)
                 {
                     Schedule::create([
                         'day'=>$i,
@@ -178,6 +190,8 @@ class LoginController extends Controller
                 Auth::login($user);
                 return redirect()->route('showChefProfile');
             }
+            Session::delete('providerInfo');
+            Session::delete('provider');
         }
         else
         {
