@@ -5,7 +5,7 @@
             <div class="col-md-12 col-xs-12">
                 <div class="pull-right">
                     @if($user==null)
-                        <a href="#" class="be_delivery_man">Devenir un livreur</a>
+                        <a href="{{route('showDeliveryRegister')}}" class="be_delivery_man">Devenir un livreur</a>
                         @else
                         <span style="height: 30px;display: block"></span>
                     @endif
@@ -28,10 +28,11 @@
                     <a href="#" class="open_close" id="close_in"><i class="icon_close"></i></a>
                     <ul>
                         @if($user==null)
-                            <li><a href="{{route('showChefRegister')}}" style="border: none;" class="be_delivery_man become_chef">Proposer un plat</a></li>
+                            <li><a href="{{route('showChefRegister')}}" style="border: none;width: 100%;" class="be_delivery_man become_chef">Proposer un plat</a></li>
                         @endif
                             <li><a href="{{route('showBlogs')}}">Blog</a></li>
                             <li><a href="about.html">A propos de nous</a></li>
+                            <li><a href="{{route('showFAQ')}}">FAQ</a></li>
                             @if($user==null)
                                 <li><a href="{{route('showClientRegister')}}">S'inscrire</a></li>
                                 <li><a href="#0" data-toggle="modal" data-target="#login_2">Connexion</a></li>

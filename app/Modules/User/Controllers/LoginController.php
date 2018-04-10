@@ -5,6 +5,8 @@ namespace App\Modules\User\Controllers;
 use App\Http\Controllers\Controller;
 use App\Modules\Chef\Models\Chef;
 use App\Modules\User\Models\Schedule;
+use App\Modules\User\Models\WhichList;
+use App\Modules\User\Models\WhichListUser;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Session;
@@ -158,6 +160,14 @@ class LoginController extends Controller
                 $user->assignRole(2);
                 $user->current_user=2;
                 $user->save();
+                foreach($whichList=WhichList::all() as $which)
+                {
+                    WhichListUser::create([
+                        'user_id'=>$user->id,
+                        'which_id'=>$which->id,
+                        'status'=>0,
+                    ]);
+                }
                 Auth::login($user);
                 return redirect()->route('showProfile');
             }

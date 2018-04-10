@@ -101,5 +101,10 @@ class ContentController extends Controller
         return view('Content::searchResults',compact('chefs','lat','lng'));
     }
 
+    public function showFAQ()
+    {
+        return view('Content::faq');
+    }
+
 
 }

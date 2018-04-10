@@ -2170,7 +2170,9 @@ footer .form-group {
 
 .panel-title a {
     display: block;
-    color: #444
+    color: #444;
+
+    text-align: left;
 }
 
 .panel-default > .panel-heading {

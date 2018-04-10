@@ -197,6 +197,7 @@
 .fancybox-lock .fancybox-overlay {
 	overflow: auto;
 	overflow-y: scroll;
+	z-index: 9999999;
 }
 
 /* Title helper */

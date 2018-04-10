@@ -16,5 +16,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CategoriesSeeder::class);
         $this->call(PlatformSeeder::class);
         $this->call(DeliveryTimesSeeder::class);
+        $this->call(WhichListSeeder::class);
     }
 }

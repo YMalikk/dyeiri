@@ -16,7 +16,8 @@ class AdminSeed extends Seeder
             'surname'=>'admin',
             'email'=>'admin@dyeiri.com',
             'password'=>bcrypt('123456'),
-            'status'=>1
+            'status'=>1,
+            'gender'=>1,
         ]);
         $user->assignRole(1); //role 1 => admin
     }
