@@ -9,9 +9,11 @@ class DeliveryMan extends Model {
     protected $table = 'delivery_man';
 
     protected $fillable = [
-        'description',
         'status',
         'transport',
+        'driver_license',
+        'smartphone',
+        'student',
         'user_id',
     ];
 

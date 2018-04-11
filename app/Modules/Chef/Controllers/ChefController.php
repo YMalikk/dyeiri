@@ -2,7 +2,9 @@
 
 namespace App\Modules\Chef\Controllers;
 
+use App\Modules\Chef\Models\Category;
 use App\Modules\Chef\Models\Chef;
+use App\Modules\Chef\Models\Gallery;
 use App\Modules\Chef\Models\KitchenImage;
 use App\Modules\Chef\Models\Review;
 use App\Modules\Chef\Models\ReviewRating;
@@ -29,7 +31,8 @@ class ChefController extends Controller
         $drinks = $chef->getFoods->where('category_id','=',4);
         $dayFoods =  $chef->getFoods->where('category_id','=',5);
         $reviews = $chef->reviews;
-        $kitchenImages=$chef->getKitchenImages;
+        $kitchenImages=$chef->availableKitchenImages;
+        $gallery=$chef->availableGallery;
         $orders = Order::where('chef_id','=',$chef->id)->orderBy('created_at','desc') ->get();
         $orderIdTable=array();
         foreach ($orders as $order)
@@ -37,7 +40,8 @@ class ChefController extends Controller
             $orderIdTable[]=$order->id;
         }
         $foodOrderReviews = FoodOrderReview::whereIn('order_id',$orderIdTable)->get();
-        return view('Chef::backOffice.chefProfile',compact('user','chef','dayFoods','drinks','kitchenImages','orders','entrees','desserts','mains','reviews','foodOrderReviews'));
+        $categories=Category::Where('status','=',1)->get();
+        return view('Chef::backOffice.chefProfile',compact('user','chef','dayFoods','drinks','kitchenImages','orders','entrees','desserts','mains','reviews','foodOrderReviews','gallery','categories'));
     }
 
 
@@ -176,6 +180,7 @@ class ChefController extends Controller
                 'kitchenImages'=>'required',
                 'lng' => 'required|between:-180.00,180.00',
                 'lat' => 'required|between:-90.00,90.00',
+                'gender'=>'required|integer|min:1|max:3',
             ]);
         }
         else
@@ -187,6 +192,7 @@ class ChefController extends Controller
                 'kitchenImages'=>'required',
                 'lng' => 'required|between:-180.00,180.00',
                 'lat' => 'required|between:-90.00,90.00',
+                'gender'=>'required|integer|min:1|max:3',
             ]);
         }
 
@@ -288,10 +294,10 @@ class ChefController extends Controller
         foreach($request->kitchenImages as $image)
         {
             $img = $image;
-            $img = str_replace('data:image/jpeg;base64,', '', $img);
+            $img = str_replace('data:image/png;base64,', '', $img);
             $img = str_replace(' ', '+', $img);
             $data= base64_decode($img);
-            $image_name=$user->id.'-'.time().$i.'.jpeg';
+            $image_name=$user->id.'-'.time().$i.'.png';
             $imagePath = $folderPath."/".$image_name;
             file_put_contents($imagePath,$data);
             $kitchenImage.=$image_name.";";
@@ -311,6 +317,7 @@ class ChefController extends Controller
         $this->fillSchedule($request->fridayCheckbox,$user->chef,4,$request->fridayStart,$request->fridayEnd);
         $this->fillSchedule($request->saturdayCheckbox,$user->chef,5,$request->saturdayStart,$request->saturdayEnd);
         $this->fillSchedule($request->sundayCheckbox,$user->chef,6,$request->sundayStart,$request->sundayEnd);
+        $user->gender=$request->gender;
         $user->save();
 
         $user->chef->mobile=$request->mobile;
@@ -476,5 +483,124 @@ class ChefController extends Controller
 
         return $img;
     }
+
+    public function handleAddGalleryImage(Request $request)
+    {
+
+        $verifyImage=Validator::make($request->all(),
+            [
+                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048|required',
+                'category'=>'required|numeric'
+            ]);
+
+        if(!$verifyImage->fails())
+        {
+            if(Category::find($request->category)) {
+                $image = $request->file('image');
+
+                if (Auth::user()->chef->availableGallery->count() < 12) {
+                    $nameImage = Auth::user()->chef->id . "-" . time() . '.' . $image->getClientOriginalExtension();
+                    $destinationPath = "storage/uploads/foods/chef_num" . Auth::user()->id;
+                    if (is_dir($destinationPath) === false) {
+                        mkdir($destinationPath);
+                    }
+                    Image::make($image->getRealPath())->save($destinationPath . "/" . $nameImage);
+                    Gallery::create([
+                        'image' => $destinationPath. "/" . $nameImage,
+                        'chef_id' => Auth::user()->chef->id,
+                        'category_id'=>$request->category,
+                        'status' => 1,
+                    ]);
+                    alert()->success('Image ajoutée avec succès', 'Information')->persistent('Ok');
+                    return redirect()->route('showChefProfile');
+                } else {
+                    alert()->error('Vous avez atteint le nombre maximum des photos (8)', 'Erreur')->persistent('Ok');
+                }
+            }
+        }
+        else
+        {
+            $errorArray=$verifyImage->messages()->all();
+            $errors="";
+            foreach($errorArray as $error)
+            {
+                $translator = new TranslateClient('en', 'fr');
+                $errors.=$translator->translate($error).",";
+            }
+            alert()->error(substr($errors,0,strlen($errors)-1),'Erreur')->persistent('Ok');
+        }
+
+    }
+
+    public function handleAddKitchenImage(Request $request)
+    {
+
+        $verifyImage=Validator::make($request->all(),
+            [
+                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048|required'
+            ]);
+
+        if(!$verifyImage->fails())
+        {
+
+                $image = $request->file('image');
+
+             //   if (Auth::user()->chef->getKitchenImages->count() < ) {
+                    $nameImage = Auth::user()->chef->id . "-" . time() . '.' . $image->getClientOriginalExtension();
+                    $destinationPath="storage/uploads/kitchen/user_num".Auth::user()->id;
+                    if (is_dir($destinationPath) === false) {
+                        mkdir($destinationPath);
+                    }
+
+                    Image::make($image->getRealPath())->save($destinationPath . "/" . $nameImage);
+                    KitchenImage::create([
+                        'image' => $destinationPath. "/" . $nameImage,
+                        'chef_id' => Auth::user()->chef->id,
+                        'status' => 1,
+                    ]);
+
+                    alert()->success('Image ajoutée avec succès', 'Information')->persistent('Ok');
+               // } else {
+                 //   alert()->error('Vous avez atteint le nombre maximum des photos (8)', 'Erreur')->persistent('Ok');
+                //}
+           }
+
+        else
+        {
+            $errorArray=$verifyImage->messages()->all();
+            $errors="";
+            foreach($errorArray as $error)
+            {
+                $translator = new TranslateClient('en', 'fr');
+                $errors.=$translator->translate($error).",";
+            }
+            alert()->error(substr($errors,0,strlen($errors)-1),'Erreur')->persistent('Ok');
+        }
+        return redirect()->route('showChefProfile');
+    }
+
+    public function handleGalleryDeleteImage($id)
+    {
+        $image=Gallery::find($id);
+        if($image)
+        {
+            $image->status=0;
+            $image->save();
+            alert()->success("Votre image a été supprimé avec succès","Information")->persistent("Ok");
+        }
+        return redirect()->route('showChefProfile');
+    }
+
+     public function handleKitchenDeleteImage($id)
+        {
+            $image=KitchenImage::find($id);
+            if($image)
+            {
+                $image->status=0;
+                $image->save();
+                alert()->success("Votre image a été supprimé avec succès","Information")->persistent("Ok");
+            }
+            return redirect()->route('showChefProfile');
+        }
 
 }

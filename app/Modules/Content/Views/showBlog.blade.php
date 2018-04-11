@@ -47,7 +47,7 @@
         <div class="row">
             <div class="col-md-9">
                 <div class="post">
-                    <img src="{{asset('storage/image/posts/'.$post->image)}}" alt="" class="img-responsive">
+                    <img src="{{asset($post->image)}}" alt="" class="img-responsive">
                     <div class="post_info clearfix">
                         <div class="post-left">
                             <ul>

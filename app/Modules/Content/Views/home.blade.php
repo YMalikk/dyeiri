@@ -271,9 +271,6 @@
         <div class="sub_content">
             <i class="icon_mug"></i>
             <h3>We also deliver to your office</h3>
-            <p>
-                Ridiculus sociosqu cursus neque cursus curae ante scelerisque vehicula.
-            </p>
         </div><!-- End sub_content -->
     </div><!-- End subheader -->
 </section><!-- End section -->
@@ -282,43 +279,55 @@
 <div class="container margin_60">
     <div class="main_title margin_mobile">
         <h2 class="nomargin_top">Work with Us</h2>
-        <p>
-            Cum doctus civibus efficiantur in imperdiet deterruisset.
-        </p>
     </div>
     <div class="row">
         <div class="col-md-4 col-xs-12">
-            <a class="box_work" href="submit_restaurant.html">
+            <a class="box_work" href="{{route('showClientRegister')}}">
                 <img src="{{asset('img')}}/steak-bowl.png" alt="" class="img-circle with_work_us">
                 <h3>Health Food, For Real<span>Start being healthy</span></h3>
                 <p>Manger sain n'est pas si compliqué.<br/>
                    Une alimentation saine contribu à rester en bonne santé.
                 </p>
-                <div class="btn_1">Get started</div>
+                <div class="btn_1">Commencer</div>
             </a>
         </div>
         <div class="col-md-4 col-xs-12">
-            <a class="box_work" href="submit_driver.html">
+            <a class="box_work" href="{{route('showBlogs')}}">
                 <img src="{{asset('img')}}/community.png" class="img-circle with_work_us">
                 <h3>Join Our Community<span>Start to be actif</span></h3>
                 <p>Rejoingez notre communité, où vos recettes prennent vie.
                    Nous rejoindre c'est rejoindre une communité chaleureuse et solide.<br/>
                 </p>
-                <div class="btn_1">Join</div>
+                <div class="btn_1">Joindre</div>
             </a>
         </div>
 
         <div class="col-md-4 col-xs-12">
-            <a class="box_work" href="submit_driver.html">
+            <a class="box_work" href="{{route('showDeliveryRegister')}}">
                 <img src="{{asset('img')}}/scooter.png" style="width: 204px;" class="img-circle with_work_us">
                 <h3>We are looking for a Driver<span>Start to earn money</span></h3>
                 <p>Dyeiri recherche une personne motivée, rigoureuse et active.<br/>
                    Ayant un moyen de transport pour la livraison.
                 </p>
-                <div class="btn_1">Read more</div>
+                <div class="btn_1">Aller de l'avant</div>
             </a>
         </div>
     </div><!-- End row -->
+</div>
+    <div class="container margin_60">
+        <div class="main_title margin_mobile">
+            <h2 class="nomargin_top">Besoin d'aide?</h2>
+        </div>
+    <div class="row" id="contacts">
+        <div class="col-md-8  col-sm-8 col-md-offset-2">
+            <div class="box_style_2">
+                <h2 class="inner">Service Clients</h2>
+                <p class="add_bottom_30">Adipisci conclusionemque ea duo, quo id fuisset prodesset, vis ea agam quas. <strong>Lorem iisque periculis</strong> id vis, no eum utinam interesset. Quis voluptaria id per, an nibh atqui vix. Mei falli simul nusquam te.</p>
+                <p><a href="tel://0021655964433" class="phone"><i class="icon-phone-circled"></i>  +216 55 964 433</a></p>
+                <p class="nopadding"><a href="mailto:dyeirifood@gmail.com"><i class="icon-mail-3"></i> dyeirifood@gmail.com</a></p>
+            </div>
+        </div>
+    </div>
 </div><!-- End container -->
 @stop
 @section('footer')

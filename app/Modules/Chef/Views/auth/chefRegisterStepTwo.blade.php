@@ -156,6 +156,18 @@
                                         </div>
                                         <small>Votre address nous aide à vous localisez facilement pour la recherche.</small> </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-sm-3">Genre<span class="text-danger"></span></label>
+                                    <div class="col-md-8 col-sm-9">
+                                        <div class="input-group">
+                                            <select class="form-control" required name="gender">
+                                                <option value="1">Homme</option>
+                                                <option value="2">Femme</option>
+                                            </select>
+                                        </div>
+                                        <small>Votre genre est obligatoire.</small> </div>
+                                </div>
                                 </div>
                                 <ul class="list-inline pull-right">
                                     <li><button type="button" id="valid_setp_1" class="btn btn-primary next-step">Continuer</button></li>

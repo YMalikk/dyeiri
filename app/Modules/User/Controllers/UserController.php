@@ -8,6 +8,8 @@ use App\Modules\Order\Models\Order;
 use App\Modules\User\Models\Message;
 use App\Modules\User\Models\Schedule;
 use App\Modules\User\Models\User;
+use App\Modules\User\Models\WhichList;
+use App\Modules\User\Models\WhichListUser;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Alert;
@@ -26,7 +28,9 @@ class UserController extends Controller
       $foodOrderReviews = FoodOrderReview::where('user_id','=',$user->id)->get();
       $types[0]=1;$types[1]=2;$types[2]=3;$types[3]=4;
       $now = Carbon::now();
-      return view('User::backOffice.profile',compact('orders','foodOrderReviews','user','types','now'));
+      $whichList=$user->whichList;
+        $activeWhichList=$user->getActiveWhichList;
+      return view('User::backOffice.profile',compact('orders','foodOrderReviews','user','types','now','whichList','activeWhichList'));
     }
     
      public function showProfileFront($id)
@@ -42,7 +46,19 @@ class UserController extends Controller
         $user=Auth::user();
         switch($currentUser)
         {
-            case 1 : $user->current_user=2;$user->save(); return redirect()->route('showProfile');
+            case 1 : $user->current_user=2;$user->save();
+            if(!$user->whichList)
+            {
+                foreach($whichList=WhichList::all() as $which)
+                {
+                    WhichListUser::create([
+                        'user_id'=>$user->id,
+                        'which_id'=>$which->id,
+                        'status'=>0,
+                    ]);
+                }
+            }
+                return redirect()->route('showProfile');
             case 2 : $user->current_user=1;
             if(!$user->hasRole("chef"))
             {
@@ -58,7 +74,7 @@ class UserController extends Controller
                 ];
 
                 Chef::create($dataChef);
-                for($i=1;$i<=7;$i++)
+                for($i=0;$i<=6;$i++)
                 {
                     Schedule::create([
                         'day'=>$i,
@@ -350,4 +366,53 @@ class UserController extends Controller
         return view('User::admin.orderList',compact('orders'));
     }
 
+    public function handleDeleteWhich($id)
+    {
+        $which=WhichListUser::find($id);
+        if($which)
+        {
+            $which->status=0;
+            $which->save();
+            alert()->success("Votre liste de souhaits a été mise à jour avec succès",'Information')->persistent('Ok');
+        }
+
+        return redirect()->back();
+    }
+
+    public function handleUpdateWhichList(Request $request)
+    {
+        $user=Auth::user();
+
+        if(count($request->image)<=3)
+        {
+            foreach($user->whichList as $which)
+            {
+                $which->status=0;
+                $which->save();
+            }
+
+        foreach($request->image as $image)
+        {
+            if($foundWhich=WhichList::find($image))
+            {
+                foreach($user->whichList as $whichImage)
+                {
+                    if($image==$whichImage->id)
+                    {
+                       $whichImage->status=1;
+                       $whichImage->save();
+                    }
+                }
+            }
+        }
+            alert()->success("Votre liste de souhait a été mise à jour avec succès","Information")->persistent("Ok");
+
+        }
+        else
+        {
+            alert()->error("Vous ne pouvez choisir que trois souhaits","Erreur")->persistent("Ok");
+
+        }
+        return redirect()->back();
+    }
 }

@@ -5,6 +5,8 @@ namespace App\Modules\User\Controllers;
 use App\Http\Controllers\Controller;
 use App\Modules\Chef\Models\Chef;
 use App\Modules\User\Models\Schedule;
+use App\Modules\User\Models\WhichList;
+use App\Modules\User\Models\WhichListUser;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Session;
@@ -99,6 +101,7 @@ class LoginController extends Controller
     public function loginProvider($provider)
     {
         $socialUserInfo = Socialite::driver($provider)->stateless()->user();
+
         $user = User::where(['email' => $socialUserInfo->getEmail()])->first();
         if(isset($user))
         {
@@ -119,6 +122,8 @@ class LoginController extends Controller
     {
         if (Session::has('providerInfo')) {
             $socialUserInfo = session('providerInfo');
+            $json= json_encode($socialUserInfo);
+            $array= json_decode($json,true);
             $provider = session('provider');
             $nameComposed = explode(" ", Str::lower($socialUserInfo->getName()));
             if($provider=="facebook")
@@ -131,9 +136,18 @@ class LoginController extends Controller
                 $surname= $nameComposed[0];
                 $name= $nameComposed[1];
             }
+            if($array['user']['gender']=="male")
+            {
+                $gender=1;
+            }
+            else
+            {
+                $gender=2;
+            }
             $user = User::create([
                 'name' => $name,
                 'surname' => $surname,
+                'gender'=>$gender,
                 'email' => $socialUserInfo->getEmail(),
                 'provider' => $provider,
                 'provider_id' => $socialUserInfo->getId(),
@@ -146,6 +160,14 @@ class LoginController extends Controller
                 $user->assignRole(2);
                 $user->current_user=2;
                 $user->save();
+                foreach($whichList=WhichList::all() as $which)
+                {
+                    WhichListUser::create([
+                        'user_id'=>$user->id,
+                        'which_id'=>$which->id,
+                        'status'=>0,
+                    ]);
+                }
                 Auth::login($user);
                 return redirect()->route('showProfile');
             }
@@ -167,7 +189,7 @@ class LoginController extends Controller
 
                 Chef::create($dataChef);
 
-                for($i=1;$i<=7;$i++)
+                for($i=0;$i<=6;$i++)
                 {
                     Schedule::create([
                         'day'=>$i,
@@ -178,6 +200,8 @@ class LoginController extends Controller
                 Auth::login($user);
                 return redirect()->route('showChefProfile');
             }
+            Session::delete('providerInfo');
+            Session::delete('provider');
         }
         else
         {

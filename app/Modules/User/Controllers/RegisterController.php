@@ -4,6 +4,9 @@ namespace App\Modules\User\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Chef\Models\Chef;
+use App\Modules\DeliveryMan\Models\DeliveryMan;
+use App\Modules\User\Models\WhichList;
+use App\Modules\User\Models\WhichListUser;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -143,6 +146,7 @@ class RegisterController extends Controller
             'image'=>$destinationPath,
             'surname' => $request->surname,
             'email' => $request->email,
+            'gender'=>$request->gender,
             'password' => bcrypt($request->password),
             'confirmation_code' => $confirmation_code,
             'current_user'=>1,
@@ -166,7 +170,7 @@ class RegisterController extends Controller
 
         Chef::create($dataChef);
 
-        for($i=1;$i<=7;$i++)
+        for($i=0;$i<=6;$i++)
         {
             Schedule::create([
                 'day'=>$i,
@@ -224,6 +228,148 @@ class RegisterController extends Controller
     public function showClientRegister()
     {
         return view('User::auth.clientRegister');
+    }
+
+    public function handleClientRegister(Request $request)
+    {
+
+        if($request->provider) {
+            $verifyForm = Validator::make($request->all(), [
+                'name' => 'required|max:190|min:1',
+                'surname' => 'required|max:190|min:1',
+                'email' => 'required|unique:users|email|',
+
+            ]);
+        }
+        else
+        {
+            if($request->password!=$request->password2)
+            {
+                alert()->error("Vérfiez votre mot de passe","Erreur")->persistent("Ok");
+                return redirect()->back();
+            }
+            $verifyForm = Validator::make($request->all(), [
+                'name' => 'required|max:190|min:1',
+                'surname' => 'required|max:190|min:1',
+                'email' => 'required|unique:users|email|',
+                'gender'=>'required|integer|min:1|max:3',
+            ]);
+        }
+        if($verifyForm->fails())
+        {
+            $translator = new TranslateClient('en', 'fr');
+            $result="";
+            $errorArray=$verifyForm->messages()->all();
+
+
+            foreach($errorArray as $error)
+            {
+
+                    $result .= $translator->translate($error)." ";
+
+            }
+            //i use the substr cause always if we found error in the form the last caractére w'll be always ","
+            alert()->error(substr($result,0,strlen($result)-1),'Erreur')->persistent('Ok');
+            return redirect()->back();
+        }
+        $confirmation_code = str_random(25);
+        $destinationPathUserImage = 'storage/uploads/users/UserImage.png';
+        $dataUser = [
+            'name' => $request->name,
+            'image'=>$destinationPathUserImage,
+            'surname' => $request->surname,
+            'email' => $request->email,
+            'gender'=>$request->gender,
+            'password' => bcrypt($request->password),
+            'confirmation_code' => $confirmation_code,
+            'current_user'=>2,
+            'status' => 0,
+        ];
+
+        $user=User::create($dataUser);
+        foreach($whichList=WhichList::all() as $which)
+        {
+            WhichListUser::create([
+                'user_id'=>$user->id,
+                'which_id'=>$which->id,
+                'status'=>0,
+            ]);
+        }
+        $user->assignRole(2);  //role 2 => client
+
+        Auth::logout();
+
+        $content = array('confirmation_code' => $confirmation_code);
+        Mail::send('User::emails.verify_account', $content, function ($message) use ($request) {
+            $message->to($request['email'], $request['name'])
+                ->subject(trans('Activé votre compte'));
+        });
+
+        alert()->warning('Consulter votre boite email pour activer votre compte.', 'Information')->persistent("Ok");
+        return redirect()->route('showHome');
+    }
+
+    public function showDeliveryRegister()
+    {
+        return view('User::auth.deliveryRegister');
+    }
+
+    public function handleDeliveryRegister(Request $request)
+    {
+        $verifyForm = Validator::make($request->all(), [
+            'name' => 'required|max:190|min:1',
+            'surname' => 'required|max:190|min:1',
+            'email' => 'required|unique:users|email|',
+            'mobile'=>'required',
+        ]);
+
+        if($verifyForm->fails())
+        {
+            $translator = new TranslateClient('en', 'fr');
+            $result="";
+            $errorArray=$verifyForm->messages()->all();
+
+            foreach($errorArray as $error)
+            {
+
+                $result .= $translator->translate($error)." ";
+
+            }
+            //i use the substr cause always if we found error in the form the last caractére w'll be always ","
+            alert()->error(substr($result,0,strlen($result)-1),'Erreur')->persistent('Ok');
+            return redirect()->back();
+        }
+        $destinationPathUserImage = 'storage/uploads/users/UserImage.png';
+        $confirmation_code = str_random(25);
+        $dataUser = [
+            'name' => $request->name,
+            'image'=>$destinationPathUserImage,
+            'surname' => $request->surname,
+            'email' => $request->email,
+            'gender'=>$request->gender,
+            'password' => bcrypt($request->password),
+            'confirmation_code' => $confirmation_code,
+            'current_user'=>2,
+            'status' => 0,
+        ];
+
+        $user=User::create($dataUser);
+        DeliveryMan::create([
+            'user_id'=>$user->id,
+            'status'=>0,
+            'transport'=>$request->transport,
+            'smartphone'=>$request->smartphone,
+            'driver_license'=>$request->license,
+            'student'=>$request->student,
+        ]);
+        $content = array('confirmation_code' => $confirmation_code);
+        Mail::send('User::emails.verify_account', $content, function ($message) use ($request) {
+            $message->to($request['email'], $request['name'])
+                ->subject(trans('Activé votre compte'));
+        });
+
+        alert()->warning('Consulter votre boite email pour activer votre compte.', 'Information')->persistent("Ok");
+        return redirect()->route('showHome');
     }
 
 }

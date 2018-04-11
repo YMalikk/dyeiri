@@ -11,7 +11,7 @@
 @section('content')
     <!-- Content ================================================== -->
     <section >
-        <div class="row user_register">
+        <div class="row user_register page_content">
             <div class="col-md-4 pull-right col-xs-12 page_content">
                 <div class="main_title">
                     <h2 class="nomargin_top chef_register_title">Inscrivez-vous</h2>
@@ -20,7 +20,7 @@
 
                 </div>
 
-                <form action="{{route('handleChefRegister')}}" method="POST" class="popup-form" id="myRegister">
+                <form action="{{route('handleClientRegister')}}" method="POST" class="popup-form" id="myRegister">
                     {!! csrf_field() !!}
                     <div class="row">
                         <div class="col-md-6 col-xs-6">
@@ -34,11 +34,15 @@
                             </a>
                         </div>
                     </div>
-                    <input type="text" class="form-control form-white" name="surname" placeholder="Prenom">
-                    <input type="text" class="form-control form-white" name="name" placeholder="Nom">
-                    <input type="email" class="form-control form-white" name="email" placeholder="Email">
-                    <input type="password" class="form-control form-white" name="password" placeholder="Mot de passe" id="password1">
-                    <input type="password" class="form-control form-white" name="password2" placeholder="Confirme mot de passe" id="password2">
+                    <input type="text" class="form-control form-white" required name="surname" placeholder="Prenom">
+                    <input type="text" class="form-control form-white" required name="name" placeholder="Nom">
+                    <select class="form-control" required name="gender">
+                        <option value="1">Homme</option>
+                        <option value="2">Femme</option>
+                    </select>
+                    <input type="email" class="form-control form-white" required name="email" placeholder="Email">
+                    <input type="password" class="form-control form-white" required name="password" placeholder="Mot de passe" id="password1">
+                    <input type="password" class="form-control form-white" required name="password2" placeholder="Confirme mot de passe" id="password2">
                     <div id="pass-info" class="clearfix"></div>
                     <div class="checkbox-holder text-left">
                         <div class="checkbox">

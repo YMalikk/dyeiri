@@ -17,6 +17,9 @@ class CreateDeliveryManTable extends Migration
             $table->increments('id');
             $table->integer('status'); // 1 available, 2 working, 0 unavailable
             $table->integer('transport'); //1 bicy , 2 motor, 3 cars
+            $table->integer('smartphone'); //1 iphone, 2 android
+            $table->integer('driver_license'); //1 oui , 0 non
+            $table->integer('student'); //1 oui , 0 non
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

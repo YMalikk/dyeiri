@@ -19,6 +19,10 @@ Route::group(['module'=> 'User','middleware'=>'chef','namespace'=>'App\Modules\C
     Route::post('/handleEditChefProfile',['uses'=>'ChefController@handleEditChefProfile','as'=>'handleEditChefProfile']);
     Route::post('/handleChefChangeImage',['uses'=>'ChefController@handleChefChangeImage','as'=>'handleChefChangeImage']);
     Route::post('/handleChefChangeCover',['uses'=>'ChefController@handleChefChangeCover','as'=>'handleChefChangeCover']);
+    Route::post('/handleAddGalleryImage',['uses'=>'ChefController@handleAddGalleryImage','as'=>'handleAddGalleryImage']);
+    Route::post('/handleAddKitchenImage',['uses'=>'ChefController@handleAddKitchenImage','as'=>'handleAddKitchenImage']);
+    Route::get('/handleGalleryDeleteImage/{id}',['uses'=>'ChefController@handleGalleryDeleteImage','as'=>'handleGalleryDeleteImage']);
+    Route::get('/handleKitchenDeleteImage/{id}',['uses'=>'ChefController@handleKitchenDeleteImage','as'=>'handleKitchenDeleteImage']);
 
 
 });

@@ -34,11 +34,15 @@
                         </a>
                     </div>
                 </div>
-                <input type="text" class="form-control form-white" name="surname" placeholder="Prenom">
-                <input type="text" class="form-control form-white" name="name" placeholder="Nom">
-                <input type="email" class="form-control form-white" name="email" placeholder="Email">
-                <input type="password" class="form-control form-white" name="password" placeholder="Mot de passe" id="password1">
-                <input type="password" class="form-control form-white" name="password2" placeholder="Confirme mot de passe" id="password2">
+                <input type="text" class="form-control form-white" name="surname" required placeholder="Prenom">
+                <input type="text" class="form-control form-white" name="name" required placeholder="Nom">
+                <select class="form-control" required name="gender">
+                    <option value="1">Homme</option>
+                    <option value="2">Femme</option>
+                </select>
+                <input type="email" class="form-control form-white" name="email" required placeholder="Email">
+                <input type="password" class="form-control form-white" name="password" required placeholder="Mot de passe" id="password1">
+                <input type="password" class="form-control form-white" name="password2" required placeholder="Confirme mot de passe" id="password2">
                 <div id="pass-info" class="clearfix"></div>
                 <div class="checkbox-holder text-left">
                     <div class="checkbox">

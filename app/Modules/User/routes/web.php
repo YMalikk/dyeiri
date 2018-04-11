@@ -5,10 +5,17 @@ Route::group(['module' => 'User', 'middleware' => ['web'], 'namespace' => 'App\M
     Route::get('/logout', ['uses' => 'LoginController@logout', 'as' => 'logout']);
     Route::get('/chef_register', 'RegisterController@showChefRegister')->name('showChefRegister');
     Route::get('/client_register', 'RegisterController@showClientRegister')->name('showClientRegister');
+    Route::get('/delivery_register','RegisterController@showDeliveryRegister')->name('showDeliveryRegister');
+
     Route::post('/handleChefRegister', 'RegisterController@handleChefRegister')->name('handleChefRegister');
+    Route::post('/handleClientRegister', 'RegisterController@handleClientRegister')->name('handleClientRegister');
+    Route::post('/handleDeliveryRegister', 'RegisterController@handleDeliveryRegister')->name('handleDeliveryRegister');
+
     Route::post('/handleConnection', 'LoginController@handleConnection')->name('handleConnection');
     Route::get('/user/verify/{token}', 'RegisterController@verifyUser');
     Route::get('/login',['uses'=>'LoginController@showLogin','as'=>'showLogin']);
+
+
 
 
     Route::get('/subscriptionProvider/{provider}', 'LoginController@authenticate')->name('authenticate');
@@ -38,6 +45,8 @@ Route::group(['module' => 'User','middleware'=>'client', 'namespace' => 'App\Mod
     Route::get('/profile', 'UserController@showProfile')->name('showProfile');
     Route::get('/profileUser', 'UserController@showProfileFront')->name('showProfileFront');
     Route::post('/profile', 'UserController@editProfile')->name('editProfile');
+    Route::get('/handleDeleteWhich/{id}', 'UserController@handleDeleteWhich')->name('handleDeleteWhich');
+    Route::post('/handleUpdateWhichList', 'UserController@handleUpdateWhichList')->name('handleUpdateWhichList');
 });
 
 Route::group(['module' => 'User','middleware'=>'admin', 'namespace' => 'App\Modules\User\Controllers'], function() {

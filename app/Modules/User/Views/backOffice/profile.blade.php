@@ -9,6 +9,22 @@
 @stop
 
 @section('content')
+    <!-- Add mousewheel plugin (this is optional) -->
+    <script type="text/javascript" src="{{asset('plugins/fancyBox')}}/lib/jquery.mousewheel-3.0.6.pack.js"></script>
+
+    <!-- Add fancyBox -->
+    <link rel="stylesheet" href="{{asset('plugins/fancyBox')}}//source/jquery.fancybox.css?v=2.1.7" type="text/css" media="screen" />
+    <script type="text/javascript" src="{{asset('plugins/fancyBox')}}//source/jquery.fancybox.pack.js?v=2.1.7"></script>
+
+    <!-- Optionally add helpers - button, thumbnail and/or media -->
+    <link rel="stylesheet" href="{{asset('plugins/fancyBox')}}/source/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" media="screen" />
+    <script type="text/javascript" src="{{asset('plugins/fancyBox')}}//source/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+    <script type="text/javascript" src="{{asset('plugins/fancyBox')}}//source/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+
+    <link rel="stylesheet" href="{{asset('plugins/fancyBox')}}/source/helpers/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
+    <script type="text/javascript" src="{{asset('plugins/fancyBox')}}//source/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset ('css/images.css') }}"/>
+
     <style>
         .onoffswitch {
             position: relative; width: 90px;
@@ -81,7 +97,7 @@
         {
             margin-left: -14px;
         }
-        
+
         div.stars {
 
         }
@@ -115,6 +131,45 @@
             content: '\f006';
             font-family: FontAwesome;
         }
+        .photo_gallery
+        {
+           height: 250px;
+           width: 250px;
+
+        }
+        nopad {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+        /*image gallery*/
+        .image-checkbox {
+            cursor: pointer;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            border: 4px solid transparent;
+            margin-bottom: 0;
+            outline: 0;
+        }
+        .image-checkbox input[type="checkbox"] {
+            display: none;
+        }
+
+        .image-checkbox-checked {
+            border-color: #4cae4c;
+        }
+        .image-checkbox .fa {
+            position: absolute;
+            color: #4cae4c;
+            border: 1px solid #4cae4c;
+            background-color: #fff;
+            padding: 10px;
+            top: 3px;
+            right: 18px;
+        }
+        .image-checkbox-checked .fa {
+            display: block !important;
+        }
     </style>
    <section class="page_content">
        <div class="container">
@@ -146,7 +201,7 @@
        </div>
        <div class="container margin_60_35 tab-content">
            <div id="account" class="tab-pane fade in active">
-                <div class="row col-md-10 col-md-offset-1 col-xs-10 col-xs-offset-1 margin_30 col-sm-12 col-sm-offset-0">
+                <div class="row col-md-12 col-md-offset-1 col-xs-10 col-xs-offset-1 margin_30 col-sm-12 col-sm-offset-0">
                 <div class="row">
                     <div class="col-md-4 col-xs-4 col-sm-4">
                         <img src="{{asset('img/user.jpg')}}" class="profile_img"/>
@@ -172,14 +227,6 @@
                                     <small>Votre prénom sera visible par tout les utilisateurs. </small> </div>
                              </div>
 
-                            <div class="form-group">
-                                <label class="control-label col-sm-3">Adresse<span class="text-danger"></span></label>
-                                <div class="col-md-8 col-sm-9">
-                                    <div class="input-group address_result">
-                                        <input type="text" disabled="" id="address" required class="form-control" value="{{$user->surname}}"/>
-                                    </div>
-                                    <small>Votre prénom sera visible par tout les utilisateurs. </small> </div>
-                            </div>
 
                             <div class="form-group">
                                 <label class="control-label col-sm-3">Email<span class="text-danger"></span></label>
@@ -249,22 +296,61 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="col-md-8 col-xs-12 col-sm-8">
-                        <span class="wish_list">Liste des souhaits <span class="wish_list_count"> (3)</span></span>
-                         <div class="row col-xs-offset-1 col-md-offset-0">
-                             <div class="col-md-4 col-sm-4">
-                                    <img src="{{asset('img/user.jpg')}}" style="width: 160px"/>
-                             </div>
 
-                             <div class="col-md-4 col-sm-4">
-                                 <img src="{{asset('img/user.jpg')}}" style="width: 160px"/>
-                             </div>
+                            <form action="{{route('handleUpdateWhichList')}}" method="POST">
+                                    {!! csrf_field() !!}
+                                <span class="wish_list">Liste des souhaits <span class="wish_list_count"> ({{count($activeWhichList)}})</span>
+                                    <button type="button" class="btn btn-md btn-success fileinput-button editWhichList" style="margin-bottom: 10px;">
+                        Modifier <i class="glyph-icon icon-edit"></i>
+                      </button>
 
-                             <div class="col-md-4 col-sm-4">
-                                 <img src="{{asset('img/user.jpg')}}" style="width: 160px"/>
-                             </div>
+                                    <button type="submit" class="btn btn-md btn-success fileinput-button saveEdit" style="margin-bottom: 10px;display:none;">
+                        Enregister <i class="glyph-icon icon-edit"></i>
+                      </button>
+                                        <div class="row col-xs-offset-1 col-md-offset-0">
+                                    <div class="whichListUser">
+                                    @foreach($activeWhichList as $which)
+                                            <div class="col-lg-4 col-md-4 col-sm-6 nopad text-center">
+                                     <label class="image-checkbox image-checkbox-checked">
+                                         <img class="img-responsive photo_gallery" src="{{$which->which->image}}" />
+                                         <input type="checkbox" name="selected" checked value="{{$which->which->id}}" />
+                                         <i class="fa fa-check hidden"></i>
+                                     </label>
+                                            </div>
+
+
+                                    @endforeach
+                                     </div>
+                                 <div style="display:none;" class="whichListSelected">
+
+                             @foreach($whichList as $which)
+                                 @if($which->status==1)
+
+                                 <div class="col-lg-4 col-md-4 col-sm-6 nopad text-center">
+                                     <label class="image-checkbox image-checkbox-checked">
+                                         <img class="img-responsive photo_gallery" src="{{$which->which->image}}" />
+                                         <input type="checkbox" checked name="image[]" value="{{$which->which->id}}" />
+                                         <i class="fa fa-check hidden"></i>
+                                     </label>
+                                 </div>
+                                 @else
+                                     <div class="col-lg-4 col-md-4 col-sm-6 nopad text-center">
+                                     <label class="image-checkbox">
+                                         <img class="img-responsive photo_gallery" src="{{$which->which->image}}" />
+                                         <input type="checkbox" name="image[]" value="{{$which->which->id}}" />
+                                         <i class="fa fa-check hidden"></i>
+                                     </label>
+                                 </div>
+                                 @endif
+                             @endforeach
+
                          </div>
+                                   </div>
+                        </form>
                     </div>
+                </div>
                 </div>
             </div>
            </div>
@@ -521,6 +607,27 @@
 
        @endforeach
    @endforeach
+    <script>
+        /*   $(document).ready(function() {
+           $(".fancybox-button").fancybox({
+                 prevEffect		: 'none',
+                 nextEffect		: 'none',
+                 closeBtn		: false,
+                 'width'         : 940,
+                 'height'        : 400,
+                 helpers		: {
+                     title	: { type : 'inside' },
+                     buttons	: {}
+                 }
+             });
+
+             $(".fancybox-logo").fancybox({
+                 prevEffect		: false,
+                 nextEffect		: false,
+                 closeBtn		: false,
+             });
+         });*/
+    </script>
    <script>
        $("#myonoffswitch").click(function()
        {
@@ -555,6 +662,36 @@
            $("#btn_cancel_edit").attr("id","btn_edit_profile");
        })
    </script>
+    <script>
+        // image gallery
+        // init the state from the input
+        $(".image-checkbox").each(function () {
+            if ($(this).find('input[type="checkbox"]').first().attr("checked")) {
+                $(this).addClass('image-checkbox-checked');
+            }
+            else {
+                $(this).removeClass('image-checkbox-checked');
+            }
+        });
+
+        // sync the state to the input
+        $(".image-checkbox").on("click", function (e) {
+            $(this).toggleClass('image-checkbox-checked');
+            var $checkbox = $(this).find('input[type="checkbox"]');
+            $checkbox.prop("checked",!$checkbox.prop("checked"))
+
+            e.preventDefault();
+        });
+
+        $(".editWhichList").click(function()
+        {
+                $(this).css('display','none');
+                $(".saveEdit").css('display','block');
+                $(".whichListSelected").css('display','block');
+                $(".whichListUser").css('display','none');
+
+        });
+    </script>
 @stop
 @section('footer')
     @include('frontOffice.inc.footer')
