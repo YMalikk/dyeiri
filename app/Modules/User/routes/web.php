@@ -57,5 +57,7 @@ Route::group(['module' => 'User','middleware'=>'admin', 'namespace' => 'App\Modu
     Route::get('/admin/clients', 'UserController@showClientList')->name('showClientList');
     Route::get('/admin/orders', 'UserController@showOrderList')->name('showOrderList');
     Route::post('/admin/sendMessage', 'UserController@handleAdminSendMessage')->name('handleAdminSendMessage');
+    Route::get('/admin/platform', 'UserController@showPlatform')->name('showPlatform');
+    Route::post('/admin/editPlatform', 'UserController@handleEditPlatform')->name('handleEditPlatform');
 });
 
