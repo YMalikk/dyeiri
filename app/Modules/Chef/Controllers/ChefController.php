@@ -334,7 +334,9 @@ class ChefController extends Controller
     public function confirmOrderChef($id)
     {
         $order = Order::find($id);
-        $order->status = 1;
+        $order->status = 1; 
+        if($request->confirmReason)
+            $order->message = $request->confirmReason;
         $order->save();
         alert()->success('Veuillez nous notifier lorsque cette commande sera prête.', 'Commande confirmé')->persistent('Ok');
         return redirect()->back();
