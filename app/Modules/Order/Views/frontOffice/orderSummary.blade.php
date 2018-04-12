@@ -77,7 +77,7 @@
                             <strong>{{$chef->user->name}} {{$chef->user->surname}}</strong><br>
                         </address>
                         <div class="image restaurantLogoInvoice">
-                            <img src="{{ asset("/img/thumb_restaurant.jpg")}}" class="dishImg img-circle" alt="User Image" />
+                            <img src="{{ asset($chef->user->image)}}" style="width: 50%" class="dishImg img-circle" alt="User Image" />
                         </div>
                     </div>
                     <!-- /.col -->
@@ -87,7 +87,7 @@
                             <strong>{{$food->name}}</strong><br>
                         </address>
                         <div class="image restaurantLogoInvoice">
-                            <img src="{{ asset("/img/slider_single_restaurant/4_small.jpg")}}" style="width: 80%" class="dishImg" alt="User Image" />
+                            <img src="{{ asset($food->image)}}" style="width: 50%" class="dishImg" alt="User Image" />
                         </div>
                     </div>
                     <!-- /.col -->
@@ -198,26 +198,37 @@
             </div>
             <div class="row no-print">
                 <div class="col-xs-12">
-                    @if($delai==0)
-                        <button  type="submit" class="btn btn-success pull-right"><i class="fa fa-check-circle-o"></i>&nbsp;&nbsp;Confirmez commande</button>
+                    @if($closed==1)
+                        <button  type="submit" disabled="disabled" class="btn btn-success pull-right"><i class="fa fa-check-circle-o"></i>&nbsp;&nbsp;Confirmez commande</button>
                         <button onclick="location.href='{{route('showChefSearchedProfile',['id' => $chef->id])}}'" type="button" class="btn btn-primary pull-right" style="margin-right: 5px">
                             <i class="fa fa-times-circle"></i>&nbsp;&nbsp;Annulez
                         </button>
+                        <div class="col-md-12" style="text-align: right;margin-top: 10px;padding: 0;">
+                            <h4 style="color: red"><i class="fa fa-exclamation-circle deadLineOver" aria-hidden="true"></i>
+                                Le chef est fermé maintenant !</h4>
+                        </div>
                     @else
-                        @if($todayDate->toTimeString() > $plateform->time_limit)
-                            <button  type="submit" disabled="disabled" class="btn btn-success pull-right"><i class="fa fa-check-circle-o"></i>&nbsp;&nbsp;Confirmez commande</button>
-                            <button onclick="location.href='{{route('showChefSearchedProfile',['id' => $chef->id])}}'" type="button" class="btn btn-primary pull-right" style="margin-right: 5px">
-                                <i class="fa fa-times-circle"></i>&nbsp;&nbsp;Annulez
-                            </button>
-                            <div class="col-md-12" style="text-align: right;margin-top: 10px;padding: 0;">
-                                <h4 style="color: red"><i class="fa fa-exclamation-circle deadLineOver" aria-hidden="true"></i>
-                                Vous avez depassé le delai de prise de commande !</h4>
-                            </div>
-                        @else
+                        @if($delai==0)
                             <button  type="submit" class="btn btn-success pull-right"><i class="fa fa-check-circle-o"></i>&nbsp;&nbsp;Confirmez commande</button>
                             <button onclick="location.href='{{route('showChefSearchedProfile',['id' => $chef->id])}}'" type="button" class="btn btn-primary pull-right" style="margin-right: 5px">
                                 <i class="fa fa-times-circle"></i>&nbsp;&nbsp;Annulez
                             </button>
+                        @else
+                            @if($todayDate->toTimeString() > $plateform->time_limit)
+                                <button  type="submit" disabled="disabled" class="btn btn-success pull-right"><i class="fa fa-check-circle-o"></i>&nbsp;&nbsp;Confirmez commande</button>
+                                <button onclick="location.href='{{route('showChefSearchedProfile',['id' => $chef->id])}}'" type="button" class="btn btn-primary pull-right" style="margin-right: 5px">
+                                    <i class="fa fa-times-circle"></i>&nbsp;&nbsp;Annulez
+                                </button>
+                                <div class="col-md-12" style="text-align: right;margin-top: 10px;padding: 0;">
+                                    <h4 style="color: red"><i class="fa fa-exclamation-circle deadLineOver" aria-hidden="true"></i>
+                                    Vous avez depassé le delai de prise de commande !</h4>
+                                </div>
+                            @else
+                                <button  type="submit" class="btn btn-success pull-right"><i class="fa fa-check-circle-o"></i>&nbsp;&nbsp;Confirmez commande</button>
+                                <button onclick="location.href='{{route('showChefSearchedProfile',['id' => $chef->id])}}'" type="button" class="btn btn-primary pull-right" style="margin-right: 5px">
+                                    <i class="fa fa-times-circle"></i>&nbsp;&nbsp;Annulez
+                                </button>
+                            @endif
                         @endif
                     @endif
                 </div>
