@@ -10,6 +10,12 @@
     <link href="{{asset('css/slider-pro.min.css')}}" rel="stylesheet">
     <!-- Radio and check inputs -->
     <link href="{{asset('css/skins/square/grey.css')}}" rel="stylesheet">
+    <style>
+        .review_strip_single
+        {
+            margin: 30px 200px 25px!important;
+        }
+    </style>
 @stop
 
 
@@ -18,8 +24,8 @@
 <section class="parallax-window" data-parallax="scroll" data-image-src="{{asset($chef->cover_photo)}}" data-natural-width="1400" data-natural-height="470">
     <div id="subheader">
         <div id="sub_content">
-            <div id="thumb"><img src="{{asset('../storage/img/users/avatar/' . $user->image)}}" alt=""></div>
-            <div class="rating"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i> (<small><a href="detail_page_2.html">Read 98 reviews</a></small>)</div>
+            <div id="thumb"><img src="{{asset($user->image)}}" alt=""></div>
+            <div class="rating"><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star voted"></i><i class="icon_star"></i> (<small><a href="detail_page_2.html">{{$chefReviews}} avis</a></small>)</div>
             <h1>{{ucfirst($user->name)}} {{ucfirst($user->surname)}}</h1>
             <div><em>{{$chef->speciality}}</em></div>
             <div><i class="icon_pin"></i> {{$chef->address}}</div>
@@ -32,7 +38,7 @@
     <div class="container">
         <ul>
             <li><a href="{{route('showHome')}}">Acceuil</a></li>
-            <li><a href="{{route('showChefProfile')}}">Profil</a></li>
+            <li><a href="{{route('showFood',array($food->id))}}">Plat</a></li>
         </ul>
     </div>
 </div><!-- Position -->
@@ -41,7 +47,7 @@
 
         <div class="container margin_60_35">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-10 col-md-offset-1">
                     <div class="box_style_2">
                         <h2 class="inner">Description</h2>
 
@@ -49,15 +55,15 @@
                             <div class="sp-slides">
                                 <div class="sp-slide">
                                     <img alt="" class="sp-image" src="{{asset('src/css/images/blank.html')}}"
-                                         data-src="{{asset('img/slider_single_restaurant/1_medium.jpg')}}"
+                                         data-src="{{asset($food->image)}}"
                                          data-small="{{asset('img/slider_single_restaurant/1_small.jpg')}}"
                                          data-medium="{{asset('img/slider_single_restaurant/1_medium.jpg')}}"
                                          data-large="{{asset('img/slider_single_restaurant/1_large.jpg')}}"
                                          data-retina="{{asset('img/slider_single_restaurant/1_large.jpg')}}">
                                 </div>
                             </div>
-                            <div class="sp-thumbnails">
-                                <img alt="" class="sp-thumbnail" src="{{asset('img/slider_single_restaurant/1_medium.jpg')}}">
+                            <div class="sp-thumbnails text-center">
+                                <img alt="" class="sp-thumbnail" src="{{asset($food->image)}}">
                             </div>
                         </div>
                         <h3>Le plat</h3>
@@ -67,8 +73,8 @@
                     </div><!-- End box_style_1 -->
                 </div>
                 @foreach($reviews as $review)
-                    <div class="review_strip_single col-md-12">
-                        <img src="{{asset('../storage/img/users/avatar/') . '/' . $users[$review->id]->image}}" alt="" class="img-circle" style="width: 80px">
+                    <div class="review_strip_single col-md-8 col-md-offset-2">
+                        <img src="{{asset($users[$review->id]->image)}}" alt="" class="img-circle" style="width: 80px">
                         <small> - {{date("j F Y",strtotime($review->created_at))}} -</small>
                         <h4>{{$users[$review->id]->name}} {{$users[$review->id]->surname}}</h4>
                         <p>
