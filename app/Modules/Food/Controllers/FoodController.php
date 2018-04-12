@@ -2,6 +2,7 @@
 
 namespace App\Modules\Food\Controllers;
 
+use App\Modules\Chef\Models\Review;
 use App\Modules\Food\Models\FoodOrderReviewRating;
 use App\Modules\Food\Models\Food;
 use App\Modules\Food\Models\FoodOrderReview;
@@ -19,11 +20,12 @@ class FoodController extends Controller
         $chef = $food->chef;
         $user=$chef->user;
         $reviews = $food->food_order_reviews;
+        $chefReviews = Review::where('chef_id','=',$chef->id)->count();
         foreach($reviews as $review)
         {
             $users[$review->id] = User::find($review->user_id);
         }
-        return view('Food::frontOffice.showFood',compact('food','chef','user','reviews','users'));
+        return view('Food::frontOffice.showFood',compact('food','chefReviews','chef','user','reviews','users'));
     }
 
     public function handleFoodReview(Request $request,$id)
