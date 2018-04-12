@@ -95,6 +95,13 @@
                 </a>
             </li>
 
+            <li>
+                <a href="{{route('showPlatform')}}" title="Panel boxes">
+                    <i class="glyph-icon icon-linecons-tv"></i>
+                    <span>Plateforme</span>
+                </a>
+            </li>
+
         </ul><!-- #sidebar-menu -->
 
 
