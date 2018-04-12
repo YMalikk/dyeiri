@@ -169,6 +169,24 @@ class UserController extends Controller
         return view('User::backOffice.showMessage',compact('user','deletedReceivedMessages','receivedMessages','sentMessages','deletedSentMessages'));
     }
 
+      public function showPlatform()
+    {
+        $user=Auth::user();
+        $platform = Platform::first();
+        $deliveryTimes = DeliveryTime::all();
+        return view('User::admin.showPlatform',compact('user','platform','deliveryTimes'));
+    }
+
+    public function handleEditPlatform(Request $request)
+    {
+        $platform = Platform::first();
+        $platform->time_limit = $request->time;
+        $platform->save();
+        alert()->success('Vous avez changer les paramètres de la plateforme','Valider')->persistent('Ok');
+        return redirect()->back();
+    }
+
+    
     public function handleSendMessage(Request $request)
     {
         $user=Auth::user();
