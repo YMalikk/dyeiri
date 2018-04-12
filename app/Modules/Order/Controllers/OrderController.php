@@ -7,6 +7,7 @@ use App\Modules\Content\Models\Platform;
 use App\Modules\Order\Models\DeliveryTime;
 use App\Modules\Order\Models\FoodOrder;
 use App\Modules\Order\Models\Order;
+use App\Modules\User\Models\Schedule;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -18,13 +19,13 @@ class OrderController extends Controller
 
     public function showOrderSummary($id,Request $request)
     {
-
         $chef = Chef::find($id);
+        $schedule = $chef->schedule;
         $user= $chef->user;
         $currentUser = Auth::user();
         $type = $request->option_2;
-
         $price = 0;
+        $closed=0;
         foreach ($request->foods as $key => $food_id)
         {
             $foods[$key] = Food::find($food_id);
@@ -33,9 +34,15 @@ class OrderController extends Controller
         $quantities = array();
         $quantities = $request->quantity;
         $todayDate = Carbon::now();
+        $todayDay = date("w", strtotime($todayDate));
+        $schedule = Schedule::where('user_id','=',$user->id)->where('day','=',$todayDay)->first();
+        if($todayDate->toTimeString() < $schedule->start_at || $todayDate->toTimeString() > $schedule->ends_at || $schedule->status==0)
+        {
+            $closed=1;
+        }
         $plateform= Platform::find(1);
         $deliveryTimes = DeliveryTime::all();
-        return view('Order::frontOffice.orderSummary',compact('type','chef','price','foods','quantities','user',
+        return view('Order::frontOffice.orderSummary',compact('type','closed','chef','price','foods','quantities','user',
             'todayDate','plateform','deliveryTimes','currentUser'));
     }
 
