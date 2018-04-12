@@ -13,7 +13,7 @@ Route::group(['module'=> 'User','middleware'=>'chef','namespace'=>'App\Modules\C
     Route::get('/me', 'ChefController@showChefProfile')->name('showChefProfile');
     Route::get('/complete', 'ChefController@showChefRegisterStepTwo')->name('showChefRegisterStepTwo');
     Route::post('/complete', 'ChefController@handleCompleteRegisterChef')->name('handleCompleteRegisterChef');
-    Route::get('/confirmOrderChef/{id}', 'ChefController@confirmOrderChef')->name('confirmOrderChef');
+    Route::post('/confirmOrderChef/{id}', 'ChefController@confirmOrderChef')->name('confirmOrderChef');
     Route::get('/denyOrderChef/{id}', 'ChefController@denyOrderChef')->name('denyOrderChef');
     Route::get('/confirmDishReadyChef/{id}', 'ChefController@confirmDishReadyChef')->name('confirmDishReadyChef');
     Route::post('/handleEditChefProfile',['uses'=>'ChefController@handleEditChefProfile','as'=>'handleEditChefProfile']);
