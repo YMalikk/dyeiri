@@ -91,7 +91,8 @@
                 <p><a href="#" style="cursor: inherit" class="btn_side">Categories</a></p>
                 <div class="box_style_1">
                     <ul id="cat_nav">
-                        <li><a href="#starters" class="active">Entrées <span>({{count($entrees)}})</span></a></li>
+                        <li><a href="#dayFoods" class="active">Menu du jour <span>({{count($dayFoods)}})</span></a></li>
+                        <li><a href="#starters">Entrées <span>({{count($entrees)}})</span></a></li>
                         <li><a href="#main_courses">Menu principale <span>({{count($mains)}})</span></a></li>
                         <li><a href="#desserts">Desserts <span>({{count($desserts)}})</span></a></li>
                         <li><a href="#drinks">Drinks <span>({{count($drinks)}})</span></a></li>
@@ -113,7 +114,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseDayMenu">
-                                    <h3 id="desserts">Menu du jour</h3>
+                                    <h3 id="dayFoods">Menu du jour</h3>
                                 </a>
                             </div>
                         </div>
@@ -150,10 +151,11 @@
                                         @foreach($dayFoods as $key => $dayFood)
                                             <tr>
                                                 <td>
-                                                    <figure class="thumb_menu_list"><img src="{{asset('../storage/img/foods/'.$dayFood->image)}}" alt="thumb"></figure>
+                                                    <figure class="thumb_menu_list"><img src="{{asset($dayFood->image)}}" alt="thumb"></figure>
                                                 </td>
                                                 <td>
-                                                    <h5>{{++$key}}. {{$dayFood->name}}</h5>
+                                                    <h5><a href='{{route('showFood',['id' => $dayFood->id])}}' class="add_bottom_15">{{++$key}}. {{$dayFood->name}}</a></h5>
+
                                                     <p>
                                                         {{$dayFood->description}}
                                                     </p>
@@ -220,30 +222,30 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($desserts as $key => $dessert)
+                                    @foreach($entrees as $key => $entree)
                                         <tr>
                                             <td>
-                                                <figure class="thumb_menu_list"><img src="{{asset('../storage/img/foods/'.$dessert->image)}}" alt="thumb"></figure>
+                                                <figure class="thumb_menu_list"><img src="{{asset($entree->image)}}" alt="thumb"></figure>
                                             </td>
                                             <td>
-                                                <h5><a href='{{route('showFood',['id' => $dessert->id])}}' class="add_bottom_15">{{++$key}}. {{$dessert->name}}</a></h5>
+                                                <h5><a href='{{route('showFood',['id' => $entree->id])}}' class="add_bottom_15">{{++$key}}. {{$entree->name}}</a></h5>
                                                 <p>
-                                                    {{$dessert->description}}
+                                                    {{$entree->description}}
                                                 </p>
                                             </td>
                                             <td>
-                                                <strong>{{$dessert->price}}</strong>
+                                                <strong>{{$entree->price}}</strong>
                                             </td>
-                                            <td><strong>{{$dessert->preparation_time}} min</strong> </td>
+                                            <td><strong>{{$entree->preparation_time}} min</strong> </td>
                                             <td class="options text-center">
                                                 <div class="dropdown dropdown-options">
                                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i class="icon_plus_alt2"></i></a>
                                                     <div class="dropdown-menu">
                                                         <h5 class="text-center">Quantité</h5>
                                                         <label class="text-center margin-bottom-none">
-                                                            <input class="text-center" type="number" id="quantite{{$dessert->id}}" min="1" value="1" max="10">
+                                                            <input class="text-center" type="number" id="quantite{{$entree->id}}" min="1" value="1" max="10">
                                                         </label>
-                                                        <a href="javascript: void(0)" onclick="add('{{$dessert->id}}','{{$dessert->name}}','{{$dessert->price}}')" class="add_to_basket" style="margin-top: 10px">Ajouter au panier</a>
+                                                        <a href="javascript: void(0)" onclick="add('{{$entree->id}}','{{$entree->name}}','{{$entree->price}}')" class="add_to_basket" style="margin-top: 10px">Ajouter au panier</a>
                                                     </div>
                                                 </div>
                                             </td>
@@ -296,7 +298,7 @@
                                         @foreach($mains as $key => $main)
                                             <tr>
                                                 <td>
-                                                    <figure class="thumb_menu_list"><img src="{{asset('../storage/img/foods/'.$main->image)}}" alt="thumb"></figure>
+                                                    <figure class="thumb_menu_list"><img src="{{asset($main->image)}}" alt="thumb"></figure>
                                                 </td>
                                                 <td>
                                                     <h5><a href='{{route('showFood',['id' => $main->id])}}' class="add_bottom_15">{{++$key}}. {{$main->name}}</a></h5>
@@ -369,7 +371,7 @@
                                         @foreach($desserts as $key => $dessert)
                                             <tr>
                                                 <td>
-                                                    <figure class="thumb_menu_list"><img src="{{asset('../storage/img/foods/'.$dessert->image)}}" alt="thumb"></figure>
+                                                    <figure class="thumb_menu_list"><img src="{{asset($dessert->image)}}" alt="thumb"></figure>
                                                 </td>
                                                 <td>
                                                     <h5><a href='{{route('showFood',['id' => $dessert->id])}}' class="add_bottom_15">{{++$key}}. {{$dessert->name}}</a></h5>
@@ -442,7 +444,7 @@
                                         @foreach($drinks as $key => $drink)
                                             <tr>
                                                 <td>
-                                                    <figure class="thumb_menu_list"><img src="{{asset('../storage/img/foods/'.$drink->image)}}" alt="thumb"></figure>
+                                                    <figure class="thumb_menu_list"><img src="{{asset($drink->image)}}" alt="thumb"></figure>
                                                 </td>
                                                 <td>
                                                     <h5><a href='{{route('showFood',['id' => $drink->id])}}' class="add_bottom_15">{{++$key}}. {{$drink->name}}</a></h5>
@@ -596,66 +598,68 @@
             @endif
         </div><!-- End summary_review -->
 
-        @foreach($reviews as $review)
-            <div class="review_strip_single">
-                <img src="" alt="" class="img-circle">
-                <small> - {{date("j F Y",strtotime($review->created_at))}} -</small>
-                <h4>{{$review->client->name}} {{$review->client->surname}}</h4>
-                <p>
-                    {{$review->content}}
-                </p>
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="rating">
-                            @for($i=0;$i<5;$i++)
-                                @if($i<($review->reviewRating->where('rating_type_id','=',1)->first())->rating)
-                                    <i class="icon_star voted"></i>
-                                @else
-                                    <i class="icon_star"></i>
-                                @endif
-                            @endfor
+        @if(count($reviews)>0)
+            @foreach($reviews as $review)
+                <div class="review_strip_single">
+                    <img src="" alt="" class="img-circle">
+                    <small> - {{date("j F Y",strtotime($review->created_at))}} -</small>
+                    <h4>{{$review->client->name}} {{$review->client->surname}}</h4>
+                    <p>
+                        {{$review->content}}
+                    </p>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="rating">
+                                @for($i=0;$i<5;$i++)
+                                    @if($i<($review->reviewRating->where('rating_type_id','=',1)->first())->rating)
+                                        <i class="icon_star voted"></i>
+                                    @else
+                                        <i class="icon_star"></i>
+                                    @endif
+                                @endfor
+                            </div>
+                            Quantité servie
                         </div>
-                        Quantité servie
-                    </div>
-                    <div class="col-md-3">
-                        <div class="rating">
-                            @for($i=0;$i<5;$i++)
-                                @if($i<($review->reviewRating->where('rating_type_id','=',2)->first())->rating)
-                                    <i class="icon_star voted"></i>
-                                @else
-                                    <i class="icon_star"></i>
-                                @endif
-                            @endfor
+                        <div class="col-md-3">
+                            <div class="rating">
+                                @for($i=0;$i<5;$i++)
+                                    @if($i<($review->reviewRating->where('rating_type_id','=',2)->first())->rating)
+                                        <i class="icon_star voted"></i>
+                                    @else
+                                        <i class="icon_star"></i>
+                                    @endif
+                                @endfor
+                            </div>
+                            Propreté
                         </div>
-                        Propreté
-                    </div>
-                    <div class="col-md-3">
-                        <div class="rating">
-                            @for($i=0;$i<5;$i++)
-                                @if($i<($review->reviewRating->where('rating_type_id','=',3)->first())->rating)
-                                    <i class="icon_star voted"></i>
-                                @else
-                                    <i class="icon_star"></i>
-                                @endif
-                            @endfor
+                        <div class="col-md-3">
+                            <div class="rating">
+                                @for($i=0;$i<5;$i++)
+                                    @if($i<($review->reviewRating->where('rating_type_id','=',3)->first())->rating)
+                                        <i class="icon_star voted"></i>
+                                    @else
+                                        <i class="icon_star"></i>
+                                    @endif
+                                @endfor
+                            </div>
+                            Rapidité
                         </div>
-                        Rapidité
-                    </div>
-                    <div class="col-md-3">
-                        <div class="rating">
-                            @for($i=0;$i<5;$i++)
-                                @if($i<($review->reviewRating->where('rating_type_id','=',4)->first())->rating)
-                                    <i class="icon_star voted"></i>
-                                @else
-                                    <i class="icon_star"></i>
-                                @endif
-                            @endfor
+                        <div class="col-md-3">
+                            <div class="rating">
+                                @for($i=0;$i<5;$i++)
+                                    @if($i<($review->reviewRating->where('rating_type_id','=',4)->first())->rating)
+                                        <i class="icon_star voted"></i>
+                                    @else
+                                        <i class="icon_star"></i>
+                                    @endif
+                                @endfor
+                            </div>
+                            Prix
                         </div>
-                        Prix
-                    </div>
-                </div><!-- End row -->
-            </div><!-- End review strip -->
-        @endforeach
+                    </div><!-- End row -->
+                </div><!-- End review strip -->
+            @endforeach
+        @endif
     </div>
 
     <div id="kicthen" class="tab-pane fade">
