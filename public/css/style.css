@@ -186,6 +186,18 @@ a:focus, a:hover {
     text-align: center
 }
 
+.btn_2, a.btn_2 {
+    font-family: inherit;
+    color: #fff;
+    cursor: pointer;
+    outline: 0;
+    font-size: 12px;
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    text-transform: uppercase;
+    text-align: center
+}
+
 #subheader a:hover, .modal-popup a:hover {
     text-decoration: underline
 }
@@ -219,6 +231,24 @@ hr.styled {
 .btn_1:hover, a.btn_1:hover {
     background: #333
 }
+
+.btn_2, a.btn_2 {
+    border: none;
+    background: red;
+    padding: 10px 20px;
+    transition: all .3s;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    font-weight: 600;
+    display: inline-block
+}
+
+
+.btn_2:hover, a.btn_2:hover {
+    background: #333
+}
+
 
 .btn_full, a.btn_full {
     border: none;
